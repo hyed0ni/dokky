@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.box {
+	width:57%;
+    margin: 0 auto; /* 가운데 정렬 */
+    height: 230px;
+    background-color: #3498db;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 50px;
+}

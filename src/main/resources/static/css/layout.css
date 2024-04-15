@@ -14,13 +14,14 @@ body {
 .navbar {
     background: #fff;
     border-bottom: 1px solid rgb(208, 209, 214); /* 기존 border-color 스타일 변경 */
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .navbar-brand {
     color: var(--main-color);
-    font-size: 1.5rem;
+    font-size: 1.0rem;
     font-weight: bold;
+    margin-left: 6px;
 }
 
 .nav-link {
@@ -46,6 +47,7 @@ body {
 
 /* Footer 스타일링 */
 footer {
+	position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -55,3 +57,19 @@ footer {
     padding: 20px 0;
     margin: 0!important; /* 마진 제거 */
 }
+
+.navbar {
+	padding-left: calc((100% - 45rem) / 2); /* 좌측 여백을 계산하여 자동으로 조절합니다. */
+    padding-right: calc((100% - 45rem) / 2); /* 우측 여백을 계산하여 자동으로 조절합니다. */
+}
+
+/* 로그인 버튼 */
+#signin {
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+/* 로그인 버튼 사이즈 조절 */
+.btn {
+	--bs-btn-font-size:0.7rem;
+}
+
