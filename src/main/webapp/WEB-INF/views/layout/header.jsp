@@ -18,7 +18,6 @@
 		</title>
 		
 		<!-- google font -->
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700,800' rel='stylesheet' type='text/css'>
 
 		<!-- bootstrap css -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -28,6 +27,8 @@
 
 		<!-- custom css -->
 		<link rel="stylesheet" href="/css/layout.css">
+		<link rel="stylesheet" href="/css/common/common.css">
+		
 
 	</head>
 	<body>

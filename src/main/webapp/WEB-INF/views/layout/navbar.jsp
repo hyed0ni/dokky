@@ -7,7 +7,7 @@
 
 		<nav class="navbar navbar-light bg-light fixed-top">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="/">DOKKY</a>
+				<a class="navbar-brand" href="/" >DOKKY</a>
 				<ul class="navbar-nav ms-auto flex-row">
 					<li>
 						<a role="button" class="btn btn-secondary me-2" href="/user/signin">로그인</a>
