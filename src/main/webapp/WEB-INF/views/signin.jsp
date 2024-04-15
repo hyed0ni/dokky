@@ -7,7 +7,7 @@
 
 <%@ include file="layout/header.jsp" %>
     <div class="login-container">
-        <h1>OKKY 아이디 로그인</h1>
+        <h1>DOKKY 아이디 로그인</h1>
         <form class="login-form">
             <label for="username">아이디</label>
             <input type="text" id="username" name="username" placeholder="아이디">
