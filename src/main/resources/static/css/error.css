@@ -1,0 +1,12 @@
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+.error-div {
+    display: flex;
+    align-items: center;
+}
