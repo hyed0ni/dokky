@@ -3,13 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>DOKKY</title>
-</head>
-<body>
+<%@ include file="layout/header.jsp" %>
+
 
 <style>
 .wrp1 {
@@ -17,6 +12,7 @@
 }
 </style>
 
+<div class="main">
 <div class="wrp1" align="center">
 <a href="${contextPath}/">
   <img src="${contextPath}/resources/image/okky.svg" alt="dokky" width="50px">
@@ -52,6 +48,6 @@
   </div>
   
 </div>
-  
+  </div>
 </body>
 </html>
