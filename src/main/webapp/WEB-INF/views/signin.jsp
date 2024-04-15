@@ -3,23 +3,55 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
-<c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DOKKY</title>
+</head>
+<body>
 
-<%@ include file="layout/header.jsp" %>
-    <div class="login-container">
-        <h1>OKKY 아이디 로그인</h1>
-        <form class="login-form">
-            <label for="username">아이디</label>
-            <input type="text" id="username" name="username" placeholder="아이디">
+<style>
+.wrp1 {
+	margin: 50px auto;
+}
+</style>
 
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" placeholder="비밀번호">
+<div class="wrp1" align="center">
+<a href="${contextPath}/">
+  <img src="${contextPath}/resources/image/okky.svg" alt="dokky" width="50px">
+</a>
+<h2>DOKKY에 오신것을 환영합니다.</h2>
+<h4>DOKKY는 MCP 개발자들을 위한 지식공유의 장입니다.</h4>
+</div>
 
-            <button type="submit">로그인</button>
-            <div class="signup-link">
-                아직 회원이 아니신가요? <a href="#">회원가입</a>
-            </div>
-        </form>
+<div class="wrp2" align="center">
+  <form method="POST"
+        action="${contextPath}/user/signin.do">
+        
+    <div>
+      <label for="email">아이디</label><br>
+      <input type="text" id="email" name="email" placeholder="example@email.com">
     </div>
+    <br>
+    <div>
+      <label for="pw">비밀번호</label><br>
+      <input type="password" id="pw" name="pw" placeholder="●●●●">
+    </div>
+    <br>
 
-<%@ include file="layout/footer.jsp" %>
+  </form>
+  
+  <div>
+    <button type="submit">로그인</button>
+  </div>
+    
+  <div>
+    <span>아직 회원이 아니신가요?</span>
+    <a href="${contextPath}/user/signup.page">회원가입</a>
+  </div>
+  
+</div>
+  
+</body>
+</html>
