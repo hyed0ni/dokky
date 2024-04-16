@@ -4,21 +4,20 @@ import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+@Data
+@Builder
+public class AccessHistoryDto {
 	
-	private int userNo;
+	private int accessHistoryNo;
 	private String userEmail;
-	private String userPw;
-	private String userName;
-	private String userGender;
-	private String userMobile;
+	private String accessIp;
+	private String userAgent;
+	private String sessionId;
 	private Date loginDt;
 	private Date logoutDt;
 

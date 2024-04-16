@@ -10,10 +10,10 @@
 				<a class="navbar-brand fw-bold" href="/" >DOKKY</a>
 				<ul class="navbar-nav ms-auto flex-row">
 					<li>
-						<a role="button" class="btn btn-light me-2" id="signin" href="/user/signin">로그인</a>
+						<a role="button" class="btn btn-light me-2" id="signin" href="/user/signin.page">로그인</a>
 					</li>
 					<li class="nav-item">
-						<a role="button" class="btn btn-primary me-2" href="#">회원가입</a>
+						<a role="button" class="btn btn-primary me-2" href="/user/signup.page">회원가입</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">모지모지</a>
