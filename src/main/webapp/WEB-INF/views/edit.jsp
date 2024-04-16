@@ -158,6 +158,5 @@ input:focus {outline:none;}
 
 
 </div>
-<h1>bye</h1>
 <%@ include file="layout/copyright.jsp" %>
 <%@ include file="layout/footer.jsp" %>
