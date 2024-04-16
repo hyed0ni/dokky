@@ -1,0 +1,89 @@
+	  *{
+	    margin: 0;
+	    padding: 0;
+	  }
+	  
+	  .body{
+	    width: 1210px;
+	    height: 800px;
+	    display: flex;
+		margin: 20px auto;
+		text-align: center;
+	  }
+	  .body > .leftarea , .rightarea{
+	    flex: 1.7;
+	    border: 1px dotted black;
+	  }
+	  .body > .centerarea{
+	    flex: 6.6;
+	    border: 1px dotted black;
+	  }
+	
+	  .body > .centerarea > .notice{
+	    width: 550px;
+	    height: 700px;
+	    border: 3px dotted black;
+	    margin: auto;
+	    background-color:aliceblue;
+	  }
+	
+	  .centerarea{
+		border:none;
+		text-align:left;
+	  }
+	  
+	  .centerarea > .contents-banner{
+		width:auto;
+		height: 150px;
+		border:1px solid black;
+		text-align:center;
+		line-height:150px;
+	  }
+	  .centerarea > .detail-title {
+	   	height: 50px;
+	  	line-height:50px;
+	  	margin-left: 5px;
+		font-size: x-large;
+		font-weight: bold;
+		margin-bottom: 20px;
+		margin-top:20px;
+	  }
+	  
+	  .centerarea > .detail-contents{
+	  	height:500px;
+	  	margin-left:5px;
+	  }
+	  
+   .centerarea > .detail-contentinfo{
+	display:flex;
+   }
+   .centerarea > .detail-contentinfo > .image-writer, .contents-button{
+	height:50px;
+	line-height:50px;
+   }
+   
+   .image-writer{
+   	margin-left: 5px;
+   	
+	flex:0.5;
+   }
+   
+   .contents-button {
+	flex:8;
+	text-align: right;
+	margin-right: 10px;
+   }
+   
+   .contents-writer{
+   	color:black;
+   	text-decoration: none;
+   }
+   
+   .contents-writer:hover{
+   	color:rgba(0, 0, 255, 0.6);
+   	cursor:pointer;
+   }
+   
+   contents-detailinfo{
+	vertical-align: middle;
+   }
