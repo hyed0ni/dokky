@@ -1,7 +1,7 @@
 :root {
   /* rem 단위 사용 시 기본 설정 */
-  font-size: 25px; /* 62.5% */
-  --main-color : black;
+  font-size: 10px; /* 62.5% */
+  --main-color : #278BEE;
   
 }
 
@@ -13,7 +13,7 @@
 }
 
 .main {
-	max-height: 60vh;
+	min-height: 88vh;
 	max-width: 1090px;
 }
 

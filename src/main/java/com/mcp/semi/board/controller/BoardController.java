@@ -8,9 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/dokky")
 public class BoardController {
 	
-	@GetMapping("/main")
+	@GetMapping("/")
 	public String Board() {
 		return "index";
+	}
+	
+	@GetMapping("/detail")
+	public String BoardDetail() {
+		return "detail";
+	}
+	
+	@GetMapping("/edit")
+	public String BoardEdit() {
+		return "edit";
 	}
 
 }

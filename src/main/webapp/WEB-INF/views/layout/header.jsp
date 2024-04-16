@@ -27,13 +27,3 @@
 		<!-- custom css -->
 		<link rel="stylesheet" href="/css/layout.css">
 		<link rel="stylesheet" href="/css/common/common.css">
-		<!-- error.jsp에만 적용 -->
-	    <c:if test="${currentPage == 'error'}">
-    	    <link rel="stylesheet" href="/css/error.css">
-   		</c:if>
-		
-		
-	</head>
-	<body>
-		
-
