@@ -18,7 +18,7 @@ body {
 }
 
 .navbar-brand {
-    color: var(--main-color);
+    color: black;
     font-size: 1.0rem;
     font-weight: bold;
     margin-left: 6px;
