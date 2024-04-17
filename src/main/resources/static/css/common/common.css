@@ -30,11 +30,11 @@ a {text-decoration: none;}
 ul, ol {list-style-type: none;}
 
 button {
-	background-color: var(--main-color);
-	border-color: var(--main-color);
+	background-color: var(--main-color) !important;
+	border-color: var(--main-color) !important;
 }
 
 .form-check-input:checked {
-    background-color: var(--main-color);
-    border-color: var(--main-color);
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
 }

@@ -15,5 +15,10 @@ public class MyPageController {
 	public String myProfile() {
 		return "mypage/myProfile";
 	}
+	
+	@GetMapping("modify-password")
+	public String modifyPw() {
+		return "mypage/modifyPw";
+	}
 
 }

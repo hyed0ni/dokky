@@ -92,8 +92,8 @@
 
 /* 비밀번호 변경, 회원 탈퇴 버튼 */
 .my-profile .warning {
-	background-color: #d02927;
-	border-color: #d02927;
+	background-color: #d02927 !important;
+	border-color: #d02927 !important;
 }
 
 /* 계정 삭제 정책 */
