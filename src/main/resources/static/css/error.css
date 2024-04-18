@@ -4,9 +4,15 @@
     align-items: center;
     height: 100%;
     flex-direction: column;
+    font-size:2.5rem;
 }
 
 .error-div {
     display: flex;
     align-items: center;
+}
+
+img.error-image {
+	width: 200px;
+    height: 200px;
 }
