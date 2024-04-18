@@ -39,4 +39,9 @@ public class BoardService {
 	{
 		return boardMapper.getBoardByNo(boardNo);
 	}
+	
+	public int updateHit(int boardNo)
+	{
+		return boardMapper.updateHit(boardNo);
+	}
 }

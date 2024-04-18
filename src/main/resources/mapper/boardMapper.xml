@@ -32,7 +32,6 @@
 		WHERE BOARD_NO = #{boardNo}	
 	</delete>
 	
-	
 	<select id="getBoardByNo"
 			resultMap="BoardMap">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.CREATE_DT, B.MODIFY_DT, B.USER_NO, U.USER_NAME
@@ -40,5 +39,11 @@
    			ON B.USER_NO = U.USER_NO
 		WHERE B.BOARD_NO = #{boardNo}
 	</select>
+	
+	<update id="updateHit">
+		UPDATE BOARD_T
+			SET BOARD_HIT = BOARD_HIT + 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
 	
 </mapper>

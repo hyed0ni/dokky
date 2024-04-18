@@ -64,6 +64,20 @@
 	}
 	var boardNo = getBoardNoFromURL();	// 이전 페이지에서 보드 넘버 받아온거 
 	
+	const fnAddBoardHit = () =>{
+		$.ajax({
+			type:'GET',
+			url: '/dokky/putBoardHit.do',
+			data:'boardNo=' + boardNo,
+			dataType:'json',
+			success: function(data){
+			},
+			error:function(jqXHR){ 
+				alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+			}			
+		})
+	}
+	
 	const fnShowDetailBoard = () =>{
 		$.ajax({
 			type:'GET',
@@ -71,6 +85,7 @@
 			data:'boardNo=' + boardNo,
 			dataType:'json',
 			success: function(data){
+				fnAddBoardHit();
 				document.getElementById('contents-writer').innerHTML = data.user.userName;
 				document.getElementById('detail-title').innerHTML = data.boardTitle;
 				document.getElementById('detail-contents').innerHTML = data.boardContent;
@@ -78,6 +93,7 @@
 				document.getElementById('board-hit').innerHTML = data.boardHit;
 			},
 			error:function(jqXHR){
+				alert("디테일 에러");
 				alert(jqXHR.statusText + '(' + jqXHR.status + ')');
 			}
 		})
@@ -102,7 +118,7 @@
 		})
 	}
 	
-	const fngetBoard = ()=>{
+	const fngetHotBoard = ()=>{
 		$.ajax({
 			type:'GET',
 			url: '/dokky/getBoard.do',
@@ -112,6 +128,7 @@
 				console.log(data.length);
 				for(var i = 1; i < data.length + 1; i++)
 				{
+					data.sort((a,b) => b.boardHit - a.boardHit);
 	 		        let str = '<div style="text-align:left;">' 
 	 		        + '<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/detail?boardNo=' 
 	 		        		+ data[i-1].boardNo+ '" style="font-size:1.5rem;">'
@@ -126,7 +143,7 @@
 		})
 	}
 
-	fngetBoard();	
+	fngetHotBoard();	
 	fnShowDetailBoard();
 	fnClickDelete();
   </script>
