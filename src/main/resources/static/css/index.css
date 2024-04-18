@@ -17,15 +17,14 @@
 	width: 100%;
 	margin-top: 25px;
 }
-/* 
-.main {
-	max-height: 60vh;
-	max-width: 1090px;
+
+:root {
+	font-size: 25px; /* 62.5% */
 }
- */
+
 #addBtn {
 	--bs-btn-font-size: 0.6rem;
-    position: relative;
+	position: relative;
     margin-right: 21rem; /* 원하는 위치 조정 */
 }
 

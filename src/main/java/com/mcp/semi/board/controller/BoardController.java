@@ -4,11 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller
 @RequestMapping("/dokky")
 public class BoardController {
 	
-	@GetMapping("/")
+	@GetMapping("/main")
 	public String Board() {
 		return "index";
 	}
@@ -18,9 +19,14 @@ public class BoardController {
 		return "detail";
 	}
 	
-	@GetMapping("/edit")
-	public String BoardEdit() {
-		return "edit";
+	@GetMapping("/modify")
+	public String BoardModify() {
+		return "board/modify";
+	}
+	
+	@GetMapping("/add")
+	public String BoardAdd() {
+		return "board/add";
 	}
 
 }
