@@ -2,87 +2,94 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="../layout/header.jsp" %>
-
-		<link href="/css/index.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<style>
-
-body{
-  padding-top: 100px;
-}
-
-</style>
-
-<link href="form-validation.css" rel="stylesheet">
-</head>
-
+<%@ include file="../layout/navbar.jsp" %>
+		<link href="/css/user/signup.css" rel="stylesheet" type="text/css" />
+    </head>
 <body>
-<%@ include file=".././layout/navbar.jsp" %>
 
-<div class="container">
-
-<div class="center" align="center">
-
-<a href="/"> <img src=".././images/dokky.png" alt="DOKKY 로고" height="50"> </a>
-<br>
-<h2>DOKKY에 오신것을 환영합니다.</h2>
-<h6>DOKKY는 MCP 개발자들을 위한 지식공유의 장입니다.</h6>
-<h6>-----------  회원가입에 필요한 기본정보를 입력해주세요.  ------------</h6>
-
-<div align="center">
-	<form method="post"
-		  action="/user/signup"
-		  id="frm-signup">  
+<div class="main">
+	<div class="signup">
+		<div align="center">
+		  <a href="/"><img class="mb-4" src=".././images/dokky.png"  alt="DOKKY-LOGO" height="40"></a>
+		  <h1 class="h3 mb-3 fw-normal">DOKKY에 오신것을 환영합니다.</h1><br>
+		  <h6>DOKKY는 MCP 개발자들을 위한 지식공유의 장입니다.</h6>
+		  <br>
+		  <h6>------  회원가입에 필요한 기본정보를 입력해주세요.  -------</h6>		
+		  </div>
+			  
+		<form method="post"
+			  action="/user/signup"
+			  id="frm-signup">
+			  
+		<div class="col-md-7 col-lg-8">
+		<div class="row g-3">
+		
+		  <div class="col-12">
+		    <label for="email" class="form-label">아이디</label>
+		    <div class="input-group mb-3">
+		      <input type="email" class="form-control frm-ctrl" id="email" placeholder="you@example.com">
+		      <button type="button" class="btn btn-primary" id="btn-code">인증코드받기</button>
+		    </div>
+		  </div>
+		
+		  <div class="col-12">
+		    <label for="inp-code" class="form-label">인증코드</label>
+		    <div class="input-group mb-3">
+		      <input type="text" class="form-control frm-ctrl" id="inp-code" placeholder="인증코드입력">
+		      <button type="button" class="btn btn-primary" id="btn-verify-code" disabled="disabled">인증하기</button>
+		    </div>
+		  </div>
+		
+		  <div class="col-12">
+		    <label for="pw" class="form-label">비밀번호</label>
+		    <input type="password" class="form-control" id="pw" placeholder="최소 6자 이상(알파벳, 숫자 필수)">
+		  </div>
+		
+		  <div class="col-12">
+		    <label for="name" class="form-label">닉네임</label>
+		    <input type="text" class="form-control" id="name" placeholder="별명을 알파벳, 한글, 숫자를 10자 이하로 입력해주세요.">
+		  </div>
+		
+		  <div class="my-3">
+			  <label class="form-label">성별</label>
+			  <div class="flex">
+			  <div class="form-check">
+			    <input id="man" name="form-check" type="radio" class="form-check-input" checked required>
+				<label class="form-check-label" for="man">남성</label>
+			  </div>
+			  <div class="form-check">
+			    <input id="woman" name="form-check" type="radio" class="form-check-input" required>
+			    <label class="form-check-label" for="woman">여성</label>
+			  </div>
+			  <div class="form-check">
+				<input id="none" name="form-check" type="radio" class="form-check-input" required>
+				<label class="form-check-label" for="none">선택 안 함</label>
+			  </div>
+		      </div>
+		  </div>
+				
+		  <div class="col-12">
+		    <label for="address2" class="form-label">휴대전화</label>
+		    <input type="text" class="form-control" id="" placeholder="- 제외하고 입력해주세요.">
+		  </div>
+		
+		  <div align="center">
+		    <button class="w-100 btn btn-primary btn-lg" type="submit" disabled="disabled">회원가입</button>
+		  </div>
+		
+		  <div align="center" class="already">
+			<span>이미 회원이신가요?</span>
+			<a href="/user/signin">로그인</a>
+		  </div>
 		  
-	  <div>
-	    <label for="email">아이디</label>
-	    <div><input type="text" id="email" name="email" placeholder="example@example.com"></div>
-	    <div><button type="button" id="btn-code" >인증코드받기</button></div>
-	  </div>
-	  <div>
-	    <label for="inp-code">인증코드</label>
-	    <div><input type="text" id="inp-code" placeholder="인증코드입력" disabled></div>
-	    <div><button type="button" id="btn-verify-code" disabled>인증하기</button></div>
-	  </div>
-	  <div>
-	  	<label for="pw">비밀번호</label>
-	  	<div><input type="password" name="pw" id="pw" placeholder="최소 6자 이상(알파벳, 숫자 필수)"></div>
-	  </div>
-	  <div>
-	  	<label for="name">닉네임</label>
-	  	<div><input type="text" name="name" id="name" placeholder="별명을 알파벳, 한글, 숫자를 10자 이하로 입력해주세요."></div>
-	  </div>
-	  <div>
-	    <label for="gender">성별</label>
-	    <div>
-	      <label for="none">선택안함</label>
-	      <input type="radio" name="gender" value="none" id="none" checked>
+		</div>
 	    </div>
-	    <div>
-	      <label for="man">남자</label>
-	      <input type="radio" name="gender" value="man" id="man">
-	    </div>
-	    <div>
-	      <label for="woman">여자</label>
-	      <input type="radio" name="gender" value="woman" id="woman">
-	    </div>
-	  </div>
-	  <div>
-	  	<label for="mobile">휴대전화</label>
-	  	<div><input type="text" name="mobile" id="mobile" placeholder="010-0000-0000"></div>
-	  </div>
-	  <br>
-	  <button type="submit" id="btn-signup">회원가입</button>
-	</form>
+		</form>
+	</div>
 </div>
 
-  <div align="center">
-    <span>이미 회원이신가요?</span>
-    <a href="/user/signin">로그인</a>
-  </div>
-  
-</div>
-</div>
+</body>
+
 
 <script>
 
