@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
 .box {
-   	width: 61rem;
-    height: 14rem;
-    margin: auto;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+	width: 40rem;
+	height: 8rem;
+	margin: 50px auto;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
 }
 
 .table-container {
@@ -18,9 +18,9 @@
 	margin-top: 25px;
 }
 
-/* :root {
-	font-size: 25px; 62.5%
-} */
+:root {
+	font-size: 25px; /* 62.5% */
+}
 
 #addBtn {
 	--bs-btn-font-size: 0.6rem;
