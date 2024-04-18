@@ -7,7 +7,7 @@
 		<nav class="navbar fixed-top">
 			<div class="container-fluid">
 			<img src="/images/dokky.png" class="logo" alt="DOKKY 로고">
-				<a class="navbar-brand" href="/" >DOKKY</a>
+				<a class="navbar-brand" href="/dokky/main" >DOKKY</a>
 				<ul class="navbar-nav ms-auto">
 					<li>
 						<a role="button" class="nav btn btn-light me-2" id="signin" href="/user/signin.page">로그인</a>
