@@ -16,7 +16,7 @@
     <div class="table-container">
         <div class="row justify-content-center mb-3">
             <div class="col-auto">
-                <button type="button" class="btn btn-primary" id="addBtn">작성하기</button>
+                <a href="/dokky/add" type="button" class="btn btn-primary" id="addBtn">작성하기</a>
             </div>
             <div class="col-auto">
                 <div class="search-container">

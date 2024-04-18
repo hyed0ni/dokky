@@ -20,15 +20,15 @@ import com.mcp.semi.board.service.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/dokky")
 public class BoardController {
 	
-	private final BoardService boardService;
-	
-	@GetMapping("/")
-	public String board() {
+
+	@GetMapping("/main")
+	public String Board() {
 		return "index";
 	}
 	
@@ -37,9 +37,14 @@ public class BoardController {
 		return "detail";
 	}
 	
-	@GetMapping("/edit")
-	public String boardEdit() {
-		return "edit";
+	@GetMapping("/modify")
+	public String BoardModify() {
+		return "board/modify";
+	}
+	
+	@GetMapping("/add")
+	public String BoardAdd() {
+		return "board/add";
 	}
  
 	@ResponseBody
