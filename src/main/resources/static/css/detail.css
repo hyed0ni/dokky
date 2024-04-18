@@ -6,20 +6,15 @@
 	  }
 	  
 	  .body{
-	    width: 1010px;
-	    height: 800px;
 	    display: flex;
 		margin: 20px auto;
 		text-align: center;
-/* 		border: 1px dotted black; */
 	  }
 	  .body > .leftarea , .rightarea{
 	    flex: 2;
-/* 	    border: 1px dotted black; */
 	  }
 	  .body > .centerarea{
 	    flex: 6;
-/* 	    border: 1px dotted black; */
 	  }
 	  
 	  .centerarea{
@@ -70,7 +65,6 @@
 	margin-right: 10px;
    }
    
-   
    .contents-block{
   	padding-top: 7px;
   	padding-left: 5px;
@@ -94,9 +88,6 @@
    }
 
 	/* 수정, 삭제 버튼 */
-   .btn{
-   	font-size: 1.8rem;
-   } 
    .btn-danger{
    background-color: #DC3545 !important; 
    border-color: #DC3545 !important;
