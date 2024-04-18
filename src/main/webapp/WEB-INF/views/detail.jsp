@@ -10,12 +10,13 @@
  </head>
 <body>
 <%@ include file="layout/navbar.jsp" %>
-
+	
+	<div class="main">
   <form class="body"> 
     <div class="leftarea"></div> 
     
     <div class="centerarea">
-    	<div class="contents-banner"><img src="/images/detailbanner.jpg" alt="디테일배너지롱" height="145" width="800"></div>
+    	<div class="contents-banner"><img src="/images/detailbanner.jpg" alt="디테일배너지롱" height="145" width="500"></div>
     	
 		<div class="detail-contentinfo">
 			<div class="image-writer" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30"></div>
@@ -41,6 +42,7 @@
     
     <div class="rightarea"></div>
   </form>
+  </div>
  
   <script>
   function getBoardNoFromURL() {
