@@ -26,10 +26,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/dokky")
 public class BoardController {
 	
-	private final BoardService boardService;
 
 	@GetMapping("/main")
-	public String board() {
+	public String Board() {
 		return "index";
 	}
 	
@@ -39,12 +38,12 @@ public class BoardController {
 	}
 	
 	@GetMapping("/modify")
-	public String boardModify() {
+	public String BoardModify() {
 		return "board/modify";
 	}
 	
 	@GetMapping("/add")
-	public String boardAdd() {
+	public String BoardAdd() {
 		return "board/add";
 	}
  
