@@ -36,7 +36,7 @@
                     <th scope="col">등록된 날짜</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="blog-list">
                 <tr>
                     <th scope="row" id="writer1">별밤</th>
                     <td id="title1">안녕하세요</td>
@@ -71,6 +71,13 @@ const fngetBoard = ()=>{
 			console.log(data.length);
 			for(var i = 1; i < data.length + 1; i++)
 			{
+// 		        let str = '<tr>';
+// 		        str += '<td>' + data[i - 1].user.userName + '</td>';
+// 		        str += '<td>' + '<a href="/dokky/detail?boardNo=' + data[i-1].boardNo+ '" style="color:black">'+ data[i - 1].boardTitle + '</a>' + '</td>';
+// 		        str += '<td>' + data[i - 1].boardHit + '</td>';
+// 		        str += '<td>' + moment(data[i - 1].createDt).format('YYYY.MM.DD') + '</td>';
+// 		        str += '</tr>';
+// 		        $('#blog-list').append(str);
  				document.getElementById('writer' + i).innerHTML = data[i - 1].user.userName;
 				document.getElementById('title' + i).innerHTML =  
 					'<a href="/dokky/detail?boardNo=' + data[i-1].boardNo+ '" style="color:black">'+ data[i - 1].boardTitle + '</a>';
