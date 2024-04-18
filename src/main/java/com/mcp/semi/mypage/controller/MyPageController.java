@@ -11,9 +11,19 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("mypage")
 public class MyPageController {
 	
-	@GetMapping("profile")
+	@GetMapping("")
 	public String myProfile() {
 		return "mypage/myProfile";
+	}
+	
+	@GetMapping("modify-password")
+	public String modifyPw() {
+		return "mypage/modifyPw";
+	}
+	
+	@GetMapping("remove-confirm")
+	public String removeConfirm() {
+		return "mypage/removeConfirm";
 	}
 
 }

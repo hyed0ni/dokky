@@ -1,0 +1,115 @@
+/* 페이지 내 기본 폰트 사이즈 */
+.my-profile * {font-size: 1.2rem;}
+
+/* 레이아웃 */
+.my-profile {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+/* 좌측 */
+.my-profile .bg-body-tertiary {
+	width: 250px;
+	background-color: #FFF !important;
+}
+
+/* 좌측 제목 */
+.my-profile .fs-4 {
+	margin-bottom: 7px;
+	font-size: 1.7rem !important;
+	font-weight: bold;
+}
+
+/* 좌측 내용 */
+.my-profile .nav-pills .nav-link {
+	display: flex;
+    align-items: center;
+    height: 35px;
+    font-size: 1.4rem;
+    font-weight: normal;
+}
+
+/* 좌측 내용 active */
+.my-profile .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	color: #000;
+	background-color: #e6e7eb;
+}
+
+/* 우측 제목 */
+.my-profile .mb-3 {
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+/* 우측 내용 */
+.my-profile form > * {padding: 0 10px;}
+
+/* label 태그 */
+.my-profile .form-label {
+	margin: 10px 5px 7px 0;
+	font-size: 1.5rem;
+}
+
+/* input 태그 */
+.my-profile .col-12 > input {
+	margin: 0;
+	width: 200px;
+}
+
+/* flex 설정: 성별, 휴대전화, 비밀번호 */
+.my-profile .flex {
+	display: flex;
+	align-items: center;
+}
+
+/* 성별 */
+.my-profile .my-3 {margin: 0 !important;}
+
+/* 라디오 버튼, 체크박스 */
+.my-profile .form-check {margin-right: 20px;}
+
+/* 휴대전화 */
+.my-profile .form-control {margin: 0 7px;}
+
+.my-profile .phone1 {
+	margin-left: 0;
+	width: 80px;
+}
+
+.my-profile .phone2 {width: 120px;}
+
+/* hr 태그 */
+.my-profile .my-4 {
+	margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+/* 비밀번호 */
+.my-profile .update-pw {justify-content: space-between;}
+
+/* 비밀번호 변경 버튼 */
+.my-profile .update-pw > button {width: 100px !important;}
+
+/* 비밀번호 변경, 회원 탈퇴 버튼 */
+.my-profile .warning {
+	background-color: #d02927 !important;
+	border-color: #d02927 !important;
+}
+
+/* 계정 삭제 정책 */
+.my-profile .mt-3 {margin: 0 10px !important;}
+
+/* 체크박스, 버튼 */
+.my-profile .delete-user {
+    justify-content: space-between;
+	margin: 10px 0;
+}
+
+/* 계정 삭제 버튼 */
+.my-profile .delete-user > button {width: 100px !important;}
+
+/* 저장 */
+.my-profile .update-user {justify-content: flex-end;}
+
+/* 저장 버튼 */
+.my-profile .update-user > button {width: 70px !important;}
