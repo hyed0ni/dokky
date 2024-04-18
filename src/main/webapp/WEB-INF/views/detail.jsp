@@ -1,50 +1,40 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>»ó¼¼º¸±âÆäÀÌÁöÀÔ´Ï´Ù</title>
- 
- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
- <link href="/css/detail.css" rel="stylesheet" type="text/css" />
- 
-</head>
+<c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
+<%@ include file="layout/header.jsp" %>
+	<link href="/css/detail.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+ </head>
 <body>
+<%@ include file="layout/navbar.jsp" %>
 
   <form class="body"> 
     <div class="leftarea"></div> 
     
     <div class="centerarea">
-    	<div class="contents-banner">´ëÃæ ¿ÀÅ°¿¡´Â ¹è³Ê°¡ µé¾î°¡ÀÖ´Â °ø°£</div>
+    	<div class="contents-banner"><img src="/images/detailbanner.jpg" alt="ë””í…Œì¼ë°°ë„ˆì§€ë¡±" height="145" width="800"></div>
     	
 		<div class="detail-contentinfo">
-			<div class="image-writer"><img src="/images/dokky.png" alt="DOKKY ·Î°í" height="30"></div>
+			<div class="image-writer" ><img src="/images/dokky.png" alt="DOKKY ë¡œê³ " height="30"></div>
 			<div class="contents-block">
-				<a class="contents-writer">ÀÛ¼ºÀÚÀÌ¸§</a>
+				<a class="contents-writer" id="contents-writer">ìž‘ì„±ìžì´ë¦„</a>
 				<div class="contents-detailinfo">
-					<span><img src="/images/dokky.png" alt="DOKKY ·Î°í" height="20">ÀÛ¼ºÀÏ</span>
-					<span><img src="/images/dokky.png" alt="DOKKY ·Î°í" height="20">Á¶È¸¼ö</span>
+					<span id="create-dt"><img src="/images/dokky.png" alt="DOKKY ë¡œê³ " height="20">ìž‘ì„±ì¼</span>
+					<span id="board-hit"><img src="/images/dokky.png" alt="DOKKY ë¡œê³ " height="20">ì¡°íšŒìˆ˜</span>
 				</div>
 			</div>
 			<div class="contents-button">
-				<button type="button" class="btn btn-primary">¼öÁ¤</button>
-				<button type="button" class="btn btn-danger">»èÁ¦</button>
+				<button type="button" class="btn btn-primary">ìˆ˜ì •</button>
+				<button type="button" class="btn btn-danger" id="btn-delete">ì‚­ì œ</button>
 			</div>
 		</div>
 		
-		<div class="detail-title" >Á¦¸ñÀÌ µé¾î°¥ °ø°£ÀÌÁö·Õ</div>
-		<div class="detail-contents">
-		¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä\
-		¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä
-		¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä
-		¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä
-		¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä
-		¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä¾È³çÇÏ¼¼¿ä °¨»çÇØ¿ä Àß ÀÖ¾î¿ä ´Ù½Ã ¸¸³ª¿ä
+		<div class="detail-title" id="detail-title">ì œëª©ì´ ë“¤ì–´ê°ˆ ê³µê°„ì´ì§€ë¡±</div>
+		<div class="detail-contents" id="detail-contents">
+		ì•ˆë…•í•˜ì„¸ìš” ê°ì‚¬í•´ìš” ìž˜ ìžˆì–´ìš” ë‹¤ì‹œ ë§Œë‚˜ìš”
 		</div>
     </div>
 
@@ -53,7 +43,52 @@
   </form>
  
   <script>
- 
+  function getBoardNoFromURL() {
+	    var urlParams = new URLSearchParams(window.location.search);
+	    return urlParams.get('boardNo');	// ìš”ì²­ íŒŒë¼ë¯¸í„°ì—ì„œ boardNo ë¥¼ ì°¾ì•„ì„œ ê°’ì„ ë¦¬í„´í•´ì¤Œ
+	}
+	var boardNo = getBoardNoFromURL();	// ì´ì „ íŽ˜ì´ì§€ì—ì„œ ë³´ë“œ ë„˜ë²„ ë°›ì•„ì˜¨ê±° 
+	
+	const fnShowDetailBoard = () =>{
+		$.ajax({
+			type:'GET',
+			url: '/dokky/getBoardByNo.do',
+			data:'boardNo=' + boardNo,
+			dataType:'json',
+			success: function(data){
+				document.getElementById('contents-writer').innerHTML = data.user.userName;
+				document.getElementById('detail-title').innerHTML = data.boardTitle;
+				document.getElementById('detail-contents').innerHTML = data.boardContent;
+				document.getElementById('create-dt').innerHTML = moment(data.createDt).format('YYYY.MM.DD HH:mm');;
+				document.getElementById('board-hit').innerHTML = ' ì¡°íšŒ ' + data.boardHit + '';
+			},
+			error:function(jqXHR){
+				alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+			}
+		})
+	}
+	fnShowDetailBoard();
+	
+	
+	const fnClickDelete = ()=> {
+		document.getElementById('btn-delete').addEventListener('click', function(evt){
+			console.log('ì‚­ì œ ëˆŒë €ë‹¤!');
+			console.log(boardNo);
+			$.ajax({
+				type:'DELETE',
+				url: '/dokky/deleteBoard/' + boardNo,
+				dataType:'json',
+				success: function(data){
+					alert(boardNo + 'ë²ˆ ê²Œì‹œê¸€ì€ ì‚­ì œëë‹¤!');
+				},
+				error:function(jqXHR){
+					alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+				}
+			})
+		})
+	}
+	
+	fnClickDelete();
   </script>
 </body>
 </html>
