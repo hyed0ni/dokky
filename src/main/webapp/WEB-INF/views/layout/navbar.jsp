@@ -5,7 +5,7 @@
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 
 		<nav class="navbar fixed-top">
-			<div class="container-fluid">
+			<div class="nav container-fluid">
 			<img src="/images/dokky.png" alt="DOKKY 로고" height="30">
 				<a class="navbar-brand fw-bold" href="/" >DOKKY</a>
 				<ul class="navbar-nav ms-auto flex-row">
