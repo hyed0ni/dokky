@@ -10,5 +10,6 @@ public interface UserMapper {
 	void setSignin(UserDto user);
 	void setSignup(UserDto user);
 	void setSignout(UserDto user);
+	UserDto findUserById(int userNo);
 	
 }

@@ -11,7 +11,7 @@
 <body>
 <%@ include file="layout/navbar.jsp" %>
 
-<div class="main">
+<div class="main" style="width:1090px">
     <div class="box"></div>
     <div class="table-container">
         <div class="row justify-content-center mb-3">
