@@ -26,36 +26,41 @@
  				<h4 class="mb-3">회원 정보</h4>
  				<form class="needs-validation" novalidate>
  				
- 					<!-- 이메일 -->
-	 				<div class="col-12">
-						<label for="email" class="form-label">이메일</label>
-						<input type="text" class="form-control" id="email" placeholder="you@example.com" readonly>
-					</div>
-					
-					<!-- 닉네임 -->
-					<div class="col-12">
-						<label for="nickname" class="form-label">닉네임</label>
-						<input type="text" class="form-control" id="nickname">
-					</div>
-    
-    				<!-- 성별 -->
-					<div class="my-3">
-						<label class="form-label">성별</label>
-						<div class="flex">
-							<div class="form-check">
-								<input id="man" name="paymentMethod" type="radio" class="form-check-input" checked required>
-								<label class="form-check-label" for="man">남성</label>
-							</div>
-							<div class="form-check">
-								<input id="woman" name="paymentMethod" type="radio" class="form-check-input" required>
-								<label class="form-check-label" for="woman">여성</label>
-							</div>
-							<div class="form-check">
-								<input id="no" name="paymentMethod" type="radio" class="form-check-input" required>
-								<label class="form-check-label" for="no">선택 안 함</label>
+ 					<div>
+ 						<!-- 프로필 이미지 -->
+ 						<img src=".././images/profileImage.jpg" class="profile-img">
+ 						
+	 					<!-- 이메일 -->
+		 				<div class="col-12">
+							<label for="email" class="form-label">이메일</label>
+							<input type="text" class="form-control" id="email" placeholder="you@example.com" readonly>
+						</div>
+						
+						<!-- 닉네임 -->
+						<div class="col-12">
+							<label for="nickname" class="form-label">닉네임</label>
+							<input type="text" class="form-control" id="nickname">
+						</div>
+	    
+	    				<!-- 성별 -->
+						<div class="my-3">
+							<label class="form-label">성별</label>
+							<div class="flex">
+								<div class="form-check">
+									<input id="man" name="paymentMethod" type="radio" class="form-check-input" checked required>
+									<label class="form-check-label" for="man">남성</label>
+								</div>
+								<div class="form-check">
+									<input id="woman" name="paymentMethod" type="radio" class="form-check-input" required>
+									<label class="form-check-label" for="woman">여성</label>
+								</div>
+								<div class="form-check">
+									<input id="no" name="paymentMethod" type="radio" class="form-check-input" required>
+									<label class="form-check-label" for="no">선택 안 함</label>
+								</div>
 							</div>
 						</div>
-					</div>
+ 					</div>
 					
 					<!-- 휴대전화 -->
 					<div class="my-3">
