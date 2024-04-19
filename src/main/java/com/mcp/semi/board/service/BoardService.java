@@ -19,20 +19,12 @@ public class BoardService {
 
 	private final BoardMapper boardMapper;
 
-	public List<BoardDto> getBoardList(Model model) {
-		
-		Map<String, Object> map = Map.of("begin", 1, "end", 3);
-		System.out.println(1);
-		List<BoardDto> boardList = boardMapper.getBoardList(map);
-		
-		System.out.println(boardList);
-		model.addAttribute(boardList);
-		return boardMapper.getBoardList(map);
+	public List<BoardDto> getBoardList(BoardDto boardDto) {
+		return boardMapper.getBoardList(boardDto);
 	}
 
-	public ResponseEntity<Map<String,Object>> deleteBoard(int boardNo) {
-      int deleteCount = boardMapper.deleteBoard(boardNo);
-      return new ResponseEntity<Map<String,Object>>(Map.of("deleteCount", deleteCount), HttpStatus.OK);
+	public int deleteBoard(int boardNo) {
+      return boardMapper.deleteBoard(boardNo);
 	}
 	
 	public BoardDto getBoardByNo(int boardNo) {
@@ -45,7 +37,8 @@ public class BoardService {
 		System.out.println(board);
 		return boardMapper.updateBoard(board);
 	}
-	 
 	
-	
+	public int updateHit(int boardNo) {
+		return boardMapper.updateHit(boardNo);
+	}
 }

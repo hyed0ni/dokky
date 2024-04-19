@@ -1,0 +1,73 @@
+.signup .col-12{
+  margin: auto;
+}
+
+.signup .col-md-7 {
+    width: 295px;
+    margin-top: 30px;
+}
+
+.signup .col-lg-8{
+    width: 295px;
+}
+
+.signup .form-control {
+  width:295px;
+  margin-bottom: 10px;
+}
+
+.signup .frm-ctrl{
+  width: 230px;
+}
+
+.signup .g-3{
+  width: 309px;
+  margin: auto;
+}
+
+.signup .gender {
+  position: relative;
+  flex-direction: row;
+}
+
+.signup .py-5{
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.signup .already{
+  margin-top: 10px;
+}
+
+.signup #btn-code {
+  height: 24px;
+  width: 70px;
+}
+
+.signup #btn-verify-code {
+  height: 24px;
+  width: 70px;
+}
+
+.signup .btn-lg {
+  width: 300px !important;
+  align-content: center;
+}
+
+.signup .my-3 {
+    margin-top: 0rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.signup .my-3 .flex {
+	display: flex;
+	align-items: center;
+}
+
+.signup .form-check {
+  margin-right: 20px;
+}
+
+.mb-3 {
+    margin-bottom: 0rem !important;
+}

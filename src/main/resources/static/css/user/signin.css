@@ -1,0 +1,31 @@
+.signin .bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.signin #floatingInput{
+  font-size: 1.5rem;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.signin #floatingPassword{
+  font-size: 1.5rem;
+  height: 50px;
+}
+
+.signin #bottom-wrap {
+  font-size: 12px !important ;
+  margin-top: 10px;
+}
+
+.signin #frm-signin{
+  margin-top: 15px;
+}
+
+.signin{
+    margin-top: 90px;
+}

@@ -1,22 +1,14 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+
 	  *{
 	    margin: 0;
 	    padding: 0;
 	  }
 	  
 	  .body{
-	    width: 1210px;
-	    height: 800px;
 	    display: flex;
 		margin: 20px auto;
 		text-align: center;
-	  }
-	  .body > .leftarea , .rightarea{
-	    flex: 1.7;
-	    border: 1px dotted black;
-	  }
-	  .body > .centerarea{
-	    flex: 6.6;
-	    border: 1px dotted black;
 	  }
 	  
 	  .centerarea{
@@ -35,15 +27,16 @@
 	   	height: 50px;
 	  	line-height:50px;
 	  	margin-left: 5px;
-		font-size: x-large;
+		font-size: 2.5rem;
 		font-weight: bold;
 		margin-bottom: 20px;
 		margin-top:20px;
 	  }
 	  
 	  .centerarea > .detail-contents{
-	  	height:500px;
+	  	height:200px;
 	  	margin-left:5px;
+	  	font-size:1.5rem;
 	  }
 	  
    .centerarea > .detail-contentinfo{
@@ -66,24 +59,36 @@
 	margin-right: 10px;
    }
    
-   .contents-writer{
-   	color:black;
-   	text-decoration: none;
+   .contents-block{
+  	padding-top: 7px;
+  	padding-left: 5px;
    }
    
+   /* 작성자 */
+   .contents-writer{	
+   	color:black;
+   	text-decoration: none;
+   	font-size: 1.3rem;
+   }
    .contents-writer:hover{
 	color: var(--main-color);
    	cursor:pointer;
    }
    
-   contents-detailinfo{
+   /* 작성일, 조회수 */
+   .contents-detailinfo{
 	vertical-align: middle;
+	font-size:1.3rem;
    }
 
-   .btn{
-   	font-size: 1.8rem;
-   } 
-   
-   
-   
+	/* 수정, 삭제 버튼 */
+   #btn-delete{
+   background-color: #DC3545 !important; 
+   border-color: #DC3545 !important;
+   font-size:1.5rem;
+   }
+   #btn-modify{
+   font-size:1.5rem;
+   }
+
    
