@@ -18,10 +18,6 @@
 	margin-top: 25px;
 }
 
-:root {
-	font-size: 25px; /* 62.5% */
-}
-
 #addBtn {
 	--bs-btn-font-size: 0.6rem;
 	position: relative;

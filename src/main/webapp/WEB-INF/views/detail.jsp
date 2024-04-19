@@ -10,7 +10,8 @@
  </head>
 <body>
 <%@ include file="layout/navbar.jsp" %>
-
+	
+	<div class="main">
   <form class="body"> 
     <div class="leftarea">
     	<div class="px-2 hot-name" id="hot-name" style="font-size:1.7rem; text-align:left;">
@@ -26,7 +27,9 @@
     </div> 
     
     <div class="centerarea">
+
     	<div class="contents-banner" style="border:none; margin-bottom:5px;"><img src="/images/detailbanner.jpg" height="145" width="600"></div>
+
     	
 		<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/main" style="font-size:1.2rem;">목록으로</a> 
 		<hr style="border: solid 1px; margin-top:1px;">
@@ -56,6 +59,7 @@
     
     <div class="rightarea"></div>
   </form>
+  </div>
  
   <script>
   function getBoardNoFromURL() {
