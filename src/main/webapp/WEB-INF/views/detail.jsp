@@ -42,7 +42,7 @@
 			</div>
 			
 			<div class="contents-button">
-				<button type="button" class="btn btn-primary">수정</button>
+				<button type="button" class="btn btn-primary" id="btn-modify">수정</button>
 				<button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
 			</div>
 		</div>

@@ -10,12 +10,6 @@
 		margin: 20px auto;
 		text-align: center;
 	  }
-	  .body > .leftarea , .rightarea{
-	    flex: 2;
-	  }
-	  .body > .centerarea{
-	    flex: 6;
-	  }
 	  
 	  .centerarea{
 		border:none;
@@ -88,9 +82,13 @@
    }
 
 	/* 수정, 삭제 버튼 */
-   .btn-danger{
+   #btn-delete{
    background-color: #DC3545 !important; 
    border-color: #DC3545 !important;
+   font-size:1.5rem;
+   }
+   #btn-modify{
+   font-size:1.5rem;
    }
    
    
