@@ -21,4 +21,13 @@ public class BoardDto {
 	private Timestamp createDt;
 	private Timestamp modifyDt;
 	private UserDto user;
+	
+	public BoardDto(int boardNo, String boardTitle, int boardHit, Timestamp createDt, UserDto user) {
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.boardHit = boardHit;
+		this.createDt = createDt;
+		this.user = user; 
+		
+	}
 }
