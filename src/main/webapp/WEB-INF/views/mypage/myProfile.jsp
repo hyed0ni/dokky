@@ -77,7 +77,7 @@
 					<!-- 비밀번호 -->
 					<div class="flex update-pw">
 						<label class="form-label">비밀번호</label>
-						<button class="w-100 btn btn-primary btn-lg warning" type="button">비밀번호 변경</button>
+						<button class="w-100 btn btn-primary btn-lg warning" id="update-pw-btn" type="button">비밀번호 변경</button>
 					</div>
 					
 					<hr class="my-4">
@@ -109,6 +109,12 @@
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		document.getElementById("update-pw-btn").addEventListener("click", () => {
+			location.href = "/mypage/modify-password";
+		})
+	</script>
 	
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>
