@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.service.BoardService;
@@ -67,6 +68,21 @@ public class BoardController {
 	public int deleteBoard(@PathVariable(value = "boardNo") Optional<String> opt) {
 		int boardNo = Integer.parseInt(opt.orElse("0"));
 		return boardService.deleteBoard(boardNo);
+	}
+  
+	@PostMapping("/edit.do")
+	public String editBoard(@RequestParam("boardNo") int boardNo, Model model) {
+		BoardDto board = boardService.getBoardByNo(boardNo);
+		model.addAttribute("board", board);
+		return "board/modify";
+		
+	}
+	
+	@GetMapping("/modify.do")
+	public String modifyBoard(BoardDto board, RedirectAttributes redirectAttributes, int boardNo) {
+		int updateCount = boardService.modifyBoard(board);
+		redirectAttributes.addFlashAttribute("updateCount", updateCount);
+	    return "redirect:/dokky/detail.do?boardNo=" + board.getBoardNo();
 	}
 
 	@ResponseBody

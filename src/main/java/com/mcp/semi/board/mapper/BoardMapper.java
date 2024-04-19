@@ -12,5 +12,6 @@ public interface BoardMapper {
 	List<BoardDto> getBoardList(BoardDto boardDto);
 	int deleteBoard(int boardNo);
 	BoardDto getBoardByNo(int boardNo);
+	int updateBoard(BoardDto board);
 	int updateHit(int boardNo);
 }

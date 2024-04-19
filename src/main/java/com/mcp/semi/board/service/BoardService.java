@@ -27,13 +27,18 @@ public class BoardService {
       return boardMapper.deleteBoard(boardNo);
 	}
 	
-	public BoardDto getBoardByNo(int boardNo)
-	{
+	public BoardDto getBoardByNo(int boardNo) {
+		
 		return boardMapper.getBoardByNo(boardNo);
+	} 
+
+	
+	public int modifyBoard(BoardDto board) {
+		System.out.println(board);
+		return boardMapper.updateBoard(board);
 	}
 	
-	public int updateHit(int boardNo)
-	{
+	public int updateHit(int boardNo) {
 		return boardMapper.updateHit(boardNo);
 	}
 }

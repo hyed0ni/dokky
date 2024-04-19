@@ -121,6 +121,15 @@
 		})
 	}
 	
+	const fnClickModify = () => {
+		
+		document.getElementById('btn-modify').addEventListener('click', function(evt) {
+			console.log(1);
+			window.location.href = '/dokky/modify?boardNo=' + boardNo;
+		})
+		
+	}
+	
 	const fngetHotBoard = ()=>{
 		$.ajax({
 			type:'GET',
@@ -149,6 +158,7 @@
 	fngetHotBoard();	
 	fnShowDetailBoard();
 	fnClickDelete();
+	fnClickModify();
   </script>
 </body>
 </html>

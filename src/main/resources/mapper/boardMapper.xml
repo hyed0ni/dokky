@@ -51,4 +51,13 @@
 		WHERE B.BOARD_NO = #{boardNo}
 	</select>
 
+  <update id="updateBoard" parameterType="BoardDto">
+	  UPDATE BOARD_T
+	   SET BOARD_TITLE = #{boardTitle},
+	       BOARD_CONTENT = #{boardContent},
+	       MODIFY_DT = TO_CHAR(CURRENT_DATE,'YYYY-MM-DD HH24:MI:SS)
+	 WHERE BOARD_NO = #{boardNo}
+	
+	</update>
+	
 </mapper>
