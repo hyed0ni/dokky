@@ -1,7 +1,7 @@
 package com.mcp.semi.mypage.service;
-
+	
 import java.util.List;
-
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.mcp.semi.board.dto.BoardDto;
@@ -30,4 +30,12 @@ public class MyPageService {
     public List<BoardDto> getUserPosts(int userNo) {
         return myPageMapper.getPostsByUserId(userNo);
     }
+  
+  /** 비밀번호 변경
+	 * @param pwMap
+	 * @return result
+	 */
+	public int modifyPw(Map<String, Object> pwMap) {
+		return myPageMapper.modifyPw(pwMap);
+  }
 }

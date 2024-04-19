@@ -5,11 +5,13 @@
 .my-profile {
 	display: flex;
 	justify-content: space-evenly;
+	margin-top: 20px;
 }
 
 /* 좌측 */
 .my-profile .bg-body-tertiary {
 	width: 250px;
+	margin-top: 7px;
 	background-color: #FFF !important;
 }
 
@@ -43,6 +45,15 @@
 
 /* 우측 내용 */
 .my-profile form > * {padding: 0 10px;}
+
+/* 프로필 이미지 */
+.my-profile .profile-img {
+    float: right;
+	width: 200px;
+    height: 200px;
+    margin-top: 15px;
+    border-radius: 100%;
+}
 
 /* label 태그 */
 .my-profile .form-label {

@@ -27,6 +27,10 @@
  				<h4 class="mb-3">회원 정보</h4>
  				<form class="needs-validation" novalidate>
  				
+ 					<div>
+ 						<!-- 프로필 이미지 -->
+ 						<img src=".././images/profileImage.jpg" class="profile-img">
+ 						
  					<!-- 이메일 -->
 	 				<div class="col-12">
 						<label for="email" class="form-label">이메일</label>
@@ -59,7 +63,7 @@
 								<label class="form-check-label" for="no">선택 안 함</label>
 							</div>
 						</div>
-					</div>
+ 					</div>
 					
 					<!-- 휴대전화 -->
 					<div class="my-3">
@@ -77,7 +81,7 @@
 					<!-- 비밀번호 -->
 					<div class="flex update-pw">
 						<label class="form-label">비밀번호</label>
-						<button class="w-100 btn btn-primary btn-lg warning" type="button">비밀번호 변경</button>
+						<button class="w-100 btn btn-primary btn-lg warning" id="update-pw-btn" type="button">비밀번호 변경</button>
 					</div>
 					
 					<hr class="my-4">
@@ -109,6 +113,12 @@
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		document.getElementById("update-pw-btn").addEventListener("click", () => {
+			location.href = "/mypage/modify-password";
+		})
+	</script>
 	
 	<div id="userPosts">
     <!-- 작성한 글 목록이 여기에 들어갈 것입니다. -->

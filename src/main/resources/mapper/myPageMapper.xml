@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mcp.semi.mypage.mapper.MyPageMapper">
-	
+
 	<resultMap id="MyPageMap" type="MyPageDto">
     <collection property="boardDto" ofType="BoardDto">
         <id property="boardNo" column="BOARD_NO"/>
@@ -24,4 +24,11 @@
 		 WHERE U.USER_NO = #{userNo}
 		 ORDER BY B.B_CREATE_DT DESC
 	</select>
+  
+  
+	<!-- 비밀번호 변경 -->
+	<update id="modifyPw">
+		UPDATE USER_T SET USER_PW = #{newPw} 
+		WHERE USER_NO = #{userNo} AND USER_PW = #{originPw}
+	</update>
 </mapper>
