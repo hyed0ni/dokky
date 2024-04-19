@@ -35,8 +35,17 @@ public class BoardService {
       return new ResponseEntity<Map<String,Object>>(Map.of("deleteCount", deleteCount), HttpStatus.OK);
 	}
 	
-	public BoardDto getBoardByNo(int boardNo)
-	{
+	public BoardDto getBoardByNo(int boardNo) {
+		
 		return boardMapper.getBoardByNo(boardNo);
+	} 
+
+	
+	public int modifyBoard(BoardDto board) {
+		System.out.println(board);
+		return boardMapper.updateBoard(board);
 	}
+	 
+	
+	
 }

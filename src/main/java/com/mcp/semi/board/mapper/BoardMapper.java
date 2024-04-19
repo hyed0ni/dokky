@@ -12,4 +12,5 @@ public interface BoardMapper {
 	List<BoardDto> getBoardList(Map<String, Object> map);
 	int deleteBoard(int boardNo);
 	BoardDto getBoardByNo(int boardNo);
+	int updateBoard(BoardDto board);
 }

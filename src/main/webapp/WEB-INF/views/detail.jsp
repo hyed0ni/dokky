@@ -27,7 +27,7 @@
 				</div>
 			</div>
 			<div class="contents-button">
-				<button type="button" class="btn btn-primary">수정</button>
+				<button type="button" class="btn btn-primary" id="btn-modify">수정</button>
 				<button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
 			</div>
 		</div>
@@ -88,7 +88,20 @@
 		})
 	}
 	
+	
+	const fnClickModify = () => {
+		
+		document.getElementById('btn-modify').addEventListener('click', function(evt) {
+			console.log(1);
+			window.location.href = '/dokky/modify?boardNo=' + boardNo;
+		})
+		
+	}
+
+	
+	
 	fnClickDelete();
+	fnClickModify();
   </script>
 </body>
 </html>
