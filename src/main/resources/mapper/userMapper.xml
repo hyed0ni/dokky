@@ -57,7 +57,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </update>
 
 
-
+<select id="findUserById"
+			 parameterType="int" resultType="UserDto">
+	SELECT USER_NO, USER_EMAIL, USER_PW, USER_NAME, 
+		   USER_GENDER, USER_MOBILE, USER_IMG 
+  	  FROM USER_T
+ 	 WHERE USER_NO = #{userNo}
+</select>
 
  
 </mapper>
