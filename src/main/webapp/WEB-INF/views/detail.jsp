@@ -102,14 +102,13 @@
 	
 	const fnClickDelete = ()=> {
 		document.getElementById('btn-delete').addEventListener('click', function(evt){
-			console.log('삭제 눌렀다!');
-			console.log(boardNo);
 			$.ajax({
 				type:'DELETE',
 				url: '/dokky/deleteBoard/' + boardNo,
 				dataType:'json',
 				success: function(data){
 					alert(boardNo + '번 게시글은 삭제됐다!');
+					location.href = "/dokky/main";
 				},
 				error:function(jqXHR){
 					alert(jqXHR.statusText + '(' + jqXHR.status + ')');
