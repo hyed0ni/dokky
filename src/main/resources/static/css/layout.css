@@ -3,11 +3,11 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
     padding-top: 90px;
    	display: flex;
    	flex-direction: column;
    	align-items: center;
+   	/* overflow: hidden; */
 }
 
 /* Navigation 변경사항 적용 */
@@ -15,20 +15,27 @@ body {
     background: #fff;
     border-bottom: 1px solid rgb(208, 209, 214); /* 기존 border-color 스타일 변경 */
 	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  	height: 55px !important;
+  	height: 70px !important
 }
+
+.navbar-nav {
+	display: flex;
+	flex-direction: row;
+	justify-content:center;
+ }
 
 .navbar-brand {
     color: black;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 3rem;
+    font-weight: 900;
     margin-left: 6px;
-}
+  }
 
 .nav-link {
     color: #666;
-    font-size: 13px;
+    font-size: 2rem;
     font-weight: bold;
+    margin-top: 3px;
 }
 
 .nav-link:hover,
@@ -60,8 +67,8 @@ footer {
 }
 
 .navbar {
-	padding-left: 344px !important;
-    padding-right: 344px !important;
+	padding-left: 410px !important;
+    padding-right: 410px !important;
 }
 
 /* 로그인 버튼 */
@@ -71,6 +78,20 @@ footer {
 
 /* 로그인 버튼 사이즈 조절 */
 .btn {
-	--bs-btn-font-size:1rem;
+	--bs-btn-font-size:1.5rem;
+	text-align: center !important;
 }
 
+.nav {
+	--bs-btn-padding-x: 1rem;
+    --bs-btn-padding-y: 0.9rem;
+    padding: 10px;
+}
+
+.logo {
+	height: 40px;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
