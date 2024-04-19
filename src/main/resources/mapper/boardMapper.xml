@@ -35,8 +35,13 @@
 		FROM BOARD_T
 		WHERE BOARD_NO = #{boardNo}
 	</delete>
-
-
+	
+	<update id="updateHit">
+		UPDATE BOARD_T
+			SET BOARD_HIT = BOARD_HIT + 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
 	<select id="getBoardByNo" resultMap="BoardMap">
 		SELECT B.BOARD_NO,
 		B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.CREATE_DT, B.MODIFY_DT,

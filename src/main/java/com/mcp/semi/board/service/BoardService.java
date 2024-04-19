@@ -23,13 +23,17 @@ public class BoardService {
 		return boardMapper.getBoardList(boardDto);
 	}
 
-	public ResponseEntity<Map<String,Object>> deleteBoard(int boardNo) {
-      int deleteCount = boardMapper.deleteBoard(boardNo);
-      return new ResponseEntity<Map<String,Object>>(Map.of("deleteCount", deleteCount), HttpStatus.OK);
+	public int deleteBoard(int boardNo) {
+      return boardMapper.deleteBoard(boardNo);
 	}
 	
 	public BoardDto getBoardByNo(int boardNo)
 	{
 		return boardMapper.getBoardByNo(boardNo);
+	}
+	
+	public int updateHit(int boardNo)
+	{
+		return boardMapper.updateHit(boardNo);
 	}
 }
