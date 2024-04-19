@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.ui.Model;
 
 import com.mcp.semi.board.dto.BoardDto;
 
@@ -14,4 +15,5 @@ public interface BoardMapper {
 	BoardDto getBoardByNo(int boardNo);
 	int updateBoard(BoardDto board);
 	int updateHit(int boardNo);
+	List<BoardDto> getHotBoardList(Map<String, Object> map);
 }

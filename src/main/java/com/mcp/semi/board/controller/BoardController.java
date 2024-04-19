@@ -33,12 +33,12 @@ public class BoardController {
 	public String board(BoardDto boardDto, Model model) {
 		List<BoardDto> boardList = boardService.getBoardList(boardDto);
 		model.addAttribute("boardList", boardList);
-		return "index";
+		return "board/index";
 	}
 
 	@GetMapping("/detail")
 	public String boardDetail() {
-		return "detail";
+		return "board/detail";
 	}
 
 	@GetMapping("/modify")
@@ -53,8 +53,8 @@ public class BoardController {
 
 	@ResponseBody
 	@GetMapping(value = "/getBoard.do", produces = "application/json") 	// 전체 게시글 가져오기
-	public List<BoardDto> getBoardList(Model model) {
-		return boardService.getBoardList(model);
+	public List<BoardDto> getHotBoardList(Model model) {
+		return boardService.getHotBoardList(model);
 	}
 
 	@ResponseBody

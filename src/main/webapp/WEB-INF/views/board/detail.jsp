@@ -3,13 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
-<%@ include file="layout/header.jsp" %>
-	<link href="/css/detail.css" rel="stylesheet" type="text/css" />
+<%@ include file="../layout/header.jsp" %>
+	<link href="/css/board/detail.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
  </head>
 <body>
-<%@ include file="layout/navbar.jsp" %>
+<%@ include file="../layout/navbar.jsp" %>
 	
 	<div class="main">
   <form class="body"> 
@@ -20,16 +20,12 @@
     		<span style="color:red; font-weight:bold;">추천</span>
     		&nbsp;<i class="fa-solid fa-fire"></i>
    		</div>
-   		<hr style="border: solid 1px; margin-top:1px; width:90%; margin-left:5px;">
-    	<div id="hot-boardList">
-    		
-    	</div>
+   		<hr style="border: solid 1px; margin-top:1px; width:70%; margin-left:5px;">
+    	<div id="hot-boardList"></div>
     </div> 
     
     <div class="centerarea">
-
-    	<div class="contents-banner" style="border:none; margin-bottom:5px;"><img src="/images/detailbanner.jpg" height="145" width="600"></div>
-
+    	<div class="contents-banner" style="border:none; margin-bottom:5px;"><img src="/images/detailbanner.jpg" height="145" width="660"></div>
     	
 		<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/main" style="font-size:1.2rem;">목록으로</a> 
 		<hr style="border: solid 1px; margin-top:1px;">
@@ -54,8 +50,34 @@
 		
 		<div class="detail-contents" id="detail-contents">안녕하세요 감사해요 잘 있어요 다시 만나요</div>
 		<hr style="border:solid 1px;">
+		
+		<div class="comment-area" id="comment-area">
+			<div class="comment-input" id="comment-input">
+				<div class="image-commenter-writer" >
+				<img src="/images/dokky.png" alt="DOKKY 로고" height="50">
+				<textarea rows="5" cols="70" id="comment-box" oninput="fnautoResize"></textarea>
+				</div>
+				<button type="button" class="btn btn-primary" id="btn-comment">등록</button>
+			</div>
+			<div class="comment-list" id="comment-list">
+				<ol>
+					<div class="image-commenter" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30">
+						<a class="comment-writer" id="comment-writer">작성자이름&nbsp;</a>
+						<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">작성일</span>
+					</div>
+					<a>댓글 이렇게 추가하면 되나?</a> 
+					<hr style="border:solid 1px; margin-bottom:10px;">
+				</ol>
+				
+				<ol>
+				</ol>
+			
+				<ol>
+				</ol>
+			</div>
+		</div>
+		
     </div>
-
     
     <div class="rightarea"></div>
   </form>
@@ -103,7 +125,6 @@
 		})
 	}
 	
-	
 	const fnClickDelete = ()=> {
 		document.getElementById('btn-delete').addEventListener('click', function(evt){
 			$.ajax({
@@ -138,13 +159,13 @@
 			success : function(data)
 			{
 				console.log(data.length);
-				for(var i = 1; i < data.length + 1; i++)
+				for(var i = 1; i < 4; i++)
 				{
 					data.sort((a,b) => b.boardHit - a.boardHit);
 	 		        let str = '<div style="text-align:left;">' 
-	 		        + '<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/detail?boardNo=' 
+	 		        + '<a class="text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/detail?boardNo=' 
 	 		        		+ data[i-1].boardNo+ '" style="font-size:1.5rem;">'
-	 		        + data[i - 1].boardTitle + '</a>' + '</div>';
+	 		        + '-' + data[i - 1].boardTitle + '</a>' + '</div>';
 	 		        $('#hot-boardList').append(str);
 				}
 			},
@@ -154,7 +175,13 @@
 			}
 		})
 	}
-
+	
+  	function fnautoResize() {
+	    const textarea = document.getElementById('comment-box');
+	    textarea.style.height = 'auto'; // 높이를 auto로 설정하여 기존 높이를 초기화합니다.
+	    textarea.style.height = textarea.scrollHeight + 'px'; // 스크롤 높이를 textarea 높이로 설정합니다.
+	}
+  	
 	fngetHotBoard();	
 	fnShowDetailBoard();
 	fnClickDelete();
