@@ -9,7 +9,7 @@ import com.mcp.semi.board.dto.BoardDto;
 
 @Mapper
 public interface BoardMapper {
-	List<BoardDto> getBoardList(Map<String, Object> map);
+	List<BoardDto> getBoardList(BoardDto boardDto);
 	int deleteBoard(int boardNo);
 	BoardDto getBoardByNo(int boardNo);
 	int updateHit(int boardNo);

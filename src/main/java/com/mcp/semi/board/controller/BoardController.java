@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.service.BoardService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -30,7 +29,9 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@GetMapping("/main")
-	public String board() {
+	public String board(BoardDto boardDto, Model model) {
+		List<BoardDto> boardList = boardService.getBoardList(boardDto);
+		model.addAttribute("boardList", boardList);
 		return "index";
 	}
 

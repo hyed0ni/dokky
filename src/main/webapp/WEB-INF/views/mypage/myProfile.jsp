@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file="../layout/header.jsp" %>
 <%@ include file="../layout/navbar.jsp" %>
 		<link rel="stylesheet" href="/css/mypage/myProfile.css" type="text/css">
@@ -17,7 +18,7 @@
 			    </a>
 			    <ul class="nav nav-pills flex-column mb-auto">
 					<li class="nav-item"><a href="#" class="nav-link active" aria-current="page">프로필</a></li>
-					<li><a href="#" class="nav-link link-body-emphasis">작성한 글</a></li>
+					<li><a href="#" class="nav-link link-body-emphasis" id="myPostsButton">작성한 글</a></li>
 			    </ul>
 			</div>
 			
@@ -26,16 +27,20 @@
  				<h4 class="mb-3">회원 정보</h4>
  				<form class="needs-validation" novalidate>
  				
+ 					<div>
+ 						<!-- 프로필 이미지 -->
+ 						<img src=".././images/profileImage.jpg" class="profile-img">
+ 						
  					<!-- 이메일 -->
 	 				<div class="col-12">
 						<label for="email" class="form-label">이메일</label>
-						<input type="text" class="form-control" id="email" placeholder="you@example.com" readonly>
+						<input type="text" class="form-control" id="email" name="email" value="${user.userEmail}" readonly>
 					</div>
 					
 					<!-- 닉네임 -->
 					<div class="col-12">
 						<label for="nickname" class="form-label">닉네임</label>
-						<input type="text" class="form-control" id="nickname">
+						<input type="text" class="form-control" id="nickname" name="nickname" value="${user.userName}">
 					</div>
     
     				<!-- 성별 -->
@@ -43,27 +48,31 @@
 						<label class="form-label">성별</label>
 						<div class="flex">
 							<div class="form-check">
-								<input id="man" name="paymentMethod" type="radio" class="form-check-input" checked required>
+								<input id="man" name="man" type="radio" class="form-check-input"
+										 ${user.userGender == 'MAN' ? 'checked' : ''} required>
 								<label class="form-check-label" for="man">남성</label>
 							</div>
 							<div class="form-check">
-								<input id="woman" name="paymentMethod" type="radio" class="form-check-input" required>
+								<input id="woman" name="woman" type="radio" class="form-check-input"
+										${user.userGender == 'WOMAN' ? 'checked' : ''} required>
 								<label class="form-check-label" for="woman">여성</label>
 							</div>
 							<div class="form-check">
-								<input id="no" name="paymentMethod" type="radio" class="form-check-input" required>
+								<input id="no" name="no" type="radio" class="form-check-input" 
+										${user.userGender == 'NO' ? 'checked' : ''} required>
 								<label class="form-check-label" for="no">선택 안 함</label>
 							</div>
 						</div>
-					</div>
+ 					</div>
 					
 					<!-- 휴대전화 -->
 					<div class="my-3">
 						<label class="form-label">휴대전화</label>
 						<div class="flex">
-							<input type="text" class="form-control phone1" id="nickname" value="">-
-							<input type="text" class="form-control phone2" id="nickname" value="">-
-							<input type="text" class="form-control phone2" id="nickname" value="">
+							<c:set var="phoneParts" value="${fn:split(user.userMobile, '-')}" />
+							<input type="text" class="form-control phone1" id="phone1" name="phone1" value="${phoneParts[0]}">-
+							<input type="text" class="form-control phone2" id="phone2" name="phone2" value="${phoneParts[1]}">-
+							<input type="text" class="form-control phone2" id="phone3" name="phone3" value="${phoneParts[2]}">
 						</div>
 					</div>
 					
@@ -72,7 +81,7 @@
 					<!-- 비밀번호 -->
 					<div class="flex update-pw">
 						<label class="form-label">비밀번호</label>
-						<button class="w-100 btn btn-primary btn-lg warning" type="button">비밀번호 변경</button>
+						<button class="w-100 btn btn-primary btn-lg warning" id="update-pw-btn" type="button">비밀번호 변경</button>
 					</div>
 					
 					<hr class="my-4">
@@ -105,5 +114,16 @@
 		</div>
 	</div>
 	
+	<script>
+		document.getElementById("update-pw-btn").addEventListener("click", () => {
+			location.href = "/mypage/modify-password";
+		})
+	</script>
+	
+	<div id="userPosts">
+    <!-- 작성한 글 목록이 여기에 들어갈 것입니다. -->
+</div>
+	
+	<script src="/js/mypage/myProfile.js"></script>
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>

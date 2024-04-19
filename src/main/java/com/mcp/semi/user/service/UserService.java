@@ -14,7 +14,6 @@ public class UserService {
 	private final UserMapper userMapper;
 
 	public void setSignin(UserDto user) {
-		
 		userMapper.setSignin(user);
 	}
 
@@ -22,6 +21,4 @@ public class UserService {
 		userMapper.setSignup(user);
 	}
 	
-	
-
 }

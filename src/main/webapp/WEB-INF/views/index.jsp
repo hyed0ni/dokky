@@ -11,91 +11,55 @@
 <body>
 <%@ include file="layout/navbar.jsp" %>
 
-<div class="main" style="width:1090px">
+<div class="main">
     <div class="box"></div>
-    <div class="table-container">
-        <div class="row justify-content-center mb-3">
-            <div class="col-auto">
-                <a href="/dokky/add" type="button" class="btn btn-primary" id="addBtn">작성하기</a>
-            </div>
-            <div class="col-auto">
-                <div class="search-container">
-                    <form action="/search" method="GET">
-                        <input type="text" placeholder="검색어를 입력해주세요." name="q">
-                        <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">작성자</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">조회수</th>
-                    <th scope="col">등록된 날짜</th>
-                </tr>
-            </thead>
-            <tbody id="blog-list">
-                <tr>
-                    <th scope="row" id="writer1">별밤</th>
-                    <td id="title1">안녕하세요</td>
-                    <td id="board-hit1">39</td>
-                    <td id="create-dt1">2024.10.30</td>
-                </tr>
-                <tr>
-                    <th scope="row" id="writer2">도킹</th>
-                    <td id="title2">개발자란..</td>
-                    <td id="board-hit2">102</td>
-                    <td id="create-dt2">2024.10.30</td>
-                </tr>
-                <tr>
-                    <th scope="row" id="writer3">구디</th>
-                    <td id="title3">개발자란..</td>
-                    <td id="board-hit3">102</td>
-                    <td id="create-dt3">2024.10.30</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-const fngetBoard = ()=>{
-	$.ajax({
-		type:'GET',
-		url: '/dokky/getBoard.do',
-		dataType : 'json',
-		success : function(data)
-		{
-			console.log(data.length);
-			for(var i = 1; i < data.length + 1; i++)
-			{
-// 		        let str = '<tr>';
-// 		        str += '<td>' + data[i - 1].user.userName + '</td>';
-// 		        str += '<td>' + '<a href="/dokky/detail?boardNo=' + data[i-1].boardNo+ '" style="color:black">'+ data[i - 1].boardTitle + '</a>' + '</td>';
-// 		        str += '<td>' + data[i - 1].boardHit + '</td>';
-// 		        str += '<td>' + moment(data[i - 1].createDt).format('YYYY.MM.DD') + '</td>';
-// 		        str += '</tr>';
-// 		        $('#blog-list').append(str);
- 				document.getElementById('writer' + i).innerHTML = data[i - 1].user.userName;
-				document.getElementById('title' + i).innerHTML =  
-					'<a href="/dokky/detail?boardNo=' + data[i-1].boardNo+ '" style="color:black">'+ data[i - 1].boardTitle + '</a>';
-					
-				document.getElementById('board-hit' + i).innerHTML = data[i - 1].boardHit;
-				// data 배열에서 날짜를 가져와서 'yyyy.MM.dd.' 형식으로 포맷하고 출력
-				document.getElementById('create-dt' + i).innerHTML = moment(data[i - 1].createDt).format('YYYY.MM.DD');
-			}
-		},
-		error:function(jqXHR)
-		{
-			alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-		}
-	})
-}
-
-fngetBoard();
-</script>
+		<div class="table-container">
+			<div class="row mb-3">
+				<div class="col">
+					<div class="search-container">
+						<form action="/search" method="GET">
+							<input type="text" placeholder="검색어를 입력해주세요." name="q">
+							<button type="submit" class="search-btn">
+								<i class="fa fa-search"></i>
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">작성자</th>
+						<th scope="col">제목</th>
+						<th scope="col">조회수</th>
+						<th scope="col">등록일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="board" items="${boardList}">
+						<tr>
+							<td>${board.user.userName}</td>
+							<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
+							<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
+							<td>${board.createDt}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" href="#"
+						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+					</a></li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 
 <%@ include file="layout/copyright.jsp" %>
 <%@ include file="layout/footer.jsp" %>
