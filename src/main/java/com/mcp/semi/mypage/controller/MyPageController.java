@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequiredArgsConstructor
 @SessionAttributes({"loginUser"}) 
 @RequestMapping("mypage")
 @RequiredArgsConstructor
@@ -91,7 +90,7 @@ public class MyPageController {
 	
 	@GetMapping(value="api/myBoard", produces = "application/json")
 	public ResponseEntity<?> myBoard() {
-		int userId = 1;
+		int userId = 2;
 		List<BoardDto> boardList = myPageService.getUserPosts(userId);
 		if(boardList.isEmpty()) {
 			return ResponseEntity.ok(Map.of("message", "아직 작성한 게시글이 없습니다"));

@@ -1,0 +1,31 @@
+/* 활동 기록 탭 UI 스타일 */
+.activity-tabs {
+    display: flex;
+    border-top: 1px solid #e5e7eb;
+    padding: 10px;
+    justify-content: space-around;
+    
+}
+
+
+.activity-tabs div {
+	padding: 20px;
+}
+
+.activity-tabs a {
+	color: black;
+}
+
+.activity-tabs a.active{
+	 color: #007bff;
+}
+
+.activity-tabs span  {
+	font-size: 1.7rem;
+}
+
+
+/* 내용 영역 스타일 */
+#activity-content {
+    border-top: 1px solid #e5e7eb
+}

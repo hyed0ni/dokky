@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyPageDto {
-
+	
 	private UserDto userDto;
 	private List<BoardDto> boardDto;
 	
