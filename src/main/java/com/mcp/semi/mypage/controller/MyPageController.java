@@ -1,6 +1,5 @@
 package com.mcp.semi.mypage.controller;
 
-
 import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +21,9 @@ import com.mcp.semi.user.dto.UserDto;
 
 import com.mcp.semi.board.dto.BoardDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequiredArgsConstructor
-@SessionAttributes({"loginUser"}) 
-@RequestMapping("mypage")
+@RequestMapping("dokky")
 @RequiredArgsConstructor
 public class MyPageController {
 	
@@ -37,24 +33,11 @@ public class MyPageController {
 	 * @param model
 	 * @return forward (myProfile.jsp)
 	 */
-// 	@GetMapping("")
-// 	public String myProfile(Model model) {
-		
-// 		// 테스트 로그인
-// 		UserDto loginUser = UserDto
-// 							.builder()
-// 							.userNo(2)
-// 							.userEmail("test2@naver.com")
-// 							.userName("테스트2")
-// 							.build();
-		
-// 		model.addAttribute("loginUser", loginUser);
-	@GetMapping("{userNo}")
+	@GetMapping("mypage/{userNo}")
 	public String myProfile(@PathVariable("userNo") int userNo, Model model) {
 		UserDto userProfile = myPageService.getUserProfile(userNo);
 		model.addAttribute("user",userProfile);
 		return "mypage/myProfile";
-		
 	}
 	
 	/** 비밀번호 변경
@@ -70,13 +53,13 @@ public class MyPageController {
 	 * @param loginUser
 	 * @return redirect (myProfile() or modifyPw())
 	 */
-	@PostMapping("modify-password")
-	public String modifyPw(@RequestParam Map<String, Object> pwMap, @SessionAttribute("loginUser") UserDto loginUser) {
+	@PostMapping("modify-password/{userNo}")
+	public String modifyPw(@RequestParam Map<String, Object> pwMap, @PathVariable("userNo") int userNo) {
 		
-		pwMap.put("userNo", loginUser.getUserNo());
+		pwMap.put("userNo", userNo);
 		int result = myPageService.modifyPw(pwMap);
 		
-		if (result == 1) return "redirect:/mypage";
+		if (result == 1) return "redirect:mypage";
 		else return "redirect:modify-password";
 		
 	}
@@ -98,6 +81,5 @@ public class MyPageController {
 		}
 		return ResponseEntity.ok(boardList);
 	}
-
 
 }

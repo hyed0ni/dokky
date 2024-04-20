@@ -91,7 +91,3 @@ footer {
 .logo {
 	height: 40px;
 }
-
-.scroll::-webkit-scrollbar {
-  display: none;
-}

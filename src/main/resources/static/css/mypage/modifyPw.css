@@ -43,6 +43,17 @@
 	font-size: 1.2rem;
 }
 
+/* 경고 메시지 미노출 */
+.modify-pw .none {display: none;}
+
+/* 경고 메시지 노출 */
+.modify-pw .block {
+	display: block;
+	padding: 5px 3px 0;
+	font-size: 1.3rem;
+    color: #d02927;
+}
+
 /* 비밀번호 변경 버튼 */
 .modify-pw .btn-lg {
 	margin-top: 20px;

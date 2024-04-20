@@ -9,7 +9,6 @@ import com.mcp.semi.board.dto.BoardDto;
 
 @Mapper
 public interface MyPageMapper {
-
   	
 	/** 비밀번호 변경
 	 * @param pwMap
