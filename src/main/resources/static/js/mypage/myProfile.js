@@ -1,42 +1,134 @@
-// 서버에서 사용자가 작성한 글을 가져와서 화면에 표시하는 함수
-function fetchUserPosts() {
-    fetch('api/myBoard') // 작성한 글을 가져올 API 엔드포인트로 요청을 보냅니다.
-        .then(response => response.json()) // 응답을 JSON 형식으로 파싱합니다.
-        .then(resData => {
-		if(resData.message) {
-			console.log(resData.message);
-			} else {
-			renderUserPosts(resData)	
-			}
-		})
-        .catch(error => console.error('Error fetching user boards:', error)); // 오류가 발생한 경우 콘솔에 오류를 출력합니다.
-}
+let originalProfileHtml = null;
 
-// 서버에서 가져온 데이터를 HTML 형식으로 변환하여 삽입하는 함수
-function renderUserPosts(resData) {
-    const userPostsContainer = document.getElementById('userPosts');
-    userPostsContainer.innerHTML = ''; // 기존 내용을 지웁니다.
+document.addEventListener('DOMContentLoaded', function() {
+    const profileContainer = document.getElementById('profile-container');
+    if (profileContainer) {
+        originalProfileHtml = profileContainer.innerHTML;
+    }
 
-    resData.forEach(item => {
-        const boards = item.boardDto;
-        boards.forEach(board => {
-            // 각각의 작성한 글 항목을 생성합니다.
-            const postElement = `
-                <div class="board">
-                    <div class="userName">${board.user.userName}</div>
-                    <div class="title">${board.boardTitle}</div>
-                    <div class="hit">${board.boardHit}</div>
-                    <div class="createDt">${board.createDt}</div>
-                </div>
-            `;
-            // 작성한 글 항목을 목록에 추가합니다.
-            userPostsContainer.innerHTML += postElement;
-        });
+    // '활동 기록' 링크에 클릭 이벤트 리스너를 추가합니다.
+    document.getElementById('my-activity').addEventListener('click', function(event) {
+        event.preventDefault();
+        removeActiveClass();
+        this.classList.add('active');
+        showActivityRecords();
+    });
+
+    // '프로필' 링크에 클릭 이벤트 리스너를 추가합니다.
+    const profileLink = document.getElementById('profile-link');
+    profileLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        removeActiveClass();
+        this.classList.add('active');
+        showProfile();
+    });
+});
+
+function removeActiveClass() {
+    document.querySelectorAll('.nav-link').forEach(function(link) {
+        link.classList.remove('active');
     });
 }
-// 작성한 글 버튼 클릭 시 작성한 글을 가져와서 화면에 표시합니다.
-const myPostsButton = document.getElementById('myPostsButton');
-myPostsButton.addEventListener('click', fetchUserPosts);
 
-// 페이지 로드 시 작성한 글을 가져와서 표시합니다.
-window.addEventListener('load', fetchUserPosts);
+function showActivityRecords() {
+    const activityHtml = `
+        <div id="activity-records">
+            <h4 class="mb-3">활동기록</h4>
+            <div class="my-profile-border">
+                <div class="my-profile-ui">
+                    <img src=".././images/profileImage.jpg" class="profile-img me-4"/>
+                    <span>모지모지</span>
+                </div>
+                <div class="activity-tabs">
+                    <a href="#" id="my-posts-button" class="tab-link">
+	                    <span>작성한 글</span>
+                    </a>
+                    <a href="#" id="my-comments-button" class="tab-link">
+                    	<span>댓글</span>
+                    </a>
+                </div>
+            </div>
+            <div id="activity-content">
+                <!-- 탭에 따라 변하는 내용을 여기에 렌더링 -->
+            </div>
+        </div>
+    `;
+
+    const profileContainer = document.getElementById('profile-container');
+    profileContainer.innerHTML = activityHtml;
+    setupActivityTabs();
+}
+
+function setupActivityTabs() {
+    document.querySelector('.activity-tabs').addEventListener('click', function(event) {
+        event.preventDefault();
+        const target = event.target.closest('.tab-link');
+        if (target) {
+            document.querySelectorAll('.tab-link').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            target.classList.add('active');
+
+            switch (target.id) {
+                case 'my-posts-button':
+                    showPosts();
+                    break;
+                case 'my-comments-button':
+                    showComments();
+                    break;
+            }
+        }
+    });
+}
+
+function showPosts() {
+    fetch('api/myBoard')
+        .then(response => response.json())
+        .then(resData => {
+            const activityContent = document.getElementById('activity-content');
+            activityContent.innerHTML = renderUserPosts(resData);
+            console.log(resData);
+        })
+        .catch(error => {
+            console.error('Error fetching user posts:', error);
+        });
+}
+
+function renderUserPosts(resData) {
+    let postsHtml = `<table class="table">
+    					<thead>
+    						<tr>
+    							<th>게시글번호</th>
+    							<th>제목</th>
+    							<th>조회수</th>
+    							<th>등록일</th>
+							</tr>
+						</thead>
+							<tbody>`;
+    resData.forEach(item => {
+        item.boardDto.forEach(board => {
+            postsHtml += `<tr>
+							<td>${board.boardNo}</td>
+							<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
+							<td>${board.boardHit}</td>
+							<td>${new Date(board.createDt).toLocaleString()}</td>
+						</tr>`;
+        });
+    });
+    postsHtml += '</tbody></table>';
+    return postsHtml;
+}
+
+function showComments() {
+    // 댓글단 글을 불러와서 'activity-content'에 렌더링하는 로직 구현
+    console.log('Show comments is called.');
+}
+
+function showProfile() {
+    const profileContainer = document.getElementById('profile-container');
+    if (originalProfileHtml) {
+        profileContainer.innerHTML = originalProfileHtml;
+    } else {
+        console.error('No original profile HTML is stored.');
+    }
+}
