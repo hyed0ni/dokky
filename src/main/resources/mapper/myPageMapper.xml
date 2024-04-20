@@ -4,18 +4,17 @@
 <mapper namespace="com.mcp.semi.mypage.mapper.MyPageMapper">
 
 	<resultMap id="MyPageMap" type="MyPageDto">
-    <collection property="boardDto" ofType="BoardDto">
-        <id property="boardNo" column="BOARD_NO"/>
-        <result property="boardTitle" column="BOARD_TITLE"/>
-        <result property="boardHit" column="BOARD_HIT"/>
-        <result property="createDt" column="B_CREATE_DT"/>
-        <association property="user" javaType="UserDto">
-            <id property="userNo" column="USER_NO"/>
-            <result property="userName" column="USER_NAME"/>
-        </association>
-    </collection>
-</resultMap>
-	
+	    <collection property="boardDto" ofType="BoardDto">
+	        <id property="boardNo" column="BOARD_NO"/>
+	        <result property="boardTitle" column="BOARD_TITLE"/>
+	        <result property="boardHit" column="BOARD_HIT"/>
+	        <result property="createDt" column="B_CREATE_DT"/>
+	        <association property="user" javaType="UserDto">
+	            <id property="userNo" column="USER_NO"/>
+	            <result property="userName" column="USER_NAME"/>
+	        </association>
+	    </collection>
+	</resultMap>
 	
 	<select id="getPostsByUserId" parameterType="int" resultMap="MyPageMap">
 		SELECT B.BOARD_NO, U.USER_NAME, U.USER_NO, B.BOARD_TITLE, B.BOARD_HIT, B.B_CREATE_DT
@@ -25,10 +24,10 @@
 		 ORDER BY B.B_CREATE_DT DESC
 	</select>
   
-  
 	<!-- 비밀번호 변경 -->
 	<update id="modifyPw">
 		UPDATE USER_T SET USER_PW = #{newPw} 
 		WHERE USER_NO = #{userNo} AND USER_PW = #{originPw}
 	</update>
+	
 </mapper>

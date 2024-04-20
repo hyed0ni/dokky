@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class MyPageService {
-
 	
 	private final MyPageMapper myPageMapper;
 	private final UserMapper userMapper;
@@ -31,11 +30,11 @@ public class MyPageService {
         return myPageMapper.getPostsByUserId(userNo);
     }
   
-  /** 비밀번호 변경
+    /** 비밀번호 변경
 	 * @param pwMap
 	 * @return result
 	 */
 	public int modifyPw(Map<String, Object> pwMap) {
 		return myPageMapper.modifyPw(pwMap);
-  }
+	}
 }
