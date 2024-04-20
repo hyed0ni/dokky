@@ -116,7 +116,7 @@
 	
 	<script>
 		document.getElementById("update-pw-btn").addEventListener("click", () => {
-			location.href = "/mypage/modify-password";
+			location.href = "/dokky/modify-password";
 		})
 	</script>
 	
