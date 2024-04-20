@@ -51,11 +51,11 @@ public class BoardController {
 		return "board/add";
 	}
 
-	@ResponseBody
-	@GetMapping(value = "/getBoard.do", produces = "application/json") 	// 전체 게시글 가져오기
-	public List<BoardDto> getBoardList(Model model) {
-		return boardService.getBoardList(model);
-	}
+//	@ResponseBody
+//	@GetMapping(value = "/getBoard.do", produces = "application/json") 	// 전체 게시글 가져오기
+//	public List<BoardDto> getBoardList(Model model) {
+//		return boardService.getBoardList(model);
+//	}
 
 	@ResponseBody
 	@GetMapping(value = "/getBoardByNo.do", produces = "application/json") // 특정 번호의 게시글만 가져오기

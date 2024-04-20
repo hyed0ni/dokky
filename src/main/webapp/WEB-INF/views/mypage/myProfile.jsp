@@ -5,6 +5,7 @@
 <%@ include file="../layout/header.jsp" %>
 <%@ include file="../layout/navbar.jsp" %>
 		<link rel="stylesheet" href="/css/mypage/myProfile.css" type="text/css">
+		<link rel="stylesheet" href="/css/mypage/activity.css" type="text/css">
 	</head>
 <body>
 
@@ -17,20 +18,20 @@
 					<span class="fs-4">마이페이지</span>
 			    </a>
 			    <ul class="nav nav-pills flex-column mb-auto">
-					<li class="nav-item"><a href="#" class="nav-link active" aria-current="page">프로필</a></li>
-					<li><a href="#" class="nav-link link-body-emphasis" id="myPostsButton">작성한 글</a></li>
+					<li class="nav-item"><a href="#" class="nav-link active" id="profile-link" aria-current="page">프로필</a></li>
+					<li class="nav-item"><a href="#" class="nav-link" id="my-activity">활동 기록</a></li>
 			    </ul>
 			</div>
 			
 			<!-- 우측 -->
-			<div class="col-md-7 col-lg-8">
+			<div id="profile-container" class="col-md-7 col-lg-8">
  				<h4 class="mb-3">회원 정보</h4>
  				<form class="needs-validation" novalidate>
  				
  					<div>
  						<!-- 프로필 이미지 -->
  						<img src=".././images/profileImage.jpg" class="profile-img">
- 						
+					</div>
  					<!-- 이메일 -->
 	 				<div class="col-12">
 						<label for="email" class="form-label">이메일</label>
@@ -119,10 +120,6 @@
 			location.href = "/dokky/modify-password";
 		})
 	</script>
-	
-	<div id="userPosts">
-    <!-- 작성한 글 목록이 여기에 들어갈 것입니다. -->
-</div>
 	
 	<script src="/js/mypage/myProfile.js"></script>
 <%@ include file="../layout/copyright.jsp" %>
