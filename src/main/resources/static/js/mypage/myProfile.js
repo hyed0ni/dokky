@@ -118,7 +118,7 @@ function setupActivityTabs() {
 			} else if (tab.id === 'my-comments-button') {
 				showComments();
 			}
-		})
+		});
 	})
 
 }
