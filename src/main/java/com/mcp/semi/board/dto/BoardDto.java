@@ -1,7 +1,9 @@
 package com.mcp.semi.board.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import com.mcp.semi.comment.dto.CommentDto;
 import com.mcp.semi.user.dto.UserDto;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ public class BoardDto {
 	private Timestamp createDt;
 	private Timestamp modifyDt;
 	private UserDto user;
+	private List<CommentDto> comments;
 	
 	public BoardDto(int boardNo, String boardTitle, int boardHit, Timestamp createDt, UserDto user) {
 		this.boardNo = boardNo;
