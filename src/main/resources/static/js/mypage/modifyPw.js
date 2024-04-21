@@ -1,22 +1,22 @@
-/* 비밀번호 입력 input */
+// 비밀번호 입력 input
 const originPw = document.getElementById("origin-pw");
 const newPw = document.getElementById("new-pw");
 const newPwChk = document.getElementById("new-pw-chk");
 
-/* 검증 메시지 */
+// 검증 메시지
 const originPwMsg = document.getElementById("origin-pw-msg");
 const newPwMsg = document.getElementById("new-pw-msg");
 const newPwChkMsg = document.getElementById("new-pw-chk-msg");
 
-/* 비밀번호 변경 form */
+// 비밀번호 변경 form
 const modifyForm = document.getElementById("modify-form");
 
-/* 현재 비밀번호 */
+// 현재 비밀번호
 originPw.addEventListener("blur", () => {
 	originPwMsg.className = empInput(originPw) ? "block" : "none";
 });
 
-/* 신규 비밀번호 유효성 검사 */
+// 신규 비밀번호 유효성 검사
 newPw.addEventListener("change", (e) => {
 
     if (empInput(e.target) === 0) {
@@ -38,16 +38,16 @@ newPw.addEventListener("change", (e) => {
 	
 });
 
-/* 신규 비밀번호 */
+// 신규 비밀번호
 newPw.addEventListener("change", pwCheck);
 
-/* 신규 비밀번호 확인 */
+// 신규 비밀번호 확인
 newPwChk.addEventListener("change", () => {
     if (empInput(newPw)) newPwChkMsg.className = "block";
 	else pwCheck();
 });
 
-/* 비밀번호 일치 여부 확인 함수 */
+// 비밀번호 일치 여부 확인 함수
 function pwCheck() {
 
 	if (empInput(newPw) || empInput(newPwChk)) {
@@ -60,12 +60,12 @@ function pwCheck() {
 
 }
 
-/* 입력 값 존재 여부 확인 함수 */
+// 입력 값 존재 여부 확인 함수
 function empInput(inp) {
 	return inp.value.trim().length === 0;
 }
 
-/* 비밀번호 변경 */
+// 비밀번호 변경
 modifyForm.addEventListener("submit", (e) => {
 
 	// 현재 비밀번호 미입력
@@ -73,7 +73,6 @@ modifyForm.addEventListener("submit", (e) => {
 		originPwMsg.className = "block";
 		originPw.focus();
 		e.preventDefault();
-
 	}
 
 	const empNewPw = empInput(newPw) || empInput(newPwChk);

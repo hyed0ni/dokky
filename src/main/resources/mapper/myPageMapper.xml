@@ -24,6 +24,22 @@
 	        </collection>
 	</resultMap>
 	
+	<!-- 비밀번호 변경 -->
+	<update id="modifyPw">
+		UPDATE USER_T 
+		SET USER_PW = #{newPw} 
+		WHERE USER_NO = #{userNo} 
+			AND USER_PW = #{originPw}
+	</update>
+	
+	<!-- 계정 삭제 -->
+	<delete id="removeUser">
+		UPDATE USER_T 
+		SET WITHDRAWAL_DT = CURRENT_DATE
+		WHERE USER_NO = #{userNo} 
+			AND USER_PW = #{originPw}
+	</delete>
+	
 	<select id="getBoardsByUserNo" resultMap="MyPageMap">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.CREATE_DT, U.USER_NAME, U.USER_NO
 		  FROM BOARD_T B
@@ -42,10 +58,4 @@
 		ORDER BY B.CREATE_DT DESC, C.CREATE_DT DESC
 	</select>
   
-	<!-- 비밀번호 변경 -->
-	<update id="modifyPw">
-		UPDATE USER_T SET USER_PW = #{newPw} 
-		WHERE USER_NO = #{userNo} AND USER_PW = #{originPw}
-	</update>
-	
 </mapper>
