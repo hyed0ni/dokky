@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mcp.semi.mypage.service.MyPageService;
 import com.mcp.semi.user.dto.UserDto;
@@ -60,27 +61,45 @@ public class MyPageController {
 	 * @return redirect (myProfile() or modifyPw())
 	 */
 	@PostMapping("modify-password/{userNo}")
-	public String modifyPw(@RequestParam Map<String, Object> pwMap, @PathVariable("userNo") int userNo) {
-
+	public String modifyPw(@RequestParam Map<String, Object> pwMap, 
+							@PathVariable("userNo") int userNo, 
+							RedirectAttributes redirectAttributes) {
+		
 		pwMap.put("userNo", userNo);
 		int result = myPageService.modifyPw(pwMap);
-
-		if (result == 1)
-			return "redirect:mypage";
-		else
-			return "redirect:modify-password";
-
+		
+		if (result == 1) return "redirect:/dokky/mypage/" + userNo;
+		else {
+			redirectAttributes.addFlashAttribute("errorMsg", "현재 비밀번호가 일치하지 않습니다.");
+			return "redirect:/dokky/modify-password";
+		}
+		
 	}
+	
+	/** 계정 삭제
+	 * @return forward (removeUser.jsp)
+	 */
+	@GetMapping("remove-user")
+	public String removeUser() {
+		return "mypage/removeUser";
+	}
+	
 
 	/**
 	 * 계정 삭제
 	 * 
 	 * @return forward (removeConfirm.jsp)
 	 */
-	@GetMapping("remove-confirm")
-	public String removeConfirm() {
-		return "mypage/removeConfirm";
+	@PostMapping("remove-user/{userNo}")
+	public String removeUser(@PathVariable("userNo") int userNo) {
+		return "redirect:mypage";
 	}
+	
+	@GetMapping(value="/api/myBoard", produces = "application/json")
+	public ResponseEntity<?> myBoard() {
+		int userId = 1;
+		List<BoardDto> boardList = myPageService.getUserPosts(userId);
+		if(boardList.isEmpty()) {
 
 	// 내가 작성한 글 조회
 	@GetMapping(value = "/api/my-board/{userNo}", produces = "application/json")

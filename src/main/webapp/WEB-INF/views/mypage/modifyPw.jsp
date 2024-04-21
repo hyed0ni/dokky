@@ -13,7 +13,7 @@
 				<h4 class="mb-3">변경하실 비밀번호를 입력해 주세요.</h4>
 			</div>
 			<div>
-				<form action="modify-password" method="post" id="modify-form">
+				<form action="modify-password/1" method="post" id="modify-form">
 					<!-- 현재 비밀번호 -->
 					<div class="col-12">
 						<label for="origin-pw" class="form-label">현재 비밀번호</label>
@@ -39,7 +39,13 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script src="/js/mypage/modifyPw.js"></script>
+	
+	<c:if test="${!empty errorMsg}">
+		<script>
+			alert("${errorMsg}");
+		</script>
+	</c:if>
 	
 <%@ include file="../layout/footer.jsp" %>
