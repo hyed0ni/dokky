@@ -36,7 +36,9 @@ public class MyPageService {
     	
     }
   
-    /** 비밀번호 변경
+    /** 
+     * 비밀번호 변경
+     * 
 	 * @param pwMap
 	 * @return result
 	 */
@@ -44,4 +46,5 @@ public class MyPageService {
 	public int modifyPw(Map<String, Object> pwMap) {
 		return myPageMapper.modifyPw(pwMap);
 	}
+    
 }

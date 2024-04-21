@@ -11,7 +11,9 @@ import com.mcp.semi.comment.dto.CommentDto;
 @Mapper
 public interface MyPageMapper {
   	
-	/** 비밀번호 변경
+	/** 
+	 * 비밀번호 변경
+	 * 
 	 * @param pwMap
 	 * @return result
 	 */

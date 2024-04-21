@@ -75,7 +75,9 @@ public class MyPageController {
 		
 	}
 	
-	/** 계정 삭제
+	/** 
+	 * 계정 삭제
+	 * 
 	 * @return forward (removeUser.jsp)
 	 */
 	@GetMapping("remove-user")
