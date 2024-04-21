@@ -149,6 +149,5 @@
 }
 
 .my-profile-border {
-	border: 0 solid #e5e7eb;
-	border-width: 1px;
+	border: 1px solid #e5e7eb;
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mcp.semi.board.dto.BoardDto;
+import com.mcp.semi.comment.dto.CommentDto;
 
 @Mapper
 public interface MyPageMapper {
@@ -16,6 +17,8 @@ public interface MyPageMapper {
 	 */
 	int modifyPw(Map<String, Object> pwMap);
   
-	List<BoardDto> getPostsByUserId(int userNo);
+	List<BoardDto> getBoardsByUserNo(int userNo);
+	
+	List<BoardDto> getBoardsWithCommentsByUserNo(int userNo);
   
 }
