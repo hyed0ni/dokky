@@ -6,11 +6,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mcp.semi.board.dto.BoardDto;
-import com.mcp.semi.comment.dto.CommentDto;
 
 @Mapper
 public interface MyPageMapper {
-  	
+	
 	/** 
 	 * 비밀번호 변경
 	 * 
@@ -18,9 +17,17 @@ public interface MyPageMapper {
 	 * @return result
 	 */
 	int modifyPw(Map<String, Object> pwMap);
-  
+
+	/**
+	 * 계정 삭제
+	 * 
+	 * @param removeUserMap
+	 * @return result
+	 */
+	int removeUser(Map<String, Object> removeUserMap);
+  	
 	List<BoardDto> getBoardsByUserNo(int userNo);
 	
 	List<BoardDto> getBoardsWithCommentsByUserNo(int userNo);
-  
+
 }

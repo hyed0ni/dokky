@@ -27,22 +27,21 @@
 					</div>
 				</div>
 				<div>
-					<button class="w-100 btn btn-primary btn-lg cancel" type="button">취소</button>
+					<button class="w-100 btn btn-primary btn-lg cancel" id="cancel-btn" type="button">취소</button>
 					<button class="w-100 btn btn-primary btn-lg warning disabled" id="remove-user-btn">예, 탈퇴하겠습니다.</button>
 				</div>
 			</form>
 		</div>
 	</div>
 
-	<script>
-		// 회원 탈퇴 버튼
-		const removeBtn = document.getElementById("remove-user-btn");
-
-		// 비밀번호 입력 시 회원 탈퇴 버튼 활성화
-		document.getElementById("origin-pw").addEventListener("input", (e) => {
-			if (e.target.value.length >= 4) removeBtn.classList.remove("disabled");
-			else removeBtn.classList.add("disabled");
-		});
-	</script>
+	<script src="/js/mypage/removeUser.js"></script>
+	
+	<!-- 회원 탈퇴 실패 -->
+	<c:if test="${!empty errorMsg}">
+		<script>
+			alert("${errorMsg}");
+			document.getElementById("origin-pw").focus();
+		</script>
+	</c:if>
 	
 <%@ include file="../layout/footer.jsp" %>

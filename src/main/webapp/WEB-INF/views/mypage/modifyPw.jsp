@@ -42,6 +42,7 @@
 
 	<script src="/js/mypage/modifyPw.js"></script>
 	
+	<!-- 비밀번호 변경 실패 -->
 	<c:if test="${!empty errorMsg}">
 		<script>
 			alert("${errorMsg}");

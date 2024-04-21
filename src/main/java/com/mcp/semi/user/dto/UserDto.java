@@ -23,4 +23,5 @@ public class UserDto {
 	private String userMobile;
 	private Date loginDt;
 	private Date logoutDt;
+	private Date withdrawalDt;
 }

@@ -24,6 +24,27 @@ public class MyPageService {
     public UserDto getUserProfile(int userNo) {
         return userMapper.findUserById(userNo);
     }
+	
+	/** 
+     * 비밀번호 변경
+     * 
+	 * @param pwMap
+	 * @return result
+	 */
+    @Transactional
+	public int modifyPw(Map<String, Object> pwMap) {
+		return myPageMapper.modifyPw(pwMap);
+	}
+
+    /**
+     * 계정 삭제
+     * 
+     * @param removeUserMap
+     * @return result
+     */
+    public int removeUser(Map<String, Object> removeUserMap) {
+    	return myPageMapper.removeUser(removeUserMap);
+    }
     
     // 내가 작성한 글 조회
     public List<BoardDto> getUserBoards(int userNo) {
@@ -36,15 +57,4 @@ public class MyPageService {
     	
     }
   
-    /** 
-     * 비밀번호 변경
-     * 
-	 * @param pwMap
-	 * @return result
-	 */
-    @Transactional
-	public int modifyPw(Map<String, Object> pwMap) {
-		return myPageMapper.modifyPw(pwMap);
-	}
-    
 }
