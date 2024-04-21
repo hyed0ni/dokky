@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -95,11 +94,6 @@ public class MyPageController {
 		return "redirect:mypage";
 	}
 	
-	@GetMapping(value="/api/myBoard", produces = "application/json")
-	public ResponseEntity<?> myBoard() {
-		int userId = 1;
-		List<BoardDto> boardList = myPageService.getUserPosts(userId);
-		if(boardList.isEmpty()) {
 
 	// 내가 작성한 글 조회
 	@GetMapping(value = "/api/my-board/{userNo}", produces = "application/json")
