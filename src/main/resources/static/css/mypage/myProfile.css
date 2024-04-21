@@ -58,7 +58,7 @@
     border-radius: 100%;
 }
 
-/*  */
+/* 이메일, 닉네임, 성별, 휴대전화 */
 .my-profile .user-info {margin: 5px 0 !important;}
 
 /* label 태그 */
@@ -124,6 +124,12 @@
 
 /* 계정 삭제 버튼 */
 .my-profile .remove-user > button {width: 100px !important;}
+
+/* 버튼 비활성화 */
+.my-profile .disabled {
+	pointer-events: none;
+    opacity: 0.5;
+}
 
 /* 테이블 */
 .table {

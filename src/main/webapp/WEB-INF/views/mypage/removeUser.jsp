@@ -19,11 +19,30 @@
 				<p class="break-keep">작성된 게시물은 삭제되지 않으며, 익명처리 후 OKKY로 소유권이 귀속됩니다. 게시물 삭제가 필요한 경우에는 
 					<a href="mailto:info@okky.kr" class="underline">관리자 메일</a>로 문의해 주시기 바랍니다.</p>
 			</div>
-			<div>
-				<button class="w-100 btn btn-primary btn-lg cancel" type="button">취소</button>
-				<button class="w-100 btn btn-primary btn-lg warning" type="button">예, 탈퇴하겠습니다.</button>
-			</div>
+			<form action="remove-user/1" method="post" id="remove-form">
+				<div>
+					<div class="col-12">
+						<label for="origin-pw" class="form-label">비밀번호를 입력해 주세요.</label>
+						<input type="password" class="form-control" id="origin-pw" name="originPw">
+					</div>
+				</div>
+				<div>
+					<button class="w-100 btn btn-primary btn-lg cancel" type="button">취소</button>
+					<button class="w-100 btn btn-primary btn-lg warning disabled" id="remove-user-btn">예, 탈퇴하겠습니다.</button>
+				</div>
+			</form>
 		</div>
 	</div>
+
+	<script>
+		// 회원 탈퇴 버튼
+		const removeBtn = document.getElementById("remove-user-btn");
+
+		// 비밀번호 입력 시 회원 탈퇴 버튼 활성화
+		document.getElementById("origin-pw").addEventListener("input", (e) => {
+			if (e.target.value.length >= 4) removeBtn.classList.remove("disabled");
+			else removeBtn.classList.add("disabled");
+		});
+	</script>
 	
 <%@ include file="../layout/footer.jsp" %>
