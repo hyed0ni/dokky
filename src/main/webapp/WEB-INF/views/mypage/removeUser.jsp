@@ -2,12 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="../layout/header.jsp" %>
-		<link rel="stylesheet" href="/css/mypage/removeConfirm.css" type="text/css">
+		<link rel="stylesheet" href="/css/mypage/removeUser.css" type="text/css">
 	</head>
 <body>
 
 	<div class="main">
-		<div class="remove-confirm">
+		<div class="remove-user">
 			<div>
 				<a href="/"><img src=".././images/dokky.png" alt="DOKKY 로고" height="50"></a>
 				<h4 class="mb-3">회원 탈퇴 시 아래와 같이 처리됩니다.</h4>
