@@ -42,11 +42,18 @@ public class MyPageServiceTest {
     
     @Test
     void 작성한_글_조회() {
-    	int userNo = 1;
-    	List<BoardDto> result = myPageService.getUserPosts(userNo);
+    	int userNo = 2;
+    	List<BoardDto> result = myPageService.getUserBoards(userNo);
     	log.info("result {}", result);
     	
     	
+    }
+    
+    @Test
+    void 댓글단_글_조회() {
+    	int userNo = 1;
+    	List<BoardDto> result = myPageService.getUserBoardsWithComments(userNo);
+    	log.info("result: {}", result);
     }
 
 }

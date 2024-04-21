@@ -2,6 +2,7 @@
 .activity-tabs {
     display: flex;
     border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
     padding: 10px;
     justify-content: space-around;
     
@@ -26,6 +27,26 @@
 
 
 /* 내용 영역 스타일 */
-#activity-content {
-    border-top: 1px solid #e5e7eb
+.activity-container {
+	margin-top: 10px;
+    display: flex;
+    flex-direction: column;
 }
+
+.activity-card {
+    border-bottom: 1px solid #ccc;
+    padding: 16px;
+}
+
+.activity-title {
+    color: #333;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.activity-title a {
+	font-size: 2rem;
+	margin-top: 6px;
+}
+
