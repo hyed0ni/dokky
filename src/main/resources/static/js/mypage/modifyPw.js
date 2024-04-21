@@ -13,8 +13,7 @@ const modifyForm = document.getElementById("modify-form");
 
 /* 현재 비밀번호 */
 originPw.addEventListener("blur", () => {
-	if (empInput(originPw)) originPwMsg.className = "block";
-	else originPwMsg.className = "none";
+	originPwMsg.className = empInput(originPw) ? "block" : "none";
 });
 
 /* 신규 비밀번호 유효성 검사 */
@@ -55,8 +54,8 @@ function pwCheck() {
 		newPwChkMsg.className = "none";
 		return;
 	}
-
-	const isValid = newPw.value == newPwChk.value;
+	
+	const isValid = newPw.value === newPwChk.value;
 	newPwChkMsg.className = isValid ? "none" : "block";
 
 }
@@ -68,9 +67,18 @@ function empInput(inp) {
 
 /* 비밀번호 변경 */
 modifyForm.addEventListener("submit", (e) => {
+
+	// 현재 비밀번호 미입력
 	if (empInput(originPw)) {
 		originPwMsg.className = "block";
 		originPw.focus();
 		e.preventDefault();
+
 	}
+
+	const empNewPw = empInput(newPw) || empInput(newPwChk);
+	const existMsg = document.querySelectorAll("#modify-form .block").length !== 0;
+
+	if (empNewPw || existMsg) e.preventDefault();
+
 });
