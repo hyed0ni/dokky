@@ -25,12 +25,20 @@ removeBtn.addEventListener("click", () => {
 let originalProfileContent = null;
 
 document.addEventListener('DOMContentLoaded', function() {
-	const profileContent = document.getElementById('profile-container').innerHTML;
-	if (profileContent) {
-		originalProfileContent = profileContent;
-	}
+	const profileContainer = document.getElementById('profile-container');
+	originalProfileContent = document.createElement('div');
+	Array.from(profileContainer.children).forEach(child => {
+		originalProfileContent.appendChild(child.cloneNode(true));
+	});
 
-	// '활동 기록' 링크에 클릭 이벤트 리스너를 추가합니다.
+	document.getElementById('update-pw-btn').addEventListener('click', () => {
+		location.href = '/dokky/modify-password';
+	})
+
+	document.getElementById("remove-user-btn").addEventListener('click', () => {
+		location.href = '/dokky/remove-user';
+	})
+
 	document.getElementById('my-activity').addEventListener('click', function(event) {
 		event.preventDefault();
 		removeActiveClass();
@@ -38,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		showActivityRecords();
 	});
 
-	// '프로필' 링크에 클릭 이벤트 리스너를 추가합니다.
 	const profileLink = document.getElementById('profile-link');
 	profileLink.addEventListener('click', function(event) {
 		event.preventDefault();
@@ -55,7 +62,7 @@ function removeActiveClass() {
 }
 
 function showActivityRecords() {
-
+	clearContent('profile-container');
 	const profileContainer = document.getElementById('profile-container');
 	profileContainer.textContent = '';
 
@@ -150,7 +157,7 @@ function setupActivityTabs() {
 
 function showContent(apiUrl, render) {
 	clearContent('activity-content');
-	const userNo = document.getElementById("user-no").value;
+	const userNo = document.getElementById('user-no').value;
 	const compleUrl = apiUrl + userNo;
 	fetch(compleUrl)
 		.then(response => response.json())
@@ -250,23 +257,14 @@ function renderBoardRepeatedWithComments(resData) {
 
 function showProfile() {
 	const profileContainer = document.getElementById('profile-container');
-	if (originalProfileContent) {
-		// innerHTML 대신에 안전한 방법을 사용합니다.
-		while (profileContainer.firstChild) {
-			profileContainer.removeChild(profileContainer.firstChild);
-		}
-
-		const parser = new DOMParser();
-		const doc = parser.parseFromString(originalProfileContent, 'text/html');
-
-		Array.from(doc.body.childNodes).forEach(child => {
-			profileContainer.appendChild(child)
-		});
-
-		rebindEventListeners();
-	} else {
-		console.error('No original profile HTML is stored.');
+	while (profileContainer.firstChild) {
+		profileContainer.removeChild(profileContainer.firstChild);
 	}
+
+	Array.from(originalProfileContent.children).forEach(child => {
+		profileContainer.appendChild(child.cloneNode(true));
+	});
+	rebindEventListeners();
 }
 
 function clearContent(content) {
@@ -276,9 +274,12 @@ function clearContent(content) {
 	}
 }
 
-function rebindEventListeners() {
-	document.getElementById("update-pw-btn").addEventListener("click", () => {
-		location.href = "/dokky/modify-password";
-	})
-}
 
+function rebindEventListeners() {
+	document.getElementById('update-pw-btn').addEventListener('click', () => {
+		location.href = '/dokky/modify-password';
+	});
+	document.getElementById("remove-user-btn").addEventListener('click', () => {
+		location.href = '/dokky/remove-user';
+	});
+}
