@@ -112,23 +112,14 @@
 							<input type="checkbox" class="form-check-input" id="withdrawal">
 							<label class="form-check-label" for="withdrawal">계정 삭제에 관한 정책을 읽고 이에 동의합니다.</label>
 						</div>
-						<button class="w-100 btn btn-primary btn-lg warning" id="remove-user-btn" type="button">회원 탈퇴</button>
+						<button class="w-100 btn btn-primary btn-lg warning disabled" id="remove-user-btn" type="button">회원 탈퇴</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 	
-	<script>
-		document.getElementById("update-pw-btn").addEventListener("click", () => {
-			location.href = "/dokky/modify-password";
-		})
-		
-		document.getElementById("remove-user-btn").addEventListener("click", () => {
-			location.href = "/dokky/remove-user";
-		})
-	</script>
-	
 	<script src="/js/mypage/myProfile.js"></script>
+	
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>
