@@ -11,7 +11,7 @@
 
 	<div class="main">
 		<div class="my-profile">
-		
+		<input type="hidden" id="user-no" name="user-no" value="${user.userNo}">
 			<!-- 좌측 -->
 			<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
 			    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -30,7 +30,7 @@
  				
  					<div>
  						<!-- 프로필 이미지 -->
- 						<img src=".././images/profileImage.jpg" class="profile-img">
+ 						<img src="/images/profileImage.jpg" class="profile-img">
 					</div>
  					<!-- 이메일 -->
 	 				<div class="col-12">
