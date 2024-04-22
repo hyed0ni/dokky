@@ -1,6 +1,7 @@
 package com.mcp.semi.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,7 @@ public class BoardService {
 	public List<BoardDto> getBoardList(BoardDto boardDto) {
 		return boardMapper.getBoardList(boardDto);
   }
+	
 	public List<BoardDto> getBoardList(Integer page,int cnt) {
 		int totalCount = getTotalCount(); 
 		int total = totalCount/cnt + ((totalCount%cnt>0) ? 1:0);
