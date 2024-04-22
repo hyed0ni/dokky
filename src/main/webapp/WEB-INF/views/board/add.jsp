@@ -11,7 +11,7 @@
 <%@ include file="../layout/navbar.jsp" %>
 
 <div class="main">
-    <form action="" method="post" class="my-3">
+    <form id="frm-board-add" action="/dokky/add-from" method="post" class="my-3">
         <!-- 제목 -->
         <h4 class="border-bottom py-2">게시물 작성하기</h4>
         <label for="content" class="form-label">제목</label>
@@ -22,6 +22,7 @@
             <textarea type="text" name="content" id="content" class="form-control"></textarea>
         </div>
         <div class="d-flex justify-content-end">
+        		<input type="hidden" name="userNo" value="${sessionScope.user.userNo}">
             <a type="submit" id="cancelBtn" class="btn btn btn-light mr-2">취소</a>
             <button type="submit" id="modifyBtn" class="btn btn-primary">등록</button>
         </div>
@@ -34,6 +35,8 @@
 <script>
 	/* 취소버튼 클릭 시 */
 	$('#cancelBtn').on('click', () => {
-		window.location.href="/dokky/index";
+		window.location.href="/dokky/main";
 	})
+	
+	
 </script>
