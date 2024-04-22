@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
-
 .box {
 	width: 102rem;
 	height: 22rem;
@@ -30,6 +28,7 @@
 	margin-top: 25px;
 	text-align: center;
 	font-size: 15px;
+	margin-bottom: 2rem;
 }
 
 .search-container {
@@ -84,7 +83,6 @@ tr th {
 
 .pagination .page-item {
     display: inline-block;
-    margin-top: 20px;
 }
 
 .pagination .page-link {

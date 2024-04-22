@@ -5,46 +5,47 @@
 <%@ include file="../layout/header.jsp" %>
 <%@ include file="../layout/navbar.jsp" %>
 		<link rel="stylesheet" href="/css/mypage/myProfile.css" type="text/css">
+		<link rel="stylesheet" href="/css/mypage/activity.css" type="text/css">
 	</head>
 <body>
 
 	<div class="main">
 		<div class="my-profile">
-		
+		<input type="hidden" id="user-no" name="user-no" value="${user.userNo}">
 			<!-- 좌측 -->
 			<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
 			    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
 					<span class="fs-4">마이페이지</span>
 			    </a>
 			    <ul class="nav nav-pills flex-column mb-auto">
-					<li class="nav-item"><a href="#" class="nav-link active" aria-current="page">프로필</a></li>
-					<li><a href="#" class="nav-link link-body-emphasis" id="myPostsButton">작성한 글</a></li>
+					<li class="nav-item"><a href="#" class="nav-link active" id="profile-link" aria-current="page">프로필</a></li>
+					<li class="nav-item"><a href="#" class="nav-link" id="my-activity">활동 기록</a></li>
 			    </ul>
 			</div>
 			
 			<!-- 우측 -->
-			<div class="col-md-7 col-lg-8">
+			<div id="profile-container" class="col-md-7 col-lg-8">
  				<h4 class="mb-3">회원 정보</h4>
  				<form class="needs-validation" novalidate>
- 				
  					<div>
  						<!-- 프로필 이미지 -->
- 						<img src=".././images/profileImage.jpg" class="profile-img">
- 						
+ 						<img src="/images/profileImage.jpg" class="profile-img">
+					</div>
+ 				
  					<!-- 이메일 -->
-	 				<div class="col-12">
+	 				<div class="col-12 user-info">
 						<label for="email" class="form-label">이메일</label>
 						<input type="text" class="form-control" id="email" name="email" value="${user.userEmail}" readonly>
 					</div>
 					
 					<!-- 닉네임 -->
-					<div class="col-12">
+					<div class="col-12 user-info">
 						<label for="nickname" class="form-label">닉네임</label>
 						<input type="text" class="form-control" id="nickname" name="nickname" value="${user.userName}">
 					</div>
     
     				<!-- 성별 -->
-					<div class="my-3">
+					<div class="my-3 user-info">
 						<label class="form-label">성별</label>
 						<div class="flex">
 							<div class="form-check">
@@ -66,26 +67,37 @@
  					</div>
 					
 					<!-- 휴대전화 -->
-					<div class="my-3">
+					<div class="my-3 user-info">
 						<label class="form-label">휴대전화</label>
-						<div class="flex">
-							<c:set var="phoneParts" value="${fn:split(user.userMobile, '-')}" />
-							<input type="text" class="form-control phone1" id="phone1" name="phone1" value="${phoneParts[0]}">-
-							<input type="text" class="form-control phone2" id="phone2" name="phone2" value="${phoneParts[1]}">-
-							<input type="text" class="form-control phone2" id="phone3" name="phone3" value="${phoneParts[2]}">
+						<div class="flex" style="justify-content: space-between;">
+							<div style="display: inherit;">
+								<c:set var="phoneParts" value="${fn:split(user.userMobile, '-')}" />
+								<input type="text" class="form-control phone1" id="phone1" name="phone1" value="${phoneParts[0]}">-
+								<input type="text" class="form-control phone2" id="phone2" name="phone2" value="${phoneParts[1]}">-
+								<input type="text" class="form-control phone2" id="phone3" name="phone3" value="${phoneParts[2]}">
+							</div>
+					
+							<!-- 저장 -->
+							<div class="flex update-user">
+								<button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>
+							</div>
 						</div>
 					</div>
+				</form>
 					
-					<hr class="my-4">
-					
+				<hr class="my-4">
+				
+				<form>
 					<!-- 비밀번호 -->
 					<div class="flex update-pw">
 						<label class="form-label">비밀번호</label>
 						<button class="w-100 btn btn-primary btn-lg warning" id="update-pw-btn" type="button">비밀번호 변경</button>
 					</div>
-					
-					<hr class="my-4">
-
+				</form>
+				
+				<hr class="my-4">
+				
+				<form action="remove-user/1" method="post" id="remove-user-form">
 					<!-- 계정 삭제 -->
 					<label class="form-label">계정 삭제</label>
 					<div class="mt-3 space-y-2 rounded-md border border-gray-500/50 p-3">
@@ -95,35 +107,19 @@
 							60일 경과된 후에는 모든 개인 정보는 완전히 삭제되며 더 이상 복구할 수 없게 됩니다.</p>
 						<p class="text-sm text-gray-500">작성된 게시물은 삭제되지 않으며, 익명처리 후 DOKKY 로 소유권이 귀속됩니다.</p>
 					</div>
-					<div class="form-check flex delete-user">
+					<div class="form-check flex remove-user">
 						<div>
 							<input type="checkbox" class="form-check-input" id="withdrawal">
 							<label class="form-check-label" for="withdrawal">계정 삭제에 관한 정책을 읽고 이에 동의합니다.</label>
 						</div>
-						<button class="w-100 btn btn-primary btn-lg warning" type="button">회원 탈퇴</button>
-					</div>
-					
-					<hr class="my-4">
-
-					<!-- 저장 -->
-					<div class="flex update-user">
-						<button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>
+						<button class="w-100 btn btn-primary btn-lg warning disabled" id="remove-user-btn" type="button">회원 탈퇴</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 	
-	<script>
-		document.getElementById("update-pw-btn").addEventListener("click", () => {
-			location.href = "/mypage/modify-password";
-		})
-	</script>
-	
-	<div id="userPosts">
-    <!-- 작성한 글 목록이 여기에 들어갈 것입니다. -->
-</div>
-	
 	<script src="/js/mypage/myProfile.js"></script>
+	
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>

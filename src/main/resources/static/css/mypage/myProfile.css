@@ -5,6 +5,7 @@
 .my-profile {
 	display: flex;
 	justify-content: space-evenly;
+	width: 1090px;
 	margin-top: 20px;
 }
 
@@ -45,6 +46,7 @@
 
 /* 우측 내용 */
 .my-profile form > * {padding: 0 10px;}
+.my-profile table > * {padding: 0 10px;}
 
 /* 프로필 이미지 */
 .my-profile .profile-img {
@@ -52,8 +54,12 @@
 	width: 200px;
     height: 200px;
     margin-top: 15px;
+    border: 1px solid #e6e7eb;
     border-radius: 100%;
 }
+
+/* 이메일, 닉네임, 성별, 휴대전화 */
+.my-profile .user-info {margin: 5px 0 !important;}
 
 /* label 태그 */
 .my-profile .form-label {
@@ -73,9 +79,6 @@
 	align-items: center;
 }
 
-/* 성별 */
-.my-profile .my-3 {margin: 0 !important;}
-
 /* 라디오 버튼, 체크박스 */
 .my-profile .form-check {margin-right: 20px;}
 
@@ -88,6 +91,9 @@
 }
 
 .my-profile .phone2 {width: 120px;}
+
+/* 저장 버튼 */
+.my-profile .needs-validation button {width: 70px !important;}
 
 /* hr 태그 */
 .my-profile .my-4 {
@@ -111,16 +117,43 @@
 .my-profile .mt-3 {margin: 0 10px !important;}
 
 /* 체크박스, 버튼 */
-.my-profile .delete-user {
+.my-profile .remove-user {
     justify-content: space-between;
-	margin: 10px 0;
+	margin: 12px 0;
 }
 
 /* 계정 삭제 버튼 */
-.my-profile .delete-user > button {width: 100px !important;}
+.my-profile .remove-user > button {width: 100px !important;}
 
-/* 저장 */
-.my-profile .update-user {justify-content: flex-end;}
+/* 버튼 비활성화 */
+.my-profile .disabled {
+	pointer-events: none;
+    opacity: 0.5;
+}
 
-/* 저장 버튼 */
-.my-profile .update-user > button {width: 70px !important;}
+/* 테이블 */
+.table {
+	width: 100%;
+	margin-top: 25px;
+	text-align: center;
+	font-size: 15px;
+}
+
+/* 활동 기록 UI*/
+.my-profile-ui {
+	display:flex;
+	align-items: center;
+}
+
+.my-profile-ui .profile-img {
+	float: right;
+	width: 75px;
+    height: 75px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 100%;
+}
+
+.my-profile-border {
+	border: 1px solid #e5e7eb;
+}
