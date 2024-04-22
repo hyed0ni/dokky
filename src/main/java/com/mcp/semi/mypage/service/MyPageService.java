@@ -8,21 +8,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.mypage.mapper.MyPageMapper;
 import com.mcp.semi.user.dto.UserDto;
-import com.mcp.semi.user.mapper.UserMapper;
+import com.mcp.semi.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class MyPageService {
 	
+	private final UserService userService;
 	private final MyPageMapper myPageMapper;
-	private final UserMapper userMapper;
 	
+	@Transactional(readOnly = true)
 	// 사용자 프로필 조회
     public UserDto getUserProfile(int userNo) {
-        return userMapper.findUserById(userNo);
+        return userService.findByUserNo(userNo);
     }
 	
 	/** 
@@ -42,15 +42,18 @@ public class MyPageService {
      * @param removeUserMap
      * @return result
      */
+    @Transactional
     public int removeUser(Map<String, Object> removeUserMap) {
     	return myPageMapper.removeUser(removeUserMap);
     }
     
+    @Transactional(readOnly = true)
     // 내가 작성한 글 조회
     public List<BoardDto> getUserBoards(int userNo) {
         return myPageMapper.getBoardsByUserNo(userNo);
     }
     
+    @Transactional(readOnly = true)
     // 내가 작성한 댓글 조회
     public List<BoardDto> getUserBoardsWithComments(int userNo) {
     	return myPageMapper.getBoardsWithCommentsByUserNo(userNo);

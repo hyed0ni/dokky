@@ -27,7 +27,12 @@ public class LoggingAspect {
         try {
             // 대상 메소드 실행
             return joinPoint.proceed();
-        } finally {
+        } catch(Throwable ex) {
+        	log.info("예외 발생 : {}.{} : {}", simpleClassName, methodName, ex.getMessage());
+        	throw ex;
+        }
+        
+        finally {
             // 메소드 실행 후 시간 측정 및 실행 시간 계산
             long executionTime = System.currentTimeMillis() - start;
             log.info("메소드 종료 : {}.{} 실행 시간: {} ms",simpleClassName, methodName ,executionTime);

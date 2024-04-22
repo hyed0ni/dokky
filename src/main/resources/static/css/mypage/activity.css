@@ -33,6 +33,11 @@
     flex-direction: column;
 }
 
+#activity-content {
+    overflow-y: auto;
+    max-height: 500px;
+}
+
 .activity-card {
     border-bottom: 1px solid #ccc;
     padding: 16px;
