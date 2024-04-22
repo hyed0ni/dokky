@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-
+@RequiredArgsConstructor
 @SessionAttributes({"loginUser"}) 
 @RequestMapping("mypage")
 public class MyPageController {

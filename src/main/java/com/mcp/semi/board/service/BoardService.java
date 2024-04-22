@@ -1,8 +1,10 @@
 package com.mcp.semi.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.mapper.BoardMapper;
@@ -89,7 +91,17 @@ public class BoardService {
 	public int updateHit(int boardNo) {
 		return boardMapper.updateHit(boardNo);
 	}
-
+	
+	public List<BoardDto> getHotBoardList(Model model) {
+		
+		Map<String, Object> map = Map.of("begin", 1, "end", 3);
+		System.out.println(1);
+		List<BoardDto> boardList = boardMapper.getHotBoardList(map);
+		
+		System.out.println(boardList);
+		model.addAttribute(boardList);
+		return boardMapper.getHotBoardList(map);
+	}
 	public BoardDto getBoardUpdateList(BoardDto boardDto) {
 		return boardMapper.getBoardUpdateList(boardDto);
 	}
@@ -101,7 +113,6 @@ public class BoardService {
 	}
 
 
-}
 	public int getTotalCount() {
 		// TODO Auto-generated method stub
 		return boardMapper.getTotalCount();

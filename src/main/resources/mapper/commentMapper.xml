@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mcp.semi.board.mapper.CommentMapper">
+
+	<resultMap type="CommentDto" id="CommentMap">
+		<id property="commentNo" column="CMT_NO" />
+		<result property="commentContent" column="CMT_CONTENT" />
+		<result property="createDt" column="C_CREATE_DT" />
+		<result property="modifyDt" column="C_MODIFY_DT" />
+		<association property="user" javaType="UserDto">
+			<id property="userNo" column="USER_NO" />
+			<result property="userName" column="USER_NAME" />
+		</association>
+		<association property="board" javaType="BoardDto">
+			<id property="boardNo" column="BOARD_NO" />
+			<result property="boardName" column="BOARD_NAME" />
+		</association>
+	</resultMap>
+	
+	<insert id="insertComment"
+			parameterType="CommentDto">
+		INSERT INTO COMMENT_T(
+				CMT_NO
+			,	CMT_CONTENT
+			,	C_CREATE_DT
+			,	C_MODIFY_DT
+			,	USER_NO
+			,	BOARD_NO
+		) VLAUES(
+				COMMENT_SEQ.NEXTVAL
+			,	#{content}
+			,	TO_CHAR(SYSDATE, 'YY/MM/DD HH24:MI:SS')
+			,	TO_CHAR(SYSDATE, 'YY/MM/DD HH24:MI:SS')
+			,	#{user.userNo}
+			,	#{board.boardNo}
+		)
+	</insert>
+	
+</mapper>
