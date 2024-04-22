@@ -3,13 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
-<%@ include file="layout/header.jsp" %>
-	<link href="/css/index.css" rel="stylesheet" type="text/css" />
+<%@ include file="../layout/header.jsp" %>
+	<link href="/css/board/list.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	</head>
 <body>
-<%@ include file="layout/navbar.jsp" %>
+<%@ include file="../layout/navbar.jsp" %>
 
 <div class="main">
     <div class="box"></div>
@@ -38,7 +38,7 @@
 				<tbody>
 					<c:forEach var="board" items="${boardList}">
 						<tr>
-							<td>${board.user.userName}</td>
+							<td>${board.boardNo}</td>
 							<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
 							<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
 							<td>${board.createDt}</td>
@@ -48,12 +48,11 @@
 			</table>
 			<nav aria-label="Page navigation example">
 				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#"
-						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<c:forEach begin="${startPage}" end="${endPage}" var="p">
+					<li class="page-item"><a class="page-link" href="main?page=${p}">${p}</a></li>
+					</c:forEach>
 					<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 					</a></li>
 				</ul>
@@ -61,5 +60,5 @@
 		</div>
 	</div>
 
-<%@ include file="layout/copyright.jsp" %>
-<%@ include file="layout/footer.jsp" %>
+<%-- <%@ include file="../layout/copyright.jsp" %> --%>
+<%-- <%@ include file="../layout/footer.jsp" %> --%>
