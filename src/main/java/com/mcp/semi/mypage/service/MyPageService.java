@@ -38,7 +38,7 @@ public class MyPageService {
 	}
 
     /**
-     * 계정 삭제
+     * 계정 삭제: 탈퇴일 수정
      * 
      * @param removeUserMap
      * @return result
@@ -47,6 +47,16 @@ public class MyPageService {
     public int removeUser(Map<String, Object> removeUserMap) {
     	return myPageMapper.removeUser(removeUserMap);
     }
+    
+    /**
+     * 계정 삭제: 데이터 삭제
+     * 
+	 * @return result
+	 */
+    @Transactional
+	public int deleteUserData() {
+		return myPageMapper.deleteUserData();
+	}
     
     // 내가 작성한 글 조회
     @Transactional(readOnly = true)
@@ -58,7 +68,6 @@ public class MyPageService {
     @Transactional(readOnly = true)
     public List<BoardDto> getUserBoardsWithComments(int userNo) {
     	return myPageMapper.getBoardsWithCommentsByUserNo(userNo);
-    	
     }
-  
+
 }
