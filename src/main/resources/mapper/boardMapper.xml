@@ -16,6 +16,29 @@
 		</association>
 	</resultMap>
 	
+	<insert id="insertBoard"
+	        parameterType="BoardDto">       
+	 <selectKey order="BEFORE" keyProperty="boardNo" resultType="int">
+      SELECT BOARD_SEQ.NEXTVAL
+        FROM DUAL
+    </selectKey>
+    INSERT INTO BOARD_T (
+        BOARD_NO
+      , BOARD_TITLE
+      , BOARD_CONTENTS
+      , USER_NO
+      , CREATE_DT
+      , MODIFY_DT
+    ) VALUES (
+        #{boardNo}
+      , #{boardTitle}
+      , #{boardContents}
+      , #{user.userNo}
+      , CURRENT_TIMESTAMP
+      , CURRENT_TIMESTAMP
+    )       
+	</insert>
+	
 	<select id="getBoardList" resultMap="BoardMap" parameterType="Map">
 		SELECT * FROM 
 		 ( SELECT ROW_NUMBER() OVER(ORDER BY B.BOARD_NO DESC) AS RN
@@ -36,7 +59,21 @@
 		SELECT COUNT(*)
 		FROM BOARD_T
 	</select>
-
+	
+	<select id="getBoardUpdateList" resultMap="BoardMap">
+		SELECT B.BOARD_TITLE
+				 , B.BOARD_CONTENT
+				 , B.BOARD_HIT
+				 , B.CREATE_DT
+				 , B.MODIFY_DT
+				 , B.USER_NO
+				 , U.USER_NAME
+				 , B.BOARD_NO
+		  FROM BOARD_T B INNER JOIN USER_T U
+			ON B.USER_NO = U.USER_NO
+			WHERE BOARD_NO = #{boardNo}
+	</select>
+	
 	<delete id="deleteBoard">
 		DELETE
 		FROM BOARD_T
@@ -58,6 +95,13 @@
 		WHERE B.BOARD_NO = #{boardNo}
 	</select>
 
+	<update id="getBoardUpdate"  parameterType="BoardDto">
+		UPDATE BOARD_T
+			 SET BOARD_TITLE = #{boardTitle},
+    			 BOARD_CONTENT = #{boardContent},
+    		   MODIFY_DT = CURRENT_TIMESTAMP
+		 WHERE BOARD_NO = #{boardNo}
+    
   <update id="updateBoard" parameterType="BoardDto">
 	  UPDATE BOARD_T
 	   SET BOARD_TITLE = #{boardTitle},
@@ -65,5 +109,6 @@
 	       MODIFY_DT = TO_CHAR(CURRENT_DATE,'YYYY-MM-DD HH24:MI:SS)
 	 WHERE BOARD_NO = #{boardNo}
 	</update>
+
 	
 </mapper>

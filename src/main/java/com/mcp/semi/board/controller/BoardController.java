@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.service.BoardService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -65,49 +66,49 @@ public class BoardController {
 	}
 
 	@GetMapping("/modify")
-	public String boardModify() {
+	public String boardModify(BoardDto boardDto, Model model) {
+		BoardDto board = boardService.getBoardUpdateList(boardDto);
+		model.addAttribute("board", board);
 		return "board/modify";
 	}
+	
 
+	@PostMapping("/modify-form")
+	public String boardModifyForm(BoardDto boardDto, Model model) {
+	    int board = boardService.getBoardUpdate(boardDto);
+	    model.addAttribute("board", boardDto);
+	    return "redirect:/dokky/detail?boardNo=" + boardDto.getBoardNo();
+	}
+	                                                                                                                                                                                                                                                                                                                                    
+	
+	
 	@GetMapping("/add")
 	public String boardAdd() {
 		return "board/add";
 	}
-
-//	@ResponseBody
-//	@GetMapping(value = "/getBoard.do", produces = "application/json") 	// 전체 게시글 가져오기
-//	public List<BoardDto> getBoardList(Model model) {
-//		return boardService.getBoardList(model);
-//	}
-
+	
+	@PostMapping("/add-form")
+	public String boardAddForm(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		int insertCount = boardService.registerBoard(request);
+		redirectAttributes.addFlashAttribute("insertResult",insertCount == 1 ? "등록되었습니다." : "등록되지 않았습니다.");
+		return "redirect:/dokky/main";
+	}
+	
+	
 	@ResponseBody
 	@GetMapping(value = "/getBoardByNo.do", produces = "application/json") // 특정 번호의 게시글만 가져오기
 	public BoardDto getBoardByNo(@RequestParam("boardNo") int boardNo) {
 		return boardService.getBoardByNo(boardNo);
 	}
 
-	@ResponseBody
-	@DeleteMapping(value = "/deleteBoard/{boardNo}", produces = "application/json") // 삭제할때 쓰는거
-	public int deleteBoard(@PathVariable(value = "boardNo") Optional<String> opt) {
+	 @ResponseBody
+	 @DeleteMapping(value = "/deleteBoard/{boardNo}", produces = "application/json") // 삭제할때 쓰는거
+	 public int deleteBoard(@PathVariable(value = "boardNo") Optional<String> opt) {
 		int boardNo = Integer.parseInt(opt.orElse("0"));
 		return boardService.deleteBoard(boardNo);
 	}
-  
-	@PostMapping("/edit.do")
-	public String editBoard(@RequestParam("boardNo") int boardNo, Model model) {
-		BoardDto board = boardService.getBoardByNo(boardNo);
-		model.addAttribute("board", board);
-		return "board/modify";
-		
-	}
-	
-	@GetMapping("/modify.do")
-	public String modifyBoard(BoardDto board, RedirectAttributes redirectAttributes, int boardNo) {
-		int updateCount = boardService.modifyBoard(board);
-		redirectAttributes.addFlashAttribute("updateCount", updateCount);
-	    return "redirect:/dokky/detail.do?boardNo=" + board.getBoardNo();
-	}
 
+	  
 	@ResponseBody
 	@GetMapping(value = "/putBoardHit.do", produces = "application/json") // 조회수 늘릴때 쓰는거
 	public int updateHit(@RequestParam("boardNo") int boardNo) {
