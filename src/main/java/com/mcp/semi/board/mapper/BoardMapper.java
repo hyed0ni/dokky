@@ -12,7 +12,7 @@ public interface BoardMapper {
 	
 	int insertBoard(BoardDto board);
 	List<BoardDto> getBoardList(BoardDto boardDto);
-	List<BoardDto> getBoardList(Map map);
+	List<BoardDto> getBoardList(Map<String, Object> map);
 	int deleteBoard(int boardNo);
 	BoardDto getBoardByNo(int boardNo);
 	int updateBoard(BoardDto board);

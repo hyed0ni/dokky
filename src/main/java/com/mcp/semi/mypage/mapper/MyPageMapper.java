@@ -9,14 +9,25 @@ import com.mcp.semi.board.dto.BoardDto;
 
 @Mapper
 public interface MyPageMapper {
-
-  	
-	/** 비밀번호 변경
+	
+	/** 
+	 * 비밀번호 변경
+	 * 
 	 * @param pwMap
 	 * @return result
 	 */
 	int modifyPw(Map<String, Object> pwMap);
-  
-	List<BoardDto> getPostsByUserId(int userNo);
-  
+
+	/**
+	 * 계정 삭제
+	 * 
+	 * @param removeUserMap
+	 * @return result
+	 */
+	int removeUser(Map<String, Object> removeUserMap);
+  	
+	List<BoardDto> getBoardsByUserNo(int userNo);
+	
+	List<BoardDto> getBoardsWithCommentsByUserNo(int userNo);
+
 }

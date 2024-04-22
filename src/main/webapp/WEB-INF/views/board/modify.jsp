@@ -5,7 +5,6 @@
 	<c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 <%@ include file="../layout/header.jsp" %>
 	<link href="/css/board/modify.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 <%@ include file="../layout/navbar.jsp" %>

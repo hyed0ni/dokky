@@ -3,9 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
+<<<<<<< HEAD:src/main/webapp/WEB-INF/views/detail.jsp
+<%@ include file="layout/header.jsp" %>
+	<link href="/css/detail.css" rel="stylesheet" type="text/css" />
+=======
 <%@ include file="../layout/header.jsp" %>
 	<link href="/css/board/detail.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+>>>>>>> origin/USB:src/main/webapp/WEB-INF/views/board/detail.jsp
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
  </head>
 <body>
