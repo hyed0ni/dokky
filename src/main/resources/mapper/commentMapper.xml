@@ -28,9 +28,9 @@
 			,	C_MODIFY_DT
 			,	USER_NO
 			,	BOARD_NO
-		) VLAUES(
+		) VALUES(
 				COMMENT_SEQ.NEXTVAL
-			,	#{content}
+			,	#{commentContent}
 			,	TO_CHAR(SYSDATE, 'YY/MM/DD HH24:MI:SS')
 			,	TO_CHAR(SYSDATE, 'YY/MM/DD HH24:MI:SS')
 			,	#{user.userNo}
