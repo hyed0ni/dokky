@@ -102,7 +102,6 @@
     		   MODIFY_DT = CURRENT_TIMESTAMP
 		 WHERE BOARD_NO = #{boardNo}
     </update>
-    
   <update id="updateBoard" parameterType="BoardDto">
 	  UPDATE BOARD_T
 	   SET BOARD_TITLE = #{boardTitle},
@@ -111,5 +110,20 @@
 	 WHERE BOARD_NO = #{boardNo}
 	</update>
 
+	<select id="getHotBoardList"
+			parameterType="Map" 
+			resultMap="BoardMap">
+		SELECT B.BOARD_NO
+			 , B.BOARD_TITLE
+			 , B.BOARD_CONTENT
+			 , B.BOARD_HIT
+			 , B.CREATE_DT
+			 , B.MODIFY_DT
+			 , B.USER_NO
+			 , U.USER_NAME
+		  FROM BOARD_T B INNER JOIN USER_T U
+			ON B.USER_NO = U.USER_NO
+<!-- 		WHERE B.BOARD_NO BETWEEN #{begin} AND #{end} -->
+	</select>
 	
 </mapper>

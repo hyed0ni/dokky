@@ -17,8 +17,9 @@ public interface BoardMapper {
 	BoardDto getBoardByNo(int boardNo);
 	int updateBoard(BoardDto board);
 	int updateHit(int boardNo);
+	List<BoardDto> getHotBoardList(Map<String, Object> map);
 	BoardDto getBoardUpdateList(BoardDto boardDto);
 	int getBoardUpdate(BoardDto boardDto);
-  int getTotalCount();
+	int getTotalCount();
 }
 	

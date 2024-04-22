@@ -28,6 +28,11 @@ public class BoardController {
 	private final BoardService boardService;
 	
 	@GetMapping("/main")
+	public String board(BoardDto boardDto, Model model) {
+		List<BoardDto> boardList = boardService.getBoardList(boardDto);
+		model.addAttribute("boardList", boardList);
+		return "board/index";
+	}
 	public String board(@RequestParam(value="page", defaultValue="1") Integer page, Model model) {
 		
 		// 전체 게시물 리스트
@@ -62,7 +67,7 @@ public class BoardController {
 	
 	@GetMapping("/detail")
 	public String boardDetail() {
-		return "detail";
+		return "board/detail";
 	}
 
 	@GetMapping("/modify")
@@ -85,6 +90,12 @@ public class BoardController {
 	@GetMapping("/add")
 	public String boardAdd() {
 		return "board/add";
+	}
+
+	@ResponseBody
+	@GetMapping(value = "/getBoard.do", produces = "application/json") 	// 전체 게시글 가져오기
+	public List<BoardDto> getHotBoardList(Model model) {
+		return boardService.getHotBoardList(model);
 	}
 	
 	@PostMapping("/add-form")
