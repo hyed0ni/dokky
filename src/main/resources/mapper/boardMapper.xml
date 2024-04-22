@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mcp.semi.board.mapper.BoardMapper">
 
@@ -16,9 +15,11 @@
 			<result property="userName" column="USER_NAME" />
 		</association>
 	</resultMap>
-
-	<select id="getBoardList" resultMap="BoardMap">
-		SELECT B.BOARD_NO
+	
+	<select id="getBoardList" resultMap="BoardMap" parameterType="Map">
+		SELECT * FROM 
+		 ( SELECT ROW_NUMBER() OVER(ORDER BY B.BOARD_NO DESC) AS RN
+			 , B.BOARD_NO
 			 , B.BOARD_TITLE
 			 , B.BOARD_CONTENT
 			 , B.BOARD_HIT
@@ -27,7 +28,13 @@
 			 , B.USER_NO
 			 , U.USER_NAME
 		  FROM BOARD_T B INNER JOIN USER_T U
-			ON B.USER_NO = U.USER_NO
+			ON B.USER_NO = U.USER_NO ) a
+		 WHERE RN BETWEEN #{begin} AND #{end}	
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM BOARD_T
 	</select>
 
 	<delete id="deleteBoard">
@@ -57,7 +64,6 @@
 	       BOARD_CONTENT = #{boardContent},
 	       MODIFY_DT = TO_CHAR(CURRENT_DATE,'YYYY-MM-DD HH24:MI:SS)
 	 WHERE BOARD_NO = #{boardNo}
-	
 	</update>
 	
 </mapper>

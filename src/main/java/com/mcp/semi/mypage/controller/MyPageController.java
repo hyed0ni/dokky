@@ -28,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @SessionAttributes({"loginUser"}) 
 @RequestMapping("mypage")
-@RequiredArgsConstructor
 public class MyPageController {
 	
 	private final MyPageService myPageService;
