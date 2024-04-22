@@ -52,6 +52,7 @@
    .centerarea > .detail-contents{
   	margin-left:5px;
   	font-size:1.5rem;
+  	min-height: 300px;
    }
 	  
    .centerarea > .detail-contentinfo{
@@ -119,7 +120,8 @@
    overflow: hidden;
    background-color: rgba(255, 240, 241, 0.8);
    border-radius: 7px;
-   margin-left: 20px;
+   margin: 10px 0 0 10px;
+   padding: 10px 0 0 10px; 
    }
    
    ol{
@@ -134,6 +136,10 @@
    #btn-comment{
    font-size:1.5rem;
    margin-top:10px;
-   margin-left:92%;
+   margin-left:90%;
    }
+   
+   .image-commenter-writer > img{
+   padding: 10px 0 0 0;    	
+   } 
    

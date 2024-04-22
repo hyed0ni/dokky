@@ -11,7 +11,7 @@
 <body>
 <%@ include file="../layout/navbar.jsp" %>
 	
-	<div class="main">
+<div class="main">
   <form class="body"> 
     <div class="leftarea">
     	<div class="px-2 hot-name" id="hot-name" style="font-size:1.7rem; text-align:left;">
@@ -51,37 +51,36 @@
 		<div class="detail-contents" id="detail-contents">안녕하세요 감사해요 잘 있어요 다시 만나요</div>
 		<hr style="border:solid 1px;">
 		
-		<div class="comment-area" id="comment-area">
-			<div class="comment-input" id="comment-input">
-				<div class="image-commenter-writer" >
-				<img src="/images/dokky.png" alt="DOKKY 로고" height="50">
-				<textarea rows="5" cols="70" id="comment-box" oninput="fnautoResize"></textarea>
-				</div>
-				<button type="button" class="btn btn-primary" id="btn-comment">등록</button>
-			</div>
-			<div class="comment-list" id="comment-list">
-				<ol>
-					<div class="image-commenter" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30">
-						<a class="comment-writer" id="comment-writer">작성자이름&nbsp;</a>
-						<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">작성일</span>
+		<form id="frm-comment">
+			<div class="comment-area" id="comment-area">
+				<div class="comment-input" id="comment-input">	<!-- 댓글 입력창 -->
+					<div class="image-commenter-writer" >
+						<input type="hidden" name="userNo" id="userNo" value="${1}">
+						<img src="/images/dokky.png" alt="DOKKY 로고" height="50">
+						<textarea rows="5" cols="70" id="comment-box"></textarea>
 					</div>
-					<a>댓글 이렇게 추가하면 되나?</a> 
-					<hr style="border:solid 1px; margin-bottom:10px;">
-				</ol>
-				
-				<ol>
-				</ol>
-			
-				<ol>
-				</ol>
+					<button type="button" class="btn btn-primary" id="btn-comment">등록</button>
+				</div>
 			</div>
+		</form>
+		
+		
+		<div class="comment-list" id="comment-list">	<!-- 댓글 목록 -->
+			<ol>
+				<div class="image-commenter" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30">
+					<a class="comment-writer" id="comment-writer">작성자이름&nbsp;</a>
+					<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">작성일</span>
+				</div>
+				<a>댓글 이렇게 추가하면 되나?</a> 
+				<hr style="border:solid 1px; margin-bottom:10px;">
+			</ol>
 		</div>
 		
     </div>
     
     <div class="rightarea"></div>
   </form>
-  </div>
+ </div>
  
   <script>
   function getBoardNoFromURL() {
@@ -176,12 +175,37 @@
 		})
 	}
 	
-  	function fnautoResize() {
-	    const textarea = document.getElementById('comment-box');
-	    textarea.style.height = 'auto'; // 높이를 auto로 설정하여 기존 높이를 초기화합니다.
-	    textarea.style.height = textarea.scrollHeight + 'px'; // 스크롤 높이를 textarea 높이로 설정합니다.
-	}
+  	const fnRegistComment = ()=>{
+  		document.getElementById('btn-comment').addEventListener('click', function(){
+  			$.ajax({
+  				type:'POST',
+  				url: '/detail/registCmt',
+  				contentType:'application/json',
+  				data: JSON.stringify({
+  					'comment' : $('#comment-box').val(),
+  					'userNo' : $('#userNo').val(),
+  					'boardNo' : boardNo
+  				}),
+  				dataType: 'json',
+  				success:(data)=>{
+  					if(data.insertCount === 1)
+					{
+						alert('댓글 등록');
+						$('#comment-box').val('');
+					}
+  					else
+  						alert('댓글 등록 실패');
+  				},
+  				error:(jqXHR)=>{
+  					console.log($('#comment-box').val());
+  					console.log($('#userNo').val());
+  					alert(jqXHR.statusText + '(' + jqXHR.status + ')');  					
+  				}
+  			})
+  		})
+  	}
   	
+  	fnRegistComment();
 	fngetHotBoard();	
 	fnShowDetailBoard();
 	fnClickDelete();
