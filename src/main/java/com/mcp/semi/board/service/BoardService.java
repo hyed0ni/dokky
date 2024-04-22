@@ -18,7 +18,6 @@ public class BoardService {
 
 	private final BoardMapper boardMapper;
 
-	
 	public int registerBoard(HttpServletRequest request) {
 		
 		String title = request.getParameter("title");
@@ -43,6 +42,16 @@ public class BoardService {
 	
 	public List<BoardDto> getBoardList(BoardDto boardDto) {
 		return boardMapper.getBoardList(boardDto);
+  }
+	public List<BoardDto> getBoardList(Integer page,int cnt) {
+		int totalCount = getTotalCount(); 
+		int total = totalCount/cnt + ((totalCount%cnt>0) ? 1:0);
+		int begin = (page - 1) * cnt + 1;
+		int end = begin + cnt - 1;
+	
+		Map<String,Object> map = Map.of("begin",begin, "end",end, "total", total);
+
+		return boardMapper.getBoardList(map);
 	}
 
 	
@@ -77,11 +86,9 @@ public class BoardService {
 	    
 	  }
 	
-	
 	public int updateHit(int boardNo) {
 		return boardMapper.updateHit(boardNo);
 	}
-
 
 	public BoardDto getBoardUpdateList(BoardDto boardDto) {
 		return boardMapper.getBoardUpdateList(boardDto);
@@ -93,5 +100,11 @@ public class BoardService {
 		
 	}
 
+
+}
+	public int getTotalCount() {
+		// TODO Auto-generated method stub
+		return boardMapper.getTotalCount();
+	}
 
 }
