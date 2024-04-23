@@ -17,7 +17,7 @@ originPw.addEventListener("blur", () => {
 });
 
 // 신규 비밀번호 유효성 검사
-newPw.addEventListener("change", (e) => {
+newPw.addEventListener("change", e => {
 
     if (empInput(e.target) === 0) {
         newPwMsg.className = "none";
@@ -48,7 +48,7 @@ newPwChk.addEventListener("change", () => {
 });
 
 // 비밀번호 변경
-modifyForm.addEventListener("submit", (e) => {
+modifyForm.addEventListener("submit", e => {
 
 	const newPwEmpExist = empInput(newPw) || newPwMsg.className === "block";
 	const newPwChkEmpExist = empInput(newPwChk) || newPwChkMsg.className === "block";

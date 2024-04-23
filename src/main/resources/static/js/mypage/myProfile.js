@@ -7,13 +7,13 @@ document.getElementById("update-pw-btn").addEventListener("click", () => {
 });
 
 // 체크박스 체크 시 회원 탈퇴 버튼 활성화
-document.getElementById("withdrawal").addEventListener("change", (e) => {
+document.getElementById("withdrawal").addEventListener("change", e => {
 	if (e.target.checked) removeBtn.classList.remove("disabled");
 	else removeBtn.classList.add("disabled");
 });
 
 // 페이지가 로드될 때 체크 해제
-window.addEventListener("pageshow", e => {
+window.addEventListener("pageshow", () => {
 	document.getElementById("withdrawal").checked = false;
 });
 
@@ -21,4 +21,3 @@ window.addEventListener("pageshow", e => {
 removeBtn.addEventListener("click", () => {
 	location.href = "/dokky/remove-user";
 });
-
