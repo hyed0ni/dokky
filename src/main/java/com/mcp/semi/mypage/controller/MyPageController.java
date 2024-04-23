@@ -118,7 +118,7 @@ public class MyPageController {
 	public ResponseEntity<?> myBoard(@PathVariable("userNo") int userNo) {
 		List<BoardDto> boardList = myPageService.getUserBoards(userNo);
 		if (boardList.isEmpty()) {
-			return ResponseEntity.ok(Map.of("message", "아직 작성한 게시글이 없습니다"));
+			return ResponseEntity.ok(Map.of("message", "아직 작성한 게시글이 없습니다."));
 		} else {
 			return ResponseEntity.ok(boardList);
 		}
@@ -129,7 +129,7 @@ public class MyPageController {
 	public ResponseEntity<?> myComment(@PathVariable("userNo") int userNo) {
 		List<BoardDto> boardList = myPageService.getUserBoardsWithComments(userNo);
 		if (boardList.isEmpty()) {
-			return ResponseEntity.ok(Map.of("message", "아직 작성한 댓글이 없습니다"));
+			return ResponseEntity.ok(Map.of("message", "아직 작성한 댓글이 없습니다."));
 		} else {
 			return ResponseEntity.ok(boardList);
 		}
