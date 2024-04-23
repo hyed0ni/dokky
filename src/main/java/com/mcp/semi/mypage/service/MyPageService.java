@@ -19,8 +19,8 @@ public class MyPageService {
 	private final UserService userService;
 	private final MyPageMapper myPageMapper;
 	
-	@Transactional(readOnly = true)
 	// 사용자 프로필 조회
+	@Transactional(readOnly = true)
     public UserDto getUserProfile(int userNo) {
         return userService.findByUserNo(userNo);
     }
@@ -47,14 +47,14 @@ public class MyPageService {
     	return myPageMapper.removeUser(removeUserMap);
     }
     
-    @Transactional(readOnly = true)
     // 내가 작성한 글 조회
+    @Transactional(readOnly = true)
     public List<BoardDto> getUserBoards(int userNo) {
         return myPageMapper.getBoardsByUserNo(userNo);
     }
     
-    @Transactional(readOnly = true)
     // 내가 작성한 댓글 조회
+    @Transactional(readOnly = true)
     public List<BoardDto> getUserBoardsWithComments(int userNo) {
     	return myPageMapper.getBoardsWithCommentsByUserNo(userNo);
     	

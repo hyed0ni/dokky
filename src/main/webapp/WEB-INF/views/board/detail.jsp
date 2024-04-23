@@ -3,14 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
-<%@ include file="layout/header.jsp" %>
-	<link href="/css/detail.css" rel="stylesheet" type="text/css" />
+<%@ include file="../layout/header.jsp" %>
+	<link href="/css/board/detail.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
  </head>
 <body>
-<%@ include file="layout/navbar.jsp" %>
+<%@ include file="../layout/navbar.jsp" %>
 	
-	<div class="main">
+<div class="main">
   <form class="body"> 
     <div class="leftarea">
     	<div class="px-2 hot-name" id="hot-name" style="font-size:1.7rem; text-align:left;">
@@ -19,16 +20,12 @@
     		<span style="color:red; font-weight:bold;">추천</span>
     		&nbsp;<i class="fa-solid fa-fire"></i>
    		</div>
-   		<hr style="border: solid 1px; margin-top:1px; width:90%; margin-left:5px;">
-    	<div id="hot-boardList">
-    		
-    	</div>
+   		<hr style="border: solid 1px; margin-top:1px; width:70%; margin-left:5px;">
+    	<div id="hot-boardList"></div>
     </div> 
     
     <div class="centerarea">
-
-    	<div class="contents-banner" style="border:none; margin-bottom:5px;"><img src="/images/detailbanner.jpg" height="145" width="600"></div>
-
+    	<div class="contents-banner" style="border:none; margin-bottom:5px;"><img src="/images/detailbanner.jpg" height="145" width="660"></div>
     	
 		<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/main" style="font-size:1.2rem;">목록으로</a> 
 		<hr style="border: solid 1px; margin-top:1px;">
@@ -53,12 +50,37 @@
 		
 		<div class="detail-contents" id="detail-contents">안녕하세요 감사해요 잘 있어요 다시 만나요</div>
 		<hr style="border:solid 1px;">
+		
+		<form id="frm-comment">
+			<div class="comment-area" id="comment-area">
+				<div class="comment-input" id="comment-input">	<!-- 댓글 입력창 -->
+					<div class="image-commenter-writer" >
+						<input type="hidden" name="userNo" id="userNo" value="${1}">
+						<img src="/images/dokky.png" alt="DOKKY 로고" height="50">
+						<textarea rows="5" cols="70" id="comment-box"></textarea>
+					</div>
+					<button type="button" class="btn btn-primary" id="btn-comment">등록</button>
+				</div>
+			</div>
+		</form>
+		
+		
+		<div class="comment-list" id="comment-list">	<!-- 댓글 목록 -->
+			<ol>
+				<div class="image-commenter" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30">
+					<a class="comment-writer" id="comment-writer">작성자이름&nbsp;</a>
+					<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">작성일</span>
+				</div>
+				<a>댓글 이렇게 추가하면 되나?</a> 
+				<hr style="border:solid 1px; margin-bottom:10px;">
+			</ol>
+		</div>
+		
     </div>
-
     
     <div class="rightarea"></div>
   </form>
-  </div>
+ </div>
  
   <script>
   function getBoardNoFromURL() {
@@ -102,7 +124,6 @@
 		})
 	}
 	
-	
 	const fnClickDelete = ()=> {
 		document.getElementById('btn-delete').addEventListener('click', function(evt){
 			$.ajax({
@@ -123,27 +144,29 @@
 	const fnClickModify = () => {
 		
 		document.getElementById('btn-modify').addEventListener('click', function(evt) {
-			console.log(1);
 			window.location.href = '/dokky/modify?boardNo=' + boardNo;
 		})
 		
 	}
+	
+
+
 	
 	const fngetHotBoard = ()=>{
 		$.ajax({
 			type:'GET',
 			url: '/dokky/getBoard.do',
 			dataType : 'json',
-			success : function(data)
+			success : function(data) 
 			{
 				console.log(data.length);
-				for(var i = 1; i < data.length + 1; i++)
+				for(var i = 1; i < 4; i++)
 				{
 					data.sort((a,b) => b.boardHit - a.boardHit);
 	 		        let str = '<div style="text-align:left;">' 
-	 		        + '<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/detail?boardNo=' 
+	 		        + '<a class="text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/detail?boardNo=' 
 	 		        		+ data[i-1].boardNo+ '" style="font-size:1.5rem;">'
-	 		        + data[i - 1].boardTitle + '</a>' + '</div>';
+	 		        + '-' + data[i - 1].boardTitle + '</a>' + '</div>';
 	 		        $('#hot-boardList').append(str);
 				}
 			},
@@ -153,11 +176,45 @@
 			}
 		})
 	}
-
+	
+  	const fnRegistComment = ()=>{
+  		document.getElementById('btn-comment').addEventListener('click', function(){
+  			$.ajax({
+  				type:'POST',
+  				url: '/detail/registCmt',
+  				contentType:'application/json',
+  				data: JSON.stringify({
+  					'comment' : $('#comment-box').val(),
+  					'userNo' : $('#userNo').val(),
+  					'boardNo' : boardNo
+  				}),
+  				dataType: 'json',
+  				success:(data)=>{
+  					if(data.insertCount === 1)
+					{
+						alert('댓글 등록');
+						$('#comment-box').val('');
+					}
+  					else
+  						alert('댓글 등록 실패');
+  				},
+  				error:(jqXHR)=>{
+  					console.log($('#comment-box').val());
+  					console.log($('#userNo').val());
+  					alert(jqXHR.statusText + '(' + jqXHR.status + ')');  					
+  				}
+  			})
+  		})
+  	}
+  	
+  	fnRegistComment();
 	fngetHotBoard();	
 	fnShowDetailBoard();
 	fnClickDelete();
 	fnClickModify();
+	fnAfterModifyUpdate();
+	
+	
   </script>
 </body>
 </html>

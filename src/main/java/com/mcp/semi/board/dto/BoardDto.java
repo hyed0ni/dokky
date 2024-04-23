@@ -3,7 +3,6 @@ package com.mcp.semi.board.dto;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.mcp.semi.comment.dto.CommentDto;
 import com.mcp.semi.user.dto.UserDto;
 
 import lombok.AllArgsConstructor;

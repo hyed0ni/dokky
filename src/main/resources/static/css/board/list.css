@@ -28,6 +28,7 @@
 	margin-top: 25px;
 	text-align: center;
 	font-size: 15px;
+	margin-bottom: 2rem;
 }
 
 .search-container {
@@ -82,7 +83,6 @@ tr th {
 
 .pagination .page-item {
     display: inline-block;
-    margin-top: 20px;
 }
 
 .pagination .page-link {
