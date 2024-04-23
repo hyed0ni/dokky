@@ -52,7 +52,7 @@
 			 , U.USER_NAME
 		  FROM BOARD_T B INNER JOIN USER_T U
 			ON B.USER_NO = U.USER_NO ) a
-		 WHERE RN BETWEEN #{begin} AND #{end}	
+		 <!-- WHERE RN BETWEEN #{begin} AND #{end} -->
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
@@ -123,7 +123,7 @@
 			 , U.USER_NAME
 		  FROM BOARD_T B INNER JOIN USER_T U
 			ON B.USER_NO = U.USER_NO
-<!-- 		WHERE B.BOARD_NO BETWEEN #{begin} AND #{end} -->
+	<!-- WHERE B.BOARD_NO BETWEEN #{begin} AND #{end} -->
 	</select>
 	
 </mapper>

@@ -14,13 +14,14 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+
 public class MyPageService {
 	
 	private final MyPageMapper myPageMapper;
 	private final UserMapper userMapper;
 	
 	// 사용자 프로필 조회
+	@Transactional(readOnly = true)
     public UserDto getUserProfile(int userNo) {
         return userMapper.findUserById(userNo);
     }
@@ -37,24 +38,36 @@ public class MyPageService {
 	}
 
     /**
-     * 계정 삭제
+     * 계정 삭제: 탈퇴일 수정
      * 
      * @param removeUserMap
      * @return result
      */
+    @Transactional
     public int removeUser(Map<String, Object> removeUserMap) {
     	return myPageMapper.removeUser(removeUserMap);
     }
     
+    /**
+     * 계정 삭제: 데이터 삭제
+     * 
+	 * @return result
+	 */
+    @Transactional
+	public int deleteUserData() {
+		return myPageMapper.deleteUserData();
+	}
+    
     // 내가 작성한 글 조회
+    @Transactional(readOnly = true)
     public List<BoardDto> getUserBoards(int userNo) {
         return myPageMapper.getBoardsByUserNo(userNo);
     }
     
     // 내가 작성한 댓글 조회
+    @Transactional(readOnly = true)
     public List<BoardDto> getUserBoardsWithComments(int userNo) {
     	return myPageMapper.getBoardsWithCommentsByUserNo(userNo);
-    	
     }
-  
+
 }

@@ -70,7 +70,7 @@
 					<div class="my-3 user-info">
 						<label class="form-label">휴대전화</label>
 						<div class="flex" style="justify-content: space-between;">
-							<div style="display: inherit;">
+							<div class="p-inp">
 								<c:set var="phoneParts" value="${fn:split(user.userMobile, '-')}" />
 								<input type="text" class="form-control phone1" id="phone1" name="phone1" value="${phoneParts[0]}">-
 								<input type="text" class="form-control phone2" id="phone2" name="phone2" value="${phoneParts[1]}">-
