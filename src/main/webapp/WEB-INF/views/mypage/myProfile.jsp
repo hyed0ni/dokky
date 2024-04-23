@@ -29,7 +29,9 @@
  				<form class="needs-validation" novalidate>
  					<div>
  						<!-- 프로필 이미지 -->
- 						<img src="/images/profileImage.jpg" class="profile-img">
+ 						<img src="/images/profileImage.jpg" id="profile-img">
+						<div id="update-img">변경</div>
+						<input type="file" id="file-input" style="display: none;">
 					</div>
  				
  					<!-- 이메일 -->
@@ -49,41 +51,40 @@
 						<label class="form-label">성별</label>
 						<div class="flex">
 							<div class="form-check">
-								<input id="man" name="man" type="radio" class="form-check-input"
+								<input id="man" name="gender" type="radio" class="form-check-input"
 										 ${user.userGender == 'man' ? 'checked' : ''} required>
 								<label class="form-check-label" for="man">남성</label>
 							</div>
 							<div class="form-check">
-								<input id="woman" name="woman" type="radio" class="form-check-input"
+								<input id="woman" name="gender" type="radio" class="form-check-input"
 										${user.userGender == 'woman' ? 'checked' : ''} required>
 								<label class="form-check-label" for="woman">여성</label>
 							</div>
 							<div class="form-check">
-								<input id="no" name="no" type="radio" class="form-check-input" 
+								<input id="no" name="gender" type="radio" class="form-check-input" 
 										${user.userGender == 'none' ? 'checked' : ''} required>
 								<label class="form-check-label" for="no">선택 안 함</label>
 							</div>
 						</div>
  					</div>
 
-							<c:set var="userMobile" value="${user.userMobile}" />
-							<c:if test="${not empty userMobile}">
-								<c:set var="phoneParts" value="${fn:split(userMobile, '-')}"/>
-								<c:choose>
-									<c:when test="${fn:length(userMobile) == 11}">
-										<c:set var = "phone1" value="${fn:substring(userMobile, 0, 3)}"/>
-										<c:set var = "phone2" value="${fn:substring(userMobile, 3, 7)}"/>
-										<c:set var = "phone3" value="${fn:substring(userMobile, 7, 11)}"/>
-									</c:when>
-								</c:choose>
-							</c:if>
+					<c:set var="userMobile" value="${user.userMobile}" />
+					<c:if test="${not empty userMobile}">
+						<c:set var="phoneParts" value="${fn:split(userMobile, '-')}"/>
+						<c:choose>
+							<c:when test="${fn:length(userMobile) == 11}">
+								<c:set var = "phone1" value="${fn:substring(userMobile, 0, 3)}"/>
+								<c:set var = "phone2" value="${fn:substring(userMobile, 3, 7)}"/>
+								<c:set var = "phone3" value="${fn:substring(userMobile, 7, 11)}"/>
+							</c:when>
+						</c:choose>
+					</c:if>
 					
 					<!-- 휴대전화 -->
 					<div class="my-3 user-info">
 						<label class="form-label">휴대전화</label>
 						<div class="flex" style="justify-content: space-between;">
-							<div style="display: inherit;">
-
+							<div class="p-inp">
 								<input type="text" class="form-control phone1" maxlength = "3"
 									   id="phone1" name="phone1" value="${phone1}">-
 								<input type="text" class="form-control phone2" maxlength = "4"
