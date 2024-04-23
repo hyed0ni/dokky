@@ -102,7 +102,7 @@ function showActivityRecords() {
 
 	//작성한 글
 	const boardsLink = document.createElement("a");
-	boardsLink.htef = "#";
+	boardsLink.href = "#";
 	boardsLink.id = "my-boards-button";
 	boardsLink.className = "tab-link";
 
@@ -112,7 +112,7 @@ function showActivityRecords() {
 
 	//댓글
 	const commentsLink = document.createElement("a");
-	commentsLink.htef = "#";
+	commentsLink.href = "#";
 	commentsLink.id = "my-comments-button";
 	commentsLink.className = "tab-link";
 

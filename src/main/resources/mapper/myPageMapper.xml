@@ -14,10 +14,10 @@
 	            <result property="userName" column="USER_NAME"/>
 	        </association>
 	        <collection property="comments" ofType="CommentDto">
-	        	<id property="cmtNo" column="CMT_NO"/>
-	        	<result property="cmtContent" column="CMT_CONTENT"/>
+	        	<id property="commentNo" column="CMT_NO"/>
+	        	<result property="commentContent" column="CMT_CONTENT"/>
 	        	<result property="createDt" column="CREATE_DT"/>
-        		<association property="userDto" javaType="UserDto">
+        		<association property="user" javaType="UserDto">
 	         		   <id property="userNo" column="USER_NO"/>
 	         		   <result property="userName" column="USER_NAME"/>
       	  	   </association>

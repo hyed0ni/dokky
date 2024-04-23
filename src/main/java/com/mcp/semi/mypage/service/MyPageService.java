@@ -8,22 +8,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.mypage.mapper.MyPageMapper;
 import com.mcp.semi.user.dto.UserDto;
-import com.mcp.semi.user.mapper.UserMapper;
+import com.mcp.semi.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-
 public class MyPageService {
 	
+	private final UserService userService;
 	private final MyPageMapper myPageMapper;
-	private final UserMapper userMapper;
 	
 	// 사용자 프로필 조회
 	@Transactional(readOnly = true)
     public UserDto getUserProfile(int userNo) {
-        return userMapper.findUserById(userNo);
+        return userService.findByUserNo(userNo);
     }
 	
 	/** 
