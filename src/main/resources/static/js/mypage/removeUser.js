@@ -10,7 +10,7 @@ cancelBtn.addEventListener("click", () => {
 });
 
 // 비밀번호 입력 시 탈퇴 버튼 활성화
-document.getElementById("origin-pw").addEventListener("input", (e) => {
+document.getElementById("origin-pw").addEventListener("input", e => {
     if (e.target.value.length >= 4) removeBtn.classList.remove("disabled");
     else removeBtn.classList.add("disabled");
 });

@@ -19,12 +19,19 @@ public interface MyPageMapper {
 	int modifyPw(Map<String, Object> pwMap);
 
 	/**
-	 * 계정 삭제
+	 * 계정 삭제: 탈퇴일 수정
 	 * 
 	 * @param removeUserMap
 	 * @return result
 	 */
 	int removeUser(Map<String, Object> removeUserMap);
+	
+	/**
+	 * 계정 삭제: 데이터 삭제
+	 * 
+	 * @return result
+	 */
+	int deleteUserData();
   	
 	List<BoardDto> getBoardsByUserNo(int userNo);
 	

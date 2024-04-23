@@ -1,8 +1,10 @@
 package com.mcp.semi.user.service;
 
+import java.util.Optional;
+import org.springframework.stereotype.Service;
+import com.mcp.semi.common.exception.UserNotFoundException;
 import java.io.PrintWriter;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -217,5 +219,12 @@ public class UserService {
     return url;	
 	}
 
+	
+	public UserDto findByUserNo(int userNo) {
+		UserDto user = userMapper.findByUserNo(userNo);
+		
+		return Optional.ofNullable(user)
+				.orElseThrow(() -> new UserNotFoundException("사용자가 존재하지 않습니다."));
+	}
 	
 }

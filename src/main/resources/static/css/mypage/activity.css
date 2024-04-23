@@ -40,13 +40,21 @@
 
 .activity-title {
     color: #333;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
 }
 
 .activity-title a {
 	font-size: 2rem;
-	margin-top: 6px;
 }
 
+.activity-text {
+	margin-bottom: 0;
+}
+
+.no-write {
+   font-size: 1.5rem;
+   padding: 20px;
+   text-align: center;
+}
