@@ -83,8 +83,6 @@ public class BoardController {
 	    model.addAttribute("board", boardDto);
 	    return "redirect:/dokky/detail?boardNo=" + boardDto.getBoardNo();
 	}
-	                                                                                                                                                                                                                                                                                                                                    
-	
 	
 	@GetMapping("/add")
 	public String boardAdd() {
@@ -104,7 +102,7 @@ public class BoardController {
 		return "redirect:/dokky/main";
 	}
 	
-	
+
 	@ResponseBody
 	@GetMapping(value = "/getBoardByNo.do", produces = "application/json") // 특정 번호의 게시글만 가져오기
 	public BoardDto getBoardByNo(@RequestParam("boardNo") int boardNo) {

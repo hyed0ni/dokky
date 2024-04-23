@@ -10,76 +10,81 @@
 <div class="main">
 	<div class="signup">
 		<div align="center">
-		  <a href="/"><img class="mb-4" src=".././images/dokky.png"  alt="DOKKY-LOGO" height="40"></a>
+		  <a href="/"><img class="mb-4" src=".././images/dokky.png"  alt="DOKKY-LOGO" height="30"></a>
 		  <h1 class="h3 mb-3 fw-normal">DOKKY에 오신것을 환영합니다.</h1><br>
 		  <h6>DOKKY는 MCP 개발자들을 위한 지식공유의 장입니다.</h6>
 		  <br>
 		  <h6>------  회원가입에 필요한 기본정보를 입력해주세요.  -------</h6>		
 		  </div>
 			  
-		<form method="post"
-			  action="/user/signup"
-			  id="frm-signup">
+		<form method="POST"
+			    action="/dokky/signup"
+			        id="frm-signup">
 			  
 		<div class="col-md-7 col-lg-8">
 		<div class="row g-3">
 		
 		  <div class="col-12">
-		    <label for="email" class="form-label">아이디</label>
+		    <label for="inp-email" class="form-label">아이디</label>
 		    <div class="input-group mb-3">
-		      <input type="email" class="form-control frm-ctrl" id="email" placeholder="you@example.com">
+		      <input type="email" class="form-control frm-ctrl" name="userEmail" id="inp-email" placeholder="you@example.com">
 		      <button type="button" class="btn btn-primary" id="btn-code">인증코드받기</button>
 		    </div>
+    		<div id="msg-email"></div>
 		  </div>
 		
-		  <div class="col-12">
+		  <div class="col-12" id="code">
 		    <label for="inp-code" class="form-label">인증코드</label>
 		    <div class="input-group mb-3">
-		      <input type="text" class="form-control frm-ctrl" id="inp-code" placeholder="인증코드입력">
+		      <input type="text" class="form-control frm-ctrl" id="inp-code" name="code" placeholder="인증코드입력">
 		      <button type="button" class="btn btn-primary" id="btn-verify-code" disabled="disabled">인증하기</button>
 		    </div>
+		    <div id="msg-code"></div>
 		  </div>
 		
 		  <div class="col-12">
-		    <label for="pw" class="form-label">비밀번호</label>
-		    <input type="password" class="form-control" id="pw" placeholder="최소 6자 이상(알파벳, 숫자 필수)">
+		    <label for="inp-pw" class="form-label">비밀번호</label>
+		    <input type="password" class="form-control" id="inp-pw" name="userPw" placeholder="비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함">
+		    <div id="msg-pw"></div>
 		  </div>
 		
 		  <div class="col-12">
-		    <label for="name" class="form-label">닉네임</label>
-		    <input type="text" class="form-control" id="name" placeholder="별명을 알파벳, 한글, 숫자를 10자 이하로 입력해주세요.">
+		    <label for="inp-name" class="form-label">닉네임</label>
+		    <input type="text" class="form-control" name="userName" id="inp-name" placeholder="별명을 알파벳, 한글, 숫자를 10자 이하로 입력해주세요.">
+		    <div id="msg-name"></div>
 		  </div>
 		
 		  <div class="my-3">
 			  <label class="form-label">성별</label>
 			  <div class="flex">
-			  <div class="form-check">
-			    <input id="man" name="form-check" type="radio" class="form-check-input" checked required>
-				<label class="form-check-label" for="man">남성</label>
-			  </div>
-			  <div class="form-check">
-			    <input id="woman" name="form-check" type="radio" class="form-check-input" required>
-			    <label class="form-check-label" for="woman">여성</label>
-			  </div>
-			  <div class="form-check">
-				<input id="none" name="form-check" type="radio" class="form-check-input" required>
-				<label class="form-check-label" for="none">선택 안 함</label>
-			  </div>
-		      </div>
+				  <div class="form-check">
+					  <input id="none" name="userGender" type="radio" value="none" class="form-check-input" checked="checked" required>
+					  <label class="form-check-label" for="none">선택 안 함</label>
+				  </div>
+				  <div class="form-check">
+				    <input id="man" name="userGender" type="radio" class="form-check-input" value="man" required>
+					  <label class="form-check-label" for="man">남성</label>
+				  </div>
+				  <div class="form-check">
+				    <input id="woman" name="userGender" type="radio" value="woman" class="form-check-input" required>
+				    <label class="form-check-label" for="woman">여성</label>
+				  </div>
+		    </div>
 		  </div>
 				
 		  <div class="col-12">
-		    <label for="address2" class="form-label">휴대전화</label>
-		    <input type="text" class="form-control" id="" placeholder="- 제외하고 입력해주세요.">
+		    <label for="inp-mobile" class="form-label">휴대전화</label>
+		    <input type="text" class="form-control" name="userMoblie" id="inp-mobile" placeholder="- 제외하고 입력해주세요.">
+		    <div id="msg-mobile"></div>
 		  </div>
 		
 		  <div align="center">
-		    <button class="w-100 btn btn-primary btn-lg" type="submit" disabled="disabled">회원가입</button>
+		    <button class="w-100 btn btn-primary btn-lg" id="btn-signup" type="submit">회원가입</button>
 		  </div>
 		
 		  <div align="center" class="already">
 			<span>이미 회원이신가요?</span>
-			<a href="/user/signin">로그인</a>
+			<a href="/dokky/signin">로그인</a>
 		  </div>
 		  
 		</div>
@@ -88,18 +93,9 @@
 	</div>
 </div>
 
+<script src="/js/user/signup.js"></script>
+
 </body>
-
-
-<script>
-
-const fnSignup = () => {
-  document.getElementById('frm-signup').addEventListener('submit', (evt) => {
-  alert("등록에 성공했습니다!");
-  location.href = '/signin';
-}
-
-</script>
 
 <%@ include file=".././layout/copyright.jsp" %>
 <%@ include file=".././layout/footer.jsp" %>
