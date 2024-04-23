@@ -214,7 +214,7 @@ function renderUserBoards(resData) {
 			boardNo: board.boardNo,
 			boardTitle: board.boardTitle,
 			content: board.boardContent,
-			date: board.createDt,
+			date: board.boardCreateDt,
 			link: `/dokky/detail?boardNo=${board.boardNo}`
 		});
 		postsContainer.appendChild(postCard);
@@ -236,7 +236,7 @@ function renderBoardRepeatedWithComments(resData) {
 				boardNo: board.boardNo,
 				boardTitle: board.boardTitle,
 				content: comment.cmtContent,
-				date: comment.createDt,
+				date: comment.cmtCreateDt,
 				link: `/dokky/detail?boardNo=${board.boardNo}`
 			});
 			commentsContainer.appendChild(commentCard);

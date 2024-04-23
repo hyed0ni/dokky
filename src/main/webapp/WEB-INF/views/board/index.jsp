@@ -41,7 +41,7 @@
 							<td>${board.boardNo}</td>
 							<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
 							<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
-							<td>${board.createDt}</td>
+							<td>${board.boardCreateDt}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -19,17 +19,10 @@ public class BoardDto {
 	private String boardTitle;
 	private String boardContent;
 	private int boardHit;
-	private Timestamp createDt;
-	private Timestamp modifyDt;
+	private Timestamp boardCreateDt;
+	private Timestamp boardModifyDt;
 	private UserDto user;
 	private List<CommentDto> comments;
-	
-	public BoardDto(int boardNo, String boardTitle, int boardHit, Timestamp createDt, UserDto user) {
-		this.boardNo = boardNo;
-		this.boardTitle = boardTitle;
-		this.boardHit = boardHit;
-		this.createDt = createDt;
-		this.user = user; 
-		
-	}
+
+
 }

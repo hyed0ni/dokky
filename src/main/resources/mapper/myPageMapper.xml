@@ -8,7 +8,7 @@
 	        <result property="boardTitle" column="BOARD_TITLE"/>
 	        <result property="boardContent" column="BOARD_CONTENT"/>
 	        <result property="boardHit" column="BOARD_HIT"/>
-	        <result property="createDt" column="BOARD_CREATE_DT"/>
+	        <result property="boardCreateDt" column="BOARD_CREATE_DT"/>
 	        <association property="user" javaType="UserDto">
 	            <id property="userNo" column="USER_NO"/>
 	            <result property="userName" column="USER_NAME"/>
@@ -16,7 +16,7 @@
 	        <collection property="comments" ofType="CommentDto">
 	        	<id property="commentNo" column="CMT_NO"/>
 	        	<result property="commentContent" column="CMT_CONTENT"/>
-	        	<result property="createDt" column="CMT_CREATE_DT"/>
+	        	<result property="cmtCreateDt" column="CMT_CREATE_DT"/>
         		<association property="user" javaType="UserDto">
 	         		   <id property="userNo" column="USER_NO"/>
 	         		   <result property="userName" column="USER_NAME"/>
@@ -46,6 +46,7 @@
 		WHERE CURRENT_DATE - WITHDRAWAL_DT >= 2
 	</delete>
 	
+	<!-- 내가 작성한 글 조회 -->
 	<select id="getBoardsByUserNo" resultMap="MyPageMap">
 		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.BOARD_CREATE_DT, U.USER_NAME, U.USER_NO
 		  FROM BOARD_T B
@@ -54,6 +55,7 @@
 		 ORDER BY B.BOARD_CREATE_DT DESC
 	</select>
 	
+	<!-- 내가 작성한 댓글 조회 -->
 	<select id="getBoardsWithCommentsByUserNo" resultMap="MyPageMap">
 		SELECT DISTINCT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.BOARD_CREATE_DT, U.USER_NAME, U.USER_NO,
 			   C.CMT_NO, C.CMT_CONTENT, C.CMT_CREATE_DT
