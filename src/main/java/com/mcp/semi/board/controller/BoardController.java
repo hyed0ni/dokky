@@ -29,10 +29,6 @@ public class BoardController {
 	
 	@GetMapping("/main")
 	public String board(@RequestParam(value="page", defaultValue="1") Integer page, Model model) {
-		List<BoardDto> boardList = boardService.getBoardList(boardDto);
-		model.addAttribute("boardList", boardList);
-		return "board/index";
-	}
 		
 		// 전체 게시물 리스트
 	    List<BoardDto> boardList = boardService.getBoardList(page,10);

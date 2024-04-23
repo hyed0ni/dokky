@@ -50,8 +50,8 @@ public class CommentService {
 		
 		CommentDto commentDto = CommentDto.builder()
 							.commentContent(comment)
-							.createDt(date)
-							.modifyDt(date)
+							.cmtCreateDt(date)
+							.cmtModifyDt(date)
 							.user(user)
 							.board(board)
 							.build();
