@@ -32,7 +32,6 @@
 		    </div>
 		    <br>
 	    	<div>
-	    		<input type="hidden" name="url" value="${url}">
 	    		<button class="w-100 btn btn-lg btn-primary mb-3" type="submit">로그인</button>
 	    	</div>
 		</form>

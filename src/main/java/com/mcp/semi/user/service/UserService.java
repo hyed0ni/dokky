@@ -46,7 +46,7 @@ public class UserService {
 		
 		try {
 			
-			response.setContentType("text/html");
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			
@@ -63,7 +63,7 @@ public class UserService {
 				
 				userMapper.insertAccessHistory(params);
 				
-				out.println("alert('회원 가입되었습니다.');");
+				out.println("alert('환영합니다! :)');");
 				out.println("location.href='" + request.getContextPath() + "/dokky/main';");
 
 			} else {  // 가입실패
@@ -114,10 +114,19 @@ public class UserService {
 	public void signin(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
+			
 			String userEmail = request.getParameter("userEmail");
 			String userPw = SecurityUtils.getSha256(request.getParameter("userPw"));
 			String userIp = request.getRemoteAddr();
 			String userAgent = request.getHeader("User-Agent");
+			
+      // 세션에 이전 페이지 URL 저장
+      HttpSession session = request.getSession();
+      String previousUrl = (String) session.getAttribute("previousUrl");
+      if (previousUrl == null) {
+          previousUrl = request.getHeader("referer");
+          session.setAttribute("previousUrl", previousUrl);
+      }
 			
 			Map<String, Object> params = Map.of("userEmail", userEmail
 																				, "userPw", userPw
@@ -129,13 +138,19 @@ public class UserService {
 			
 			if(user != null) {   // 성공
 				
-				userMapper.insertAccessHistory(params);
-				
-				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
-				session.setMaxInactiveInterval(1800);  
-				
-				response.sendRedirect(request.getParameter("url"));
+        userMapper.insertAccessHistory(params);
+
+        session.setAttribute("user", user);
+        session.setMaxInactiveInterval(1800);
+
+        // 이전 페이지로 리다이렉트
+        String redirectUrl = (String) session.getAttribute("previousUrl");
+        if (redirectUrl != null) {
+            response.sendRedirect(redirectUrl);
+        } else {
+            // 이전 페이지가 없을 경우 기본 페이지로 리다이렉트
+            response.sendRedirect(request.getContextPath() + "/"); // 적절한 기본 페이지 URL로 변경해주세요
+        }
 				
 			} else {   // 실패
 				
