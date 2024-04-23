@@ -85,12 +85,20 @@
 /* 휴대전화 */
 .my-profile .form-control {margin: 0 7px;}
 
+.my-profile .p-inp {
+	display: flex;
+    align-items: center;
+}
+
 .my-profile .phone1 {
 	margin-left: 0;
 	width: 80px;
 }
 
 .my-profile .phone2 {width: 120px;}
+
+/* 버튼 */
+.my-profile .btn-lg {height: 30px;}
 
 /* 저장 버튼 */
 .my-profile .needs-validation button {width: 70px !important;}
@@ -119,11 +127,17 @@
 /* 체크박스, 버튼 */
 .my-profile .remove-user {
     justify-content: space-between;
-	margin: 12px 0;
+	margin: 10px 0;
+}
+
+/* 체크박스 */
+.my-profile #withdrawal {
+	margin-left: 0;
+    margin-right: 7px;
 }
 
 /* 계정 삭제 버튼 */
-.my-profile .remove-user > button {width: 100px !important;}
+.my-profile #remove-user-btn {width: 100px !important;}
 
 /* 버튼 비활성화 */
 .my-profile .disabled {

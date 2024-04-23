@@ -17,7 +17,7 @@ originPw.addEventListener("blur", () => {
 });
 
 // 신규 비밀번호 유효성 검사
-newPw.addEventListener("change", (e) => {
+newPw.addEventListener("change", e => {
 
     if (empInput(e.target) === 0) {
         newPwMsg.className = "none";
@@ -47,6 +47,26 @@ newPwChk.addEventListener("change", () => {
 	else pwCheck();
 });
 
+// 비밀번호 변경
+modifyForm.addEventListener("submit", e => {
+
+	const newPwEmpExist = empInput(newPw) || newPwMsg.className === "block";
+	const newPwChkEmpExist = empInput(newPwChk) || newPwChkMsg.className === "block";
+
+	if (empInput(originPw)) {
+		originPwMsg.className = "block";
+		prevForm(originPw, e);
+	} 
+	else if (newPwEmpExist) prevForm(newPw, e);
+	else if (newPwChkEmpExist) prevForm(newPwChk, e);
+
+});
+
+// 입력 값 존재 여부 확인 함수
+function empInput(inp) {
+	return inp.value.trim().length === 0;
+}
+
 // 비밀번호 일치 여부 확인 함수
 function pwCheck() {
 
@@ -60,24 +80,8 @@ function pwCheck() {
 
 }
 
-// 입력 값 존재 여부 확인 함수
-function empInput(inp) {
-	return inp.value.trim().length === 0;
+// form 태그 제출 중단 함수
+function prevForm(inp, e) {
+	inp.focus();
+	e.preventDefault();
 }
-
-// 비밀번호 변경
-modifyForm.addEventListener("submit", (e) => {
-
-	// 현재 비밀번호 미입력
-	if (empInput(originPw)) {
-		originPwMsg.className = "block";
-		originPw.focus();
-		e.preventDefault();
-	}
-
-	const empNewPw = empInput(newPw) || empInput(newPwChk);
-	const existMsg = document.querySelectorAll("#modify-form .block").length !== 0;
-
-	if (empNewPw || existMsg) e.preventDefault();
-
-});

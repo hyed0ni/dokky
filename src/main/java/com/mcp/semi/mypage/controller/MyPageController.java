@@ -52,7 +52,6 @@ public class MyPageController {
 		return "mypage/modifyPw";
 	}
 
-	
 	/**
 	 * 비밀번호 변경
 	 * 
@@ -62,22 +61,22 @@ public class MyPageController {
 	 * @return redirect (myProfile() or modifyPw())
 	 */
 	@PostMapping("modify-password/{userNo}")
-	public String modifyPw(@RequestParam Map<String, Object> pwMap, 
-							@PathVariable("userNo") int userNo, 
-							RedirectAttributes redirectAttributes) {
-		
+	public String modifyPw(@RequestParam Map<String, Object> pwMap, @PathVariable("userNo") int userNo,
+			RedirectAttributes redirectAttributes) {
+
 		pwMap.put("userNo", userNo);
 		int result = myPageService.modifyPw(pwMap);
-		
-		if (result == 1) return "redirect:/dokky/mypage/" + userNo;
+
+		if (result == 1)
+			return "redirect:/dokky/mypage/" + userNo;
 		else {
 			redirectAttributes.addFlashAttribute("errorMsg", "현재 비밀번호가 일치하지 않습니다.");
 			return "redirect:/dokky/modify-password";
 		}
-		
+
 	}
-	
-	/** 
+
+	/**
 	 * 계정 삭제
 	 * 
 	 * @return forward (removeUser.jsp)
@@ -86,32 +85,32 @@ public class MyPageController {
 	public String removeUser() {
 		return "mypage/removeUser";
 	}
-	
+
 	/**
 	 * 계정 삭제
 	 * 
 	 * @param userNo
 	 * @param originPw
 	 * @param redirectAttributes
-	 * @return 
+	 * @return
 	 */
 	@PostMapping("remove-user/{userNo}")
-	public String removeUser(@PathVariable("userNo") int userNo, 
-							@RequestParam("originPw") String originPw, 
-							RedirectAttributes redirectAttributes) {
-		
+	public String removeUser(@PathVariable("userNo") int userNo, @RequestParam("originPw") String originPw,
+			RedirectAttributes redirectAttributes) {
+
 		Map<String, Object> removeUserMap = new HashMap<String, Object>();
 		removeUserMap.put("userNo", userNo);
 		removeUserMap.put("originPw", originPw);
-		
+
 		int result = myPageService.removeUser(removeUserMap);
-		
-		if (result == 1) return "redirect:/dokky/main";
+
+		if (result == 1)
+			return "redirect:/dokky/main";
 		else {
 			redirectAttributes.addFlashAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
 			return "redirect:/dokky/remove-user";
 		}
-		
+
 	}
 
 	// 내가 작성한 글 조회
@@ -119,7 +118,7 @@ public class MyPageController {
 	public ResponseEntity<?> myBoard(@PathVariable("userNo") int userNo) {
 		List<BoardDto> boardList = myPageService.getUserBoards(userNo);
 		if (boardList.isEmpty()) {
-			return ResponseEntity.ok(Map.of("message", "아직 작성한 게시글이 없습니다"));
+			return ResponseEntity.ok(Map.of("message", "아직 작성한 게시글이 없습니다."));
 		} else {
 			return ResponseEntity.ok(boardList);
 		}
@@ -130,11 +129,11 @@ public class MyPageController {
 	public ResponseEntity<?> myComment(@PathVariable("userNo") int userNo) {
 		List<BoardDto> boardList = myPageService.getUserBoardsWithComments(userNo);
 		if (boardList.isEmpty()) {
-			return ResponseEntity.ok(Map.of("message", "아직 작성한 댓글이 없습니다"));
+			return ResponseEntity.ok(Map.of("message", "아직 작성한 댓글이 없습니다."));
 		} else {
-			return ResponseEntity.ok(boardList);	
+			return ResponseEntity.ok(boardList);
 		}
-		
+
 	}
 
 }
