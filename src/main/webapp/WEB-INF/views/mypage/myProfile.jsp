@@ -29,7 +29,7 @@
  				<form class="needs-validation" novalidate>
  					<div>
  						<!-- 프로필 이미지 -->
- 						<img src="/images/profileImage.jpg" id="profile-img">
+ 						<img src="/images/dokky.png" id="profile-img">
 						<div id="update-img">변경</div>
 						<input type="file" id="file-input" style="display: none;">
 					</div>
@@ -136,6 +136,6 @@
 	</div>
 	
 	<script src="/js/mypage/myProfile.js"></script>
-	
+	<script src="/js/mypage/activity.js"></script>
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>

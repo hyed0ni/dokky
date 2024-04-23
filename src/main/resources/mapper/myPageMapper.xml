@@ -8,7 +8,7 @@
 	        <result property="boardTitle" column="BOARD_TITLE"/>
 	        <result property="boardContent" column="BOARD_CONTENT"/>
 	        <result property="boardHit" column="BOARD_HIT"/>
-	        <result property="createDt" column="CREATE_DT"/>
+	        <result property="createDt" column="BOARD_CREATE_DT"/>
 	        <association property="user" javaType="UserDto">
 	            <id property="userNo" column="USER_NO"/>
 	            <result property="userName" column="USER_NAME"/>
@@ -16,7 +16,7 @@
 	        <collection property="comments" ofType="CommentDto">
 	        	<id property="commentNo" column="CMT_NO"/>
 	        	<result property="commentContent" column="CMT_CONTENT"/>
-	        	<result property="createDt" column="CREATE_DT"/>
+	        	<result property="createDt" column="CMT_CREATE_DT"/>
         		<association property="user" javaType="UserDto">
 	         		   <id property="userNo" column="USER_NO"/>
 	         		   <result property="userName" column="USER_NAME"/>
@@ -47,21 +47,21 @@
 	</delete>
 	
 	<select id="getBoardsByUserNo" resultMap="MyPageMap">
-		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.CREATE_DT, U.USER_NAME, U.USER_NO
+		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.BOARD_CREATE_DT, U.USER_NAME, U.USER_NO
 		  FROM BOARD_T B
 		 INNER JOIN USER_T U ON B.USER_NO = U.USER_NO
 		 WHERE U.USER_NO = #{userNo}
-		 ORDER BY B.CREATE_DT DESC
+		 ORDER BY B.BOARD_CREATE_DT DESC
 	</select>
 	
 	<select id="getBoardsWithCommentsByUserNo" resultMap="MyPageMap">
-		SELECT DISTINCT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.CREATE_DT, U.USER_NAME, U.USER_NO,
-			   C.CMT_NO, C.CMT_CONTENT, C.CREATE_DT
+		SELECT DISTINCT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.BOARD_CREATE_DT, U.USER_NAME, U.USER_NO,
+			   C.CMT_NO, C.CMT_CONTENT, C.CMT_CREATE_DT
 	     FROM BOARD_T B
 	    INNER JOIN USER_T U ON B.USER_NO = U.USER_NO
 		 LEFT JOIN COMMENT_T C ON B.BOARD_NO = C.BOARD_NO
 		WHERE B.USER_NO = #{userNo} AND CMT_NO IS NOT NULL
-		ORDER BY B.CREATE_DT DESC, C.CREATE_DT DESC
+		ORDER BY B.BOARD_CREATE_DT DESC, C.CMT_CREATE_DT DESC
 	</select>
 	
 </mapper>
