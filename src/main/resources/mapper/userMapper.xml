@@ -6,47 +6,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.mcp.semi.user.mapper.UserMapper">
 
-<insert id="setSignup"
-		parameterType="UserDto">
+<insert id="insertUser"
+		    parameterType="UserDto">
 	INSERT INTO USER_T (
-				USER_NO
-			  , USER_EMAIL
-			  , USER_PW
-			  , USER_NAME
-			  , USER_GENDER
-			  , USER_MOBILE
-			  , SIGNUP_DT
-			  , PW_MODIFY_DT
+						  USER_NO
+					  , USER_EMAIL
+					  , USER_PW
+					  , USER_NAME
+					  , USER_GENDER
+					  , USER_MOBILE
+					  , SIGNUP_DT
+					  , PW_MODIFY_DT
 	) VALUES (
-				USER_SEQ.NEXTVAL
-			  , #{userEmail}
-			  , #{userPw}
-			  , #{userName}
-			  , #{userGender}
-			  , #{userMobile}
-			  , CURRENT_DATE
-			  , CURRENT_DATE
+						USER_SEQ.NEXTVAL
+					  , #{userEmail}
+					  , #{userPw}
+					  , #{userName}
+					  , #{userGender}
+					  , #{userMobile}
+					  , CURRENT_DATE
+					  , CURRENT_DATE
 	)
 </insert>
 
 <insert id="insertAccessHistory"
-          parameterType="Map">       
+        parameterType="Map">       
     INSERT INTO ACCESS_HISTORY_T (
-		        ACCESS_HISTORY_NO
-		      , USER_EMAIL
-		      , ACCESS_IP
-		      , USER_AGENT
-		      , SESSION_ID
-		      , LOGIN_DT
-		      , LOGOUT_DT
+				        ACCESS_HISTORY_NO
+				      , USER_EMAIL
+				      , ACCESS_IP
+				      , USER_AGENT
+				      , SESSION_ID
+				      , LOGIN_DT
+				      , LOGOUT_DT
     ) VALUES (
-		        ACCESS_HISTORY_SEQ.NEXTVAL
-		      , #{userEmail}
-		      , #{accessIp}
-		      , #{userAgent}
-		      , #{sessionId}
-		      , CURRENT_DATE
-		      , NULL
+				        ACCESS_HISTORY_SEQ.NEXTVAL
+				      , #{userEmail}
+				      , #{accessIp}
+				      , #{userAgent}
+				      , #{sessionId}
+				      , CURRENT_DATE
+				      , NULL
     )    
 </insert>
 
@@ -56,7 +56,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 WHERE SESSION_ID = #{sessionId}
 </update>
 
-
 <select id="findByUserNo"
 			 parameterType="int" resultType="UserDto">
 	SELECT USER_NO, USER_EMAIL, USER_PW, USER_NAME, 
@@ -65,5 +64,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	 WHERE USER_NO = #{userNo}
 </select>
 
- 
+<select id="getUserByMap"
+        parameterType="Map"
+        resultType="UserDto">
+  SELECT USER_NO, USER_EMAIL, USER_PW, USER_NAME, USER_GENDER, USER_MOBILE, PW_MODIFY_DT, SIGNUP_DT
+    FROM USER_T
+  <where>
+     <if test="userEmail!=null">USER_EMAIL = #{userEmail}</if>
+    <if test="userPw!=null">AND USER_PW= #{userPw}</if> 
+  </where>
+</select>
+
 </mapper>

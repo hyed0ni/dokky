@@ -6,17 +6,21 @@
 
 		<nav class="navbar fixed-top">
 			<div class="container-fluid">
-			<img src="/images/dokky.png" class="logo" alt="DOKKY 로고">
-				<a class="navbar-brand nav-pd" href="/dokky/main" >DOKKY</a>
-				<ul class="navbar-nav ms-auto">
+			<img src="/images/dokky.png" alt="DOKKY 로고" height="30">
+				<a class="navbar-brand fw-bold" href="/" >DOKKY</a>
+				<ul class="navbar-nav ms-auto flex-row">
 					<li class="nav-item">
-						<a role="button" class="btn btn-light me-2 nav-pd" id="signin" href="/user/signin">로그인</a>
+						<a role="button" class="btn btn-light me-2" id="signin" href="/dokky/signin">로그인</a>
 					</li>
 					<li class="nav-item">
-						<a role="button" class="btn btn-primary me-2 nav-pd" href="/user/signup">회원가입</a>
+						<a role="button" class="btn btn-primary me-2" id="signup" href="/dokky/signup">회원가입</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">모지모지</a>
+			      <!-- Sign In 된 경우 -->
+			      <c:if test="${sessionScope.user != null}">
+			        ${sessionScope.user.userName}님 반갑습니다.
+			        <a href="/user/signout">로그아웃</a>
+			      </c:if>
 					</li>
 				</ul>
 			</div>
