@@ -29,7 +29,7 @@
  				<form class="needs-validation" novalidate>
  					<div>
  						<!-- 프로필 이미지 -->
- 						<img src="/images/profileImage.jpg" class="profile-img">
+ 						<img src="/images/dokky.png" class="profile-img">
 					</div>
  				
  					<!-- 이메일 -->
@@ -49,17 +49,17 @@
 						<label class="form-label">성별</label>
 						<div class="flex">
 							<div class="form-check">
-								<input id="man" name="man" type="radio" class="form-check-input"
+								<input id="man" name="gender" type="radio" class="form-check-input"
 										 ${user.userGender == 'man' ? 'checked' : ''} required>
 								<label class="form-check-label" for="man">남성</label>
 							</div>
 							<div class="form-check">
-								<input id="woman" name="woman" type="radio" class="form-check-input"
+								<input id="woman" name="gender" type="radio" class="form-check-input"
 										${user.userGender == 'woman' ? 'checked' : ''} required>
 								<label class="form-check-label" for="woman">여성</label>
 							</div>
 							<div class="form-check">
-								<input id="no" name="no" type="radio" class="form-check-input" 
+								<input id="no" name="gender" type="radio" class="form-check-input" 
 										${user.userGender == 'none' ? 'checked' : ''} required>
 								<label class="form-check-label" for="no">선택 안 함</label>
 							</div>
@@ -135,6 +135,6 @@
 	</div>
 	
 	<script src="/js/mypage/myProfile.js"></script>
-	
+	<script src="/js/mypage/activity.js"></script>
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>

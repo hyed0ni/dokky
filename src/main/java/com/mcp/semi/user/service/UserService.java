@@ -25,7 +25,7 @@ public class UserService {
 	}
 	
 	public UserDto findByUserNo(int userNo) {
-		UserDto user = userMapper.findUserByNo(userNo);
+		UserDto user = userMapper.findByUserNo(userNo);
 		
 		return Optional.ofNullable(user)
 				.orElseThrow(() -> new UserNotFoundException("사용자가 존재하지 않습니다."));
