@@ -42,7 +42,7 @@ for (const inp of phoneInputs) {
 }
 
 // 회원 정보 수정
-modifyForm.addEventListener("submit", () => {
+modifyForm.addEvantListener("submit", () => {
 
 	// 휴대전화 input 하나의 문자열로 합치기
 	const userMobile = `${phone1.value}${phone2.value}${phone3.value}`;
