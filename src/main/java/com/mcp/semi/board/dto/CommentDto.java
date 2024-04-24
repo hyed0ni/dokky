@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class CommentDto {
 	private int commentNo;
 	private String commentContent;
-	private Date createDt;
-	private Date modifyDt;
+	private Date cmtCreateDt;
+	private Date cmtModifyDt;
 	private UserDto user;
 	private BoardDto board;
 }

@@ -21,8 +21,8 @@
             <textarea type="text" name="boardContent" id="content" class="form-control"></textarea>
         </div>
         <div class="d-flex justify-content-end">
-        		<!-- <input type="hidden" name="userNo" value="${sessionScope.user.userNo}">  -->
-            <input type="hidden" name="userNo" value="1">
+        		 <input type="hidden" name="userNo" value="${sessionScope.user.userNo}"> 
+           <!-- <input type="hidden" name="userNo" value="1">   -->
             <a type="button" id="cancelBtn" class="btn btn btn-light mr-2">취소</a>
             <button type="submit" id="writeBtn" class="btn btn-primary">등록</button>
         </div>

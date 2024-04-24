@@ -1,4 +1,4 @@
-html::-webkit-scrollbar, body::-webkit-scrollbar {
+html::-webkit-scrollbar, body::-webkit-scrollbar, div::-webkit-scrollbar {
 	display: none; /* 스크롤바 숨김 */
 }
 

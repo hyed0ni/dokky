@@ -114,7 +114,7 @@
 				document.getElementById('contents-writer').innerHTML = data.user.userName;
 				document.getElementById('detail-title').innerHTML = data.boardTitle;
 				document.getElementById('detail-contents').innerHTML = data.boardContent;
-				document.getElementById('create-dt').innerHTML = moment(data.createDt).format('YYYY.MM.DD HH:mm');;
+				document.getElementById('create-dt').innerHTML = moment(data.boardCreateDt).format('YYYY.MM.DD HH:mm');;
 				document.getElementById('board-hit').innerHTML = data.boardHit;
 			},
 			error:function(jqXHR){

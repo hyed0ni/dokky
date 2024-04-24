@@ -7,8 +7,8 @@
 	<resultMap type="CommentDto" id="CommentMap">
 		<id property="commentNo" column="CMT_NO" />
 		<result property="commentContent" column="CMT_CONTENT" />
-		<result property="createDt" column="C_CREATE_DT" />
-		<result property="modifyDt" column="C_MODIFY_DT" />
+		<result property="cmtCreateDt" column="CMT_CREATE_DT" />
+		<result property="cmtModifyDt" column="CMT_MODIFY_DT" />
 		<association property="user" javaType="UserDto">
 			<id property="userNo" column="USER_NO" />
 			<result property="userName" column="USER_NAME" />
@@ -24,8 +24,8 @@
 		INSERT INTO COMMENT_T(
 				CMT_NO
 			,	CMT_CONTENT
-			,	C_CREATE_DT
-			,	C_MODIFY_DT
+			,	CMT_CREATE_DT
+			,	CMT_MODIFY_DT
 			,	USER_NO
 			,	BOARD_NO
 		) VALUES(
