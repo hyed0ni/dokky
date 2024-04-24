@@ -7,7 +7,7 @@
 		<nav class="navbar fixed-top">
 			<div class="container-fluid">
 			<img src="/images/dokky.png" alt="DOKKY 로고" height="30">
-				<a class="navbar-brand fw-bold" href="/" >DOKKY</a>
+				<a class="navbar-brand fw-bold" href="/dokky/main" >DOKKY</a>
 				<ul class="navbar-nav ms-auto flex-row">
 					<li class="nav-item">
 					<c:if test="${sessionScope.user == null}">
@@ -20,6 +20,9 @@
 					</c:if>
 					</li>
 					<li class="nav-item">
+					  <!-- Sign In 안 된 경우 -->
+			      <c:if test="${sessionScope.user == null}">  
+			      </c:if>
 			      <!-- Sign In 된 경우 -->
 			      <c:if test="${sessionScope.user != null}">
 			        <a href="/dokky/mypage/${user.userNo}"> ${sessionScope.user.userName}님 </a> 반갑습니다.

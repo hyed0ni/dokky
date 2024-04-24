@@ -16,7 +16,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					  , USER_GENDER
 					  , USER_MOBILE
 					  , SIGNUP_DT
-					  , PW_MODIFY_DT
 	) VALUES (
 						USER_SEQ.NEXTVAL
 					  , #{userEmail}
@@ -24,7 +23,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					  , #{userName}
 					  , #{userGender}
 					  , #{userMobile}
-					  , CURRENT_DATE
 					  , CURRENT_DATE
 	)
 </insert>
@@ -47,12 +45,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				      , #{sessionId}
 				      , CURRENT_DATE
 				      , NULL
-    )    
+    )
 </insert>
 
 <update id="updateAccessHistory">
 	UPDATE ACCESS_HISTORY_T
-	   SET SIGNOUT_DT = CURRENT_DATE
+	   SET LOGOUT_DT = CURRENT_DATE
 	 WHERE SESSION_ID = #{sessionId}
 </update>
 

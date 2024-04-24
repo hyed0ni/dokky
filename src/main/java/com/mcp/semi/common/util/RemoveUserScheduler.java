@@ -22,5 +22,4 @@ public class RemoveUserScheduler {
 		int result = myPageService.deleteUserData();
 		log.info("탈퇴 회원 데이터 삭제 완료: {}명", result);
 	}
-	
 }

@@ -9,9 +9,6 @@ import com.mcp.semi.user.dto.UserDto;
 @Mapper
 public interface UserMapper {
 
-	void setSignin(UserDto user);
-	void setSignup(UserDto user);
-	void setSignout(UserDto user);
 	UserDto findByUserNo(int userNo);
 	int insertUser(UserDto user);
   int deleteUser(int userNo);

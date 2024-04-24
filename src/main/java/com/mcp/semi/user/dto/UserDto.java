@@ -26,4 +26,5 @@ public class UserDto {
 	private String userImg;
 	private String userUploadPath;
 	private Date withdrawalDt;
+	
 }
