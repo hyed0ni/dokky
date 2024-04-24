@@ -20,6 +20,8 @@ import com.mcp.semi.mypage.service.MyPageService;
 import com.mcp.semi.user.dto.UserDto;
 
 import com.mcp.semi.board.dto.BoardDto;
+import com.mcp.semi.common.page.PageResponse;
+
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -115,9 +117,10 @@ public class MyPageController {
 
 	// 내가 작성한 글 조회
 	@GetMapping(value = "/api/my-board/{userNo}", produces = "application/json")
-	public ResponseEntity<?> myBoard(@PathVariable("userNo") int userNo) {
-		List<BoardDto> boardList = myPageService.getUserBoards(userNo);
-		if (boardList.isEmpty()) {
+	public ResponseEntity<?> myBoard(@PathVariable("userNo") int userNo,
+									 @RequestParam(value ="page", defaultValue = "1")int page) {
+		PageResponse<BoardDto> boardList = myPageService.getUserBoards(userNo, page, 10);
+		if (boardList.getItems().isEmpty()) {
 			return ResponseEntity.ok(Map.of("message", "아직 작성한 게시글이 없습니다."));
 		} else {
 			return ResponseEntity.ok(boardList);
@@ -126,9 +129,10 @@ public class MyPageController {
 
 	// 내가 댓글 단 게시글 정보 + 댓글 내용 조회
 	@GetMapping(value = "/api/my-comment/{userNo}", produces = "application/json")
-	public ResponseEntity<?> myComment(@PathVariable("userNo") int userNo) {
-		List<BoardDto> boardList = myPageService.getUserBoardsWithComments(userNo);
-		if (boardList.isEmpty()) {
+	public ResponseEntity<?> myComment(@PathVariable("userNo") int userNo,
+			 						  @RequestParam(value ="page", defaultValue = "1")int page) {
+		 PageResponse<BoardDto> boardList = myPageService.getUserBoardsWithComments(userNo, page, 10);
+		if (boardList.getItems().isEmpty()) {
 			return ResponseEntity.ok(Map.of("message", "아직 작성한 댓글이 없습니다."));
 		} else {
 			return ResponseEntity.ok(boardList);

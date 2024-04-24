@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mcp.semi.board.dto.BoardDto;
+import com.mcp.semi.common.page.PageResponse;
 import com.mcp.semi.mypage.mapper.MyPageMapper;
 import com.mcp.semi.user.dto.UserDto;
 import com.mcp.semi.user.service.UserService;
@@ -59,14 +60,30 @@ public class MyPageService {
     
     // 내가 작성한 글 조회
     @Transactional(readOnly = true)
-    public List<BoardDto> getUserBoards(int userNo) {
-        return myPageMapper.getBoardsByUserNo(userNo);
+    public PageResponse<BoardDto> getUserBoards(int userNo, int page, int cnt) {
+    	int totalCount = myPageMapper.countBoardsByUserNo(userNo);
+    	int total = totalCount / cnt + ((totalCount % cnt > 0) ? 1 : 0);
+    	int startPage = Math.max(page - 2, 1);
+		int endPage = Math.min(page + 2,  total);
+		int begin = (page - 1) * cnt + 1;
+		int end = begin + cnt - 1;
+		
+		List<BoardDto> items = myPageMapper.getBoardsByUserNo(userNo, begin, end);
+		return new PageResponse<>(items, page ,total, startPage, endPage);
     }
     
     // 내가 작성한 댓글 조회
     @Transactional(readOnly = true)
-    public List<BoardDto> getUserBoardsWithComments(int userNo) {
-    	return myPageMapper.getBoardsWithCommentsByUserNo(userNo);
+    public PageResponse<BoardDto> getUserBoardsWithComments(int userNo, int page, int cnt) {
+    	int totalCount = myPageMapper.countCommentsByUserNo(userNo);
+    	int total = totalCount / cnt + ((totalCount % cnt > 0) ? 1 : 0);
+    	int startPage = Math.max(page - 2, 1);
+		int endPage = Math.min(page + 2,  total);
+		int begin = (page - 1) * cnt + 1;
+		int end = begin + cnt - 1;
+		
+		List<BoardDto> items = myPageMapper.getBoardsWithCommentsByUserNo(userNo, begin, end);
+		return new PageResponse<>(items, page ,total, startPage, endPage);
     }
 
 }

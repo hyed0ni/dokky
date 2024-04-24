@@ -16,4 +16,5 @@ public interface CommentMapper {
 	int deleteComment(int boardNo);
 	int modifyComment(int boardNo);
 	CommentDto getCommentByNo(int boardNo);
+	int getTotalCount();
 }

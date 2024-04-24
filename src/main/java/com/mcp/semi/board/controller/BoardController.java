@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.service.BoardService;
+import com.mcp.semi.common.page.PageResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -27,39 +28,47 @@ public class BoardController {
 
 	private final BoardService boardService;
 	
-	@GetMapping("/main")
-	public String board(@RequestParam(value="page", defaultValue="1") Integer page, Model model) {
-		
-		// 전체 게시물 리스트
-	    List<BoardDto> boardList = boardService.getBoardList(page,10);
-	    model.addAttribute("boardList", boardList);
-	    
-	    // 해당 게시물 전체 조회	    
-	    for(BoardDto b : boardList)
-	    System.out.println(b);
-	    
-	    // 전체 게시물 수 조회
-	    int totalCount = boardService.getTotalCount(); 
-	    model.addAttribute("totalCount", totalCount);
-	    
-	    // 전체 게시물 / 10	    
-		int maxPage = (int)Math.ceil((double)totalCount/10);
-		int startPage = page - 2;
-		int endPage = page + 2;
-		
-		// 다음 페이지, 전 페이지
-		int perPage = maxPage - 1;
-		model.addAttribute("perPage", perPage);
-		
-		// 시작번호, 끝번호 계산 후 표출		
-		endPage = Math.min(endPage, maxPage);
-		startPage = Math.max(startPage, 1);
-		model.addAttribute("startPage",startPage);
-		model.addAttribute("endPage",endPage);
-		
-	    return "board/list";
-	}
+//	@GetMapping("/main")
+//	public String board(@RequestParam(value="page", defaultValue="1") Integer page, Model model) {
+//		
+//		// 전체 게시물 리스트
+//	    List<BoardDto> boardList = boardService.getBoardList(page,10);
+//	    model.addAttribute("boardList", boardList);
+//	    
+//	    // 해당 게시물 전체 조회	    
+//	    for(BoardDto b : boardList)
+//	    System.out.println(b);
+//	    
+//	    // 전체 게시물 수 조회
+//	    int totalCount = boardService.getTotalCount(); 
+//	    model.addAttribute("totalCount", totalCount);
+//	    
+//	    // 전체 게시물 / 10	    
+//		int maxPage = (int)Math.ceil((double)totalCount/10);
+//		int startPage = page - 2;
+//		int endPage = page + 2;
+//		
+//		// 다음 페이지, 전 페이지
+//		int perPage = maxPage - 1;
+//		model.addAttribute("perPage", perPage);
+//		
+//		// 시작번호, 끝번호 계산 후 표출		
+//		endPage = Math.min(endPage, maxPage);
+//		startPage = Math.max(startPage, 1);
+//		model.addAttribute("startPage",startPage);
+//		model.addAttribute("endPage",endPage);
+//		
+//	    return "board/list";
+//	}
 	
+	@GetMapping("/main")
+	public String board(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		final int cnt = 10;
+		PageResponse<BoardDto> pageResponse = boardService.getBoardList(page, cnt);
+		model.addAttribute("pageResponse", pageResponse);
+		return "board/list";
+	}
+
 	@GetMapping("/detail")
 	public String boardDetail() {
 		return "board/detail";
