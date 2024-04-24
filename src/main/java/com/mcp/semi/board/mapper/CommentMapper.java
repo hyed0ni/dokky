@@ -8,13 +8,14 @@ import org.springframework.ui.Model;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.dto.CommentDto;
+import com.mcp.semi.board.dto.CommentInfoDto;
 
 @Mapper
 public interface CommentMapper {
-	List<CommentDto> getCommentList(CommentDto commentDto);	
+	List<CommentDto> getCommentList(int boardNo);	
 	int insertComment(CommentDto commentDto);
-	int deleteComment(int boardNo);
-	int modifyComment(int boardNo);
 	CommentDto getCommentByNo(int boardNo);
 	int getTotalCount();
+	int deleteComment(int commentNo);
+	int modifyComment(CommentInfoDto commentInfoDto);
 }

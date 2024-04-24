@@ -11,6 +11,14 @@ import com.mcp.semi.board.dto.BoardDto;
 @Mapper
 public interface MyPageMapper {
 	
+	/**
+	 * 회원 정보 수정
+	 * 
+	 * @param userMap
+	 * @return result
+	 */
+	int modifyUser(Map<String, Object> userMap);
+	
 	/** 
 	 * 비밀번호 변경
 	 * 
