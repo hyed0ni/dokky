@@ -1,5 +1,6 @@
 import { rebindEventListeners } from "./myProfile.js";
 
+
 let originalProfileContent = null;
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -8,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	Array.from(profileContainer.children).forEach(child => {
 		originalProfileContent.appendChild(child.cloneNode(true));
 	});
-
+	
 	document.getElementById("my-activity").addEventListener("click", function(event) {
 		event.preventDefault();
 		removeActiveClass();
@@ -23,9 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		this.classList.add("active");
 		showProfile();
 	});
-
-
-	rebindEventListeners();
+	
+	    rebindEventListeners();
 });
 
 function formatDate(dateString) {
@@ -40,6 +40,8 @@ function formatDate(dateString) {
 		hour12: false
 	});
 };
+
+
 
 function removeActiveClass() {
 	document.querySelectorAll(".nav-link").forEach(function(link) {
@@ -66,6 +68,7 @@ function showActivityRecords() {
 	//프로필 및 컨테이너
 	const myProfileBorder = document.createElement("div");
 	myProfileBorder.className = "my-profile-border mb-4";
+
 
 	const uiBox = document.createElement("div");
 	uiBox.className = "ui-box";
@@ -122,7 +125,6 @@ function showActivityRecords() {
 	activityRecords.appendChild(myProfileBorder);
 	profileContainer.appendChild(activityRecords);
 	setupActivityTabs();
-
 }
 
 function setupActivityTabs() {
@@ -143,11 +145,11 @@ function setupActivityTabs() {
 
 function displayMessage(message, container) {
 	clearContent(container.id);
-
+	
 	const messageElement = document.createElement("div");
 	messageElement.className = "no-write";
 	messageElement.textContent = message;
-
+	
 	/*
 	const linkElement = document.createElement("a");
 	linkElement.href = linkHref;
@@ -155,17 +157,17 @@ function displayMessage(message, container) {
 	linkElement.className = "add-link"
 	messageElement.appendChild(linkElement);
 	*/
-	container.appendChild(messageElement);
+	container.appendChild(messageElement);	
 }
 
 
 function showContent(apiUrl, render, loadPage) {
 	window.scrollTo(0, 0);
 	clearContent("activity-content");
-	fetch(apiUrl)
+		fetch(apiUrl)
 		.then(response => response.json())
 		.then(resData => {
-			const activityContent = document.getElementById("activity-content");
+		const activityContent = document.getElementById("activity-content");
 			// window.currentUserName = resData.items.userName;
 			if (resData.items && resData.items.length > 0) {
 				activityContent.appendChild(render(resData.items));
@@ -186,10 +188,10 @@ function showComments(page = 1) {
 	const userNo = document.getElementById("user-no").value;
 	showContent(`/dokky/api/my-comment/${userNo}?page=${page}`, renderBoardRepeatedWithComments, (newPage) => showComments(newPage));
 }
-
 function showBoards(page = 1) {
 	const userNo = document.getElementById("user-no").value;
 	showContent(`/dokky/api/my-board/${userNo}?page=${page}`, renderUserBoards, (newPage) => showBoards(newPage));
+
 }
 
 function createActivityCard({ boardNo, boardTitle, content, date, link, contentLength = 20 }) {
@@ -209,12 +211,14 @@ function createActivityCard({ boardNo, boardTitle, content, date, link, contentL
 	activityDate.className = "activity-date";
 	activityDate.textContent = formatDate(date);
 
+
 	activityTitle.appendChild(activityLink);
 	activityTitle.appendChild(activityDate);
 
 	const activityText = document.createElement("p");
 	activityText.className = "activity-text";
 	activityText.textContent = content.length > contentLength ? `${content.substring(0, contentLength)}...` : content;
+
 	activityCard.appendChild(activityTitle);
 	activityCard.appendChild(activityText);
 	return activityCard;
@@ -288,13 +292,13 @@ function renderPagination(currentPage, totalPage, loadPage) {
 
 
 
+
 function renderUserBoards(resData) {
 	// 게시물 목록 컨테이너
 	const postsContainer = document.createElement("div");
 	postsContainer.className = "activity-container";
 
 	resData.forEach(board => {
-		// createActivityCard 함수를 사용하여 게시물 카드 생성
 		const postCard = createActivityCard({
 			boardNo: board.boardNo,
 			boardTitle: board.boardTitle,
@@ -310,9 +314,11 @@ function renderUserBoards(resData) {
 
 
 function renderBoardRepeatedWithComments(resData) {
+
 	// 게시물 목록 컨테이너
 	const commentsContainer = document.createElement("div");
 	commentsContainer.className = "activity-container";
+
 	resData.forEach(board => {
 		board.comments.forEach(comment => {
 			const commentCard = createActivityCard({

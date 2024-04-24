@@ -26,12 +26,12 @@
 			<!-- 우측 -->
 			<div id="profile-container" class="col-md-7 col-lg-8">
  				<h4 class="mb-3">회원 정보</h4>
- 				<form class="needs-validation" novalidate>
+ 				<form action="1" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
  					<div>
  						<!-- 프로필 이미지 -->
- 						<img src="/images/dokky.png" id="profile-img">
+ 						<img src="/images/dokky_profile.png" id="profile-img">
 						<div id="update-img">변경</div>
-						<input type="file" id="file-input" style="display: none;">
+						<input type="file" id="file-input" accept="image/*" name="profileImg">
 					</div>
  				
  					<!-- 이메일 -->
@@ -43,7 +43,7 @@
 					<!-- 닉네임 -->
 					<div class="col-12 user-info">
 						<label for="nickname" class="form-label">닉네임</label>
-						<input type="text" class="form-control" id="nickname" name="nickname" value="${user.userName}">
+						<input type="text" class="form-control" id="nickname" name="userName" value="${user.userName}" maxlength="50">
 					</div>
     
     				<!-- 성별 -->
@@ -51,17 +51,17 @@
 						<label class="form-label">성별</label>
 						<div class="flex">
 							<div class="form-check">
-								<input id="man" name="gender" type="radio" class="form-check-input"
+								<input id="man" name="userGender" value="man" type="radio" class="form-check-input"
 										 ${user.userGender == 'man' ? 'checked' : ''} required>
 								<label class="form-check-label" for="man">남성</label>
 							</div>
 							<div class="form-check">
-								<input id="woman" name="gender" type="radio" class="form-check-input"
+								<input id="woman" name="userGender" value="woman" type="radio" class="form-check-input"
 										${user.userGender == 'woman' ? 'checked' : ''} required>
 								<label class="form-check-label" for="woman">여성</label>
 							</div>
 							<div class="form-check">
-								<input id="no" name="gender" type="radio" class="form-check-input" 
+								<input id="no" name="userGender" value="none" type="radio" class="form-check-input" 
 										${user.userGender == 'none' ? 'checked' : ''} required>
 								<label class="form-check-label" for="no">선택 안 함</label>
 							</div>
@@ -85,12 +85,13 @@
 						<label class="form-label">휴대전화</label>
 						<div class="flex" style="justify-content: space-between;">
 							<div class="p-inp">
-								<input type="text" class="form-control phone1" maxlength = "3"
+								<input type="text" class="form-control p-inps phone1" maxlength = "3"
 									   id="phone1" name="phone1" value="${phone1}">-
-								<input type="text" class="form-control phone2" maxlength = "4"
+								<input type="text" class="form-control p-inps phone2" maxlength = "4"
 									   id="phone2" name="phone2" value="${phone2}">-
-								<input type="text" class="form-control phone2" maxlength = "4" 
+								<input type="text" class="form-control p-inps phone2" maxlength = "4" 
 									   id="phone3" name="phone3" value="${phone3}">
+								<input type="hidden" name="userMobile" id="userMobile">
 							</div>
 					
 							<!-- 저장 -->
@@ -136,5 +137,13 @@
 	</div>
 	
 	<script type="module" src="/js/mypage/activity.js"></script>
+	
+	<!-- 회원 정보 변경  -->
+	<c:if test="${!empty resultMsg}">
+		<script>
+			alert("${resultMsg}");
+		</script>
+	</c:if>
+	
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>

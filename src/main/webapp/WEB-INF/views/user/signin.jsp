@@ -32,6 +32,7 @@
 		    </div>
 		    <br>
 	    	<div>
+	    		<input type="hidden" name="url" value="${url}">
 	    		<button class="w-100 btn btn-lg btn-primary mb-3" type="submit">로그인</button>
 	    	</div>
 		</form>
@@ -43,6 +44,34 @@
 		
 	</div>
 </div>
+
+
+<script>
+/*document.getElementById('frm-signin').addEventListener('submit', function(event) {
+  event.preventDefault(); // 기본 동작 중지
+
+  // 로그인 폼 데이터 가져오기
+  var formData = new FormData(this);
+
+  // 서버로 로그인 요청 보내기
+  fetch('/dokky/signin', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('로그인에 실패하였습니다.');
+    }
+    // 로그인에 성공하면 이전 페이지로 리다이렉트
+    window.location.href = response.url; // 서버에서 리다이렉트 URL을 반환하는 경우
+  })
+  .catch(error => {
+    console.error('로그인 오류:', error);
+    // 오류 처리 (예: 오류 메시지 표시)
+  });
+});*/
+</script>
+
   
 <%@ include file=".././layout/copyright.jsp" %>
 <%@ include file=".././layout/footer.jsp" %>

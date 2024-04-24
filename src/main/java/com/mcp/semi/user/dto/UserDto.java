@@ -23,5 +23,8 @@ public class UserDto {
 	private String userMobile;
 	private Date loginDt;
 	private Date logoutDt;
+	private String userImg;
+	private String userUploadPath;
 	private Date withdrawalDt;
+	
 }
