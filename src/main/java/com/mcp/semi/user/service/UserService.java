@@ -1,14 +1,14 @@
 package com.mcp.semi.user.service;
 
-import java.util.Optional;
-import org.springframework.stereotype.Service;
-import com.mcp.semi.common.exception.UserNotFoundException;
 import java.io.PrintWriter;
 import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.mcp.semi.common.exception.UserNotFoundException;
 import com.mcp.semi.common.util.MailUtils;
 import com.mcp.semi.common.util.SecurityUtils;
 import com.mcp.semi.user.dto.UserDto;
@@ -52,7 +52,7 @@ public class UserService {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			
-			if(insertCount == 1) {  // 가입성공
+			if(insertCount == 1) {   // 가입성공
 				
 				// 접속기록 남기는 Map
 				Map<String, Object> params = Map.of("userEmail", userEmail
@@ -68,7 +68,7 @@ public class UserService {
 				out.println("alert('환영합니다! :)');");
 				out.println("location.href='" + request.getContextPath() + "/dokky/main';");
 
-			} else {  // 가입실패
+			} else {   // 가입실패
 				out.println("alert('회원 가입이 실패했습니다. 다시 가입해주세요.');");
 				out.println("history.back();");
 			}
@@ -104,15 +104,13 @@ public class UserService {
 	// 사용된 이메일인지 확인하기
 	public ResponseEntity<Map<String, Object>> checkEmail(Map<String, Object> params) {
 		
-    /*boolean enableEmail = userMapper.getUserByMap(params) == null
-        && userMapper.getLeaveUserByMap(params) == null;*/
 		boolean enableEmail = userMapper.getUserByMap(params) == null;
     return new ResponseEntity<>(Map.of("enableEmail", enableEmail)
         , HttpStatus.OK);	
 	}
 	
 	
-	// 로그인하기
+	// 로그인
 	public void signin(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
@@ -122,17 +120,9 @@ public class UserService {
 			String userIp = request.getRemoteAddr();
 			String userAgent = request.getHeader("User-Agent");
 			
-      // 세션에 이전 페이지 URL 저장
-      HttpSession session = request.getSession();
-      String previousUrl = (String) session.getAttribute("previousUrl");
-      if (previousUrl == null) {
-          previousUrl = request.getHeader("referer");
-          session.setAttribute("previousUrl", previousUrl);
-      }
-			
 			Map<String, Object> params = Map.of("userEmail", userEmail
 																				, "userPw", userPw
-																				, "userIp", userIp 
+																				, "accessIp", userIp
 																				, "userAgent", userAgent
 																				, "sessionId", request.getSession().getId());
 
@@ -142,17 +132,14 @@ public class UserService {
 				
         userMapper.insertAccessHistory(params);
 
+        HttpSession session = request.getSession();
         session.setAttribute("user", user);
         session.setMaxInactiveInterval(1800);
-
-        // 이전 페이지로 리다이렉트
-        String redirectUrl = (String) session.getAttribute("previousUrl");
-        if (redirectUrl != null) {
-            response.sendRedirect(redirectUrl);
-        } else {
-            // 이전 페이지가 없을 경우 기본 페이지로 리다이렉트
-            response.sendRedirect(request.getContextPath() + "/"); // 적절한 기본 페이지 URL로 변경해주세요
-        }
+        
+        Optional<String> optUrl = Optional.ofNullable(request.getParameter("url"));
+        String redirectUrl = optUrl.orElse(request.getContextPath() + "/dokky/main");
+        
+        response.sendRedirect(redirectUrl);        
 				
 			} else {   // 실패
 				
@@ -179,12 +166,14 @@ public class UserService {
 		try {
 			
 			// 로그아웃 기록
-			HttpSession session = request.getSession();
-			String sessionId = session.getId();
-			userMapper.updateAccessHistory(sessionId);
-			
-			// 정보 초기화
-			session.invalidate();  
+			HttpSession session = request.getSession(false);
+      if (session != null && session.getAttribute("user") != null) {
+        String sessionId = session.getId();
+        userMapper.updateAccessHistory(sessionId);
+
+        // 세션 무효화
+        session.invalidate();
+      }  
 			
 			// 메인화면 이동
 			response.sendRedirect(request.getContextPath() + "/dokky/main");  
@@ -195,29 +184,19 @@ public class UserService {
 	
 	}
 
+	
+	// 로그인 후 리다이렉트
+	public String getRedirectURLAfterSignin(HttpServletRequest request) {
+    
+    String redirectURL = "";
+    redirectURL = (String)request.getHeader("REFERER");
 
-	public Object getRedirectURLAfterSignin(HttpServletRequest request) {
-		
-    // Sign In 페이지 이전의 주소가 저장되어 있는 Request Header 의 referer 값 확인
-    String referer = request.getHeader("referer");
-    
-    // referer 로 돌아가면 안 되는 예외 상황 (아이디/비밀번호 찾기 화면, 가입 화면 등)
-    String[] excludeURLs = {"/findId.page", "/findPw.page", "/signup.page", "/upload/edit.do"};
-    
-    // Sign In 이후 이동할 url
-    String url = referer;
-    if(referer != null) {
-      for(String excludeURL : excludeURLs) {
-        if(referer.contains(excludeURL)) {
-          url = request.getContextPath() + "/";
-          break;
-        }
-      }
-    } else {
-      url = request.getContextPath() + "/";
+    // 기본적으로 돌아갈 URL
+    if (redirectURL == null || redirectURL.isEmpty()) {
+    	redirectURL = request.getContextPath() + "/dokky/main";
     }
-    return url;	
-	}
+    return redirectURL;
+}
 
 	
 	public UserDto findByUserNo(int userNo) {

@@ -7,7 +7,7 @@
 		<nav class="navbar fixed-top">
 			<div class="container-fluid">
 			<img src="/images/dokky.png" alt="DOKKY 로고" height="30">
-				<a class="navbar-brand fw-bold" href="/" >DOKKY</a>
+				<a class="navbar-brand fw-bold" href="/dokky/main" >DOKKY</a>
 				<ul class="navbar-nav ms-auto flex-row">
 					<li class="nav-item">
 						<a role="button" class="btn btn-light me-2" id="signin" href="/dokky/signin">로그인</a>
@@ -16,10 +16,13 @@
 						<a role="button" class="btn btn-primary me-2" id="signup" href="/dokky/signup">회원가입</a>
 					</li>
 					<li class="nav-item">
+					  <!-- Sign In 안 된 경우 -->
+			      <c:if test="${sessionScope.user == null}">  
+			      </c:if>
 			      <!-- Sign In 된 경우 -->
 			      <c:if test="${sessionScope.user != null}">
 			        ${sessionScope.user.userName}님 반갑습니다.
-			        <a href="/user/signout">로그아웃</a>
+			        <a href="/dokky/signout">로그아웃</a>
 			      </c:if>
 					</li>
 				</ul>

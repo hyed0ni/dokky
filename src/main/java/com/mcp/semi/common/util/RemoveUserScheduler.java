@@ -16,11 +16,11 @@ public class RemoveUserScheduler {
 	private MyPageService myPageService;
 
 	// 탈퇴 회원 데이터 삭제 스케줄러
-	@Scheduled(cron = "*/10 * * * * *") // 매 10초마다 실행
-	public void deleteUserData() {
-		log.info("탈퇴 회원 데이터 삭제 스케줄러 실행");
-		int result = myPageService.deleteUserData();
-		log.info("탈퇴 회원 데이터 삭제 완료: {}명", result);
-	}
+//	@Scheduled(cron = "*/10 * * * * *") // 매 10초마다 실행
+//	public void deleteUserData() {
+//		log.info("탈퇴 회원 데이터 삭제 스케줄러 실행");
+//		int result = myPageService.deleteUserData();
+//		log.info("탈퇴 회원 데이터 삭제 완료: {}명", result);
+//	}
 	
 }
