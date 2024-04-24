@@ -41,10 +41,6 @@ public class BoardService {
 		
 	}
 	
-	@Transactional(readOnly = true)
-	public List<BoardDto> getBoardList(BoardDto boardDto) {
-		return boardMapper.getBoardList(boardDto);
-  }
 	
 	@Transactional(readOnly = true)
 	public List<BoardDto> getBoardList(Integer page,int cnt) {

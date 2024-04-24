@@ -28,11 +28,6 @@ public class BoardController {
 	private final BoardService boardService;
 	
 	@GetMapping("/main")
-	public String board(BoardDto boardDto, Model model) {
-		List<BoardDto> boardList = boardService.getBoardList(boardDto);
-		model.addAttribute("boardList", boardList);
-		return "board/index";
-	}
 	public String board(@RequestParam(value="page", defaultValue="1") Integer page, Model model) {
 		
 		// 전체 게시물 리스트
@@ -84,8 +79,6 @@ public class BoardController {
 	    model.addAttribute("board", boardDto);
 	    return "redirect:/dokky/detail?boardNo=" + boardDto.getBoardNo();
 	}
-	                                                                                                                                                                                                                                                                                                                                    
-	
 	
 	@GetMapping("/add")
 	public String boardAdd() {
@@ -105,7 +98,7 @@ public class BoardController {
 		return "redirect:/dokky/main";
 	}
 	
-	
+
 	@ResponseBody
 	@GetMapping(value = "/getBoardByNo", produces = "application/json") // 특정 번호의 게시글만 가져오기
 	public BoardDto getBoardByNo(@RequestParam("boardNo") int boardNo) {

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+                   <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
@@ -41,7 +41,7 @@
 							<td>${board.boardNo}</td>
 							<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
 							<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
-							<td>${board.createDt}</td>
+							<td>${board.boardCreateDt}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
