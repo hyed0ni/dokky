@@ -1,5 +1,3 @@
-import { rebindEventListeners } from "./myProfile.js";
-
 let originalProfileContent = null;
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -7,6 +5,14 @@ document.addEventListener("DOMContentLoaded", function() {
 	originalProfileContent = document.createElement("div");
 	Array.from(profileContainer.children).forEach(child => {
 		originalProfileContent.appendChild(child.cloneNode(true));
+	});
+
+	document.getElementById("update-pw-btn").addEventListener("click", () => {
+		location.href = "/dokky/modify-password";
+	});
+
+	document.getElementById("remove-user-btn").addEventListener("click", () => {
+		location.href = "/dokky/remove-user";
 	});
 
 	document.getElementById("my-activity").addEventListener("click", function(event) {
@@ -23,23 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		this.classList.add("active");
 		showProfile();
 	});
-
-
-	rebindEventListeners();
 });
-
-function formatDate(dateString) {
-	const date = new Date(dateString);
-	return date.toLocaleString("ko-KR", {
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-		hour: "2-digit",
-		minute: "2-digit",
-		second: "2-digit",
-		hour12: false
-	});
-};
 
 function removeActiveClass() {
 	document.querySelectorAll(".nav-link").forEach(function(link) {
@@ -48,7 +38,6 @@ function removeActiveClass() {
 }
 
 function showActivityRecords() {
-	const nickname = document.getElementById("nickname").value;
 	clearContent("profile-container");
 	const profileContainer = document.getElementById("profile-container");
 	profileContainer.textContent = "";
@@ -65,7 +54,7 @@ function showActivityRecords() {
 
 	//프로필 및 컨테이너
 	const myProfileBorder = document.createElement("div");
-	myProfileBorder.className = "my-profile-border mb-4";
+	myProfileBorder.className = "my-profile-border";
 
 	const uiBox = document.createElement("div");
 	uiBox.className = "ui-box";
@@ -78,7 +67,7 @@ function showActivityRecords() {
 	profileImage.className = "profile-img me-4";
 
 	const span = document.createElement("span");
-	span.textContent = nickname;
+	span.textContent = "모지모지";
 	myProfileUI.appendChild(profileImage);
 	myProfileUI.appendChild(span);
 	uiBox.appendChild(myProfileUI);
@@ -122,7 +111,6 @@ function showActivityRecords() {
 	activityRecords.appendChild(myProfileBorder);
 	profileContainer.appendChild(activityRecords);
 	setupActivityTabs();
-
 }
 
 function setupActivityTabs() {
@@ -143,11 +131,11 @@ function setupActivityTabs() {
 
 function displayMessage(message, container) {
 	clearContent(container.id);
-
+	
 	const messageElement = document.createElement("div");
 	messageElement.className = "no-write";
 	messageElement.textContent = message;
-
+	
 	/*
 	const linkElement = document.createElement("a");
 	linkElement.href = linkHref;
@@ -155,24 +143,20 @@ function displayMessage(message, container) {
 	linkElement.className = "add-link"
 	messageElement.appendChild(linkElement);
 	*/
-	container.appendChild(messageElement);
+	container.appendChild(messageElement);	
 }
 
 
-function showContent(apiUrl, render, loadPage) {
-	window.scrollTo(0, 0);
+function showContent(apiUrl, render) {
 	clearContent("activity-content");
-	fetch(apiUrl)
+	const userNo = document.getElementById("user-no").value;
+	const compleUrl = apiUrl + userNo;
+	fetch(compleUrl)
 		.then(response => response.json())
 		.then(resData => {
 			const activityContent = document.getElementById("activity-content");
-			// window.currentUserName = resData.items.userName;
-			if (resData.items && resData.items.length > 0) {
-				activityContent.appendChild(render(resData.items));
-				if (resData.totalPage > 1) {
-					createPaginationContainer();
-					renderPagination(resData.currentPage, resData.totalPage, loadPage);
-				}
+			if (resData.length > 0) {
+				activityContent.appendChild(render(resData));
 			} else {
 				displayMessage(resData.message, activityContent);
 			};
@@ -182,14 +166,12 @@ function showContent(apiUrl, render, loadPage) {
 		});
 }
 
-function showComments(page = 1) {
-	const userNo = document.getElementById("user-no").value;
-	showContent(`/dokky/api/my-comment/${userNo}?page=${page}`, renderBoardRepeatedWithComments, (newPage) => showComments(newPage));
+function showComments() {
+	showContent("/dokky/api/my-comment/", renderBoardRepeatedWithComments);
 }
 
-function showBoards(page = 1) {
-	const userNo = document.getElementById("user-no").value;
-	showContent(`/dokky/api/my-board/${userNo}?page=${page}`, renderUserBoards, (newPage) => showBoards(newPage));
+function showBoards() {
+	showContent("/dokky/api/my-board/", renderUserBoards);
 }
 
 function createActivityCard({ boardNo, boardTitle, content, date, link, contentLength = 20 }) {
@@ -207,7 +189,7 @@ function createActivityCard({ boardNo, boardTitle, content, date, link, contentL
 	// 등록일
 	const activityDate = document.createElement("small");
 	activityDate.className = "activity-date";
-	activityDate.textContent = formatDate(date);
+	activityDate.textContent = new Date(date).toLocaleString();
 
 	activityTitle.appendChild(activityLink);
 	activityTitle.appendChild(activityDate);
@@ -215,77 +197,11 @@ function createActivityCard({ boardNo, boardTitle, content, date, link, contentL
 	const activityText = document.createElement("p");
 	activityText.className = "activity-text";
 	activityText.textContent = content.length > contentLength ? `${content.substring(0, contentLength)}...` : content;
+
 	activityCard.appendChild(activityTitle);
 	activityCard.appendChild(activityText);
 	return activityCard;
 }
-
-function createPaginationContainer() {
-	const activityContent = document.getElementById("activity-content");
-	const paginationContainer = document.createElement("div");
-	paginationContainer.id = "pagination-container";
-	paginationContainer.className = "pagination";
-	activityContent.appendChild(paginationContainer);
-}
-
-function clearPaginationContainer(paginationContainer) {
-	while (paginationContainer.firstChild) {
-		paginationContainer.removeChild(paginationContainer.firstChild);
-	}
-}
-
-function renderPagination(currentPage, totalPage, loadPage) {
-	const paginationContainer = document.getElementById("pagination-container");
-	clearPaginationContainer(paginationContainer);
-
-	// 이전 페이지 버튼
-	const prevLink = document.createElement("a");
-	prevLink.href = "#";
-	prevLink.textContent = "<";
-	prevLink.className = "page-link";
-	if (currentPage > 1) {
-		prevLink.addEventListener("click", (e) => {
-			e.preventDefault();
-			loadPage(currentPage - 1);
-		});
-	} else {
-		prevLink.classList.add("disabled");
-	}
-	paginationContainer.appendChild(prevLink);
-
-	for (let i = 1; i <= totalPage; i++) {
-		const pageLink = document.createElement("a");
-		pageLink.href = "#";
-		pageLink.textContent = i;
-		pageLink.className = "page-link";
-		if (i === currentPage) {
-			pageLink.classList.add("active");
-		}
-		pageLink.addEventListener("click", (e) => {
-			e.preventDefault();
-			loadPage(i)// 페이지 변경 시 콘텐츠 재로드
-		});
-
-		paginationContainer.appendChild(pageLink); // 페이지 링크를 컨테이너에 추가
-	}
-
-	// 다음 페이지 버튼
-	const nextLink = document.createElement("a");
-	nextLink.href = "#";
-	nextLink.textContent = ">";
-	nextLink.className = "page-link";
-	if (currentPage < totalPage) {
-		nextLink.addEventListener("click", (e) => {
-			e.preventDefault();
-			loadPage(currentPage + 1);
-		});
-	} else {
-		nextLink.classList.add("disabled");
-	}
-	paginationContainer.appendChild(nextLink);
-
-}
-
 
 
 function renderUserBoards(resData) {
@@ -294,7 +210,6 @@ function renderUserBoards(resData) {
 	postsContainer.className = "activity-container";
 
 	resData.forEach(board => {
-		// createActivityCard 함수를 사용하여 게시물 카드 생성
 		const postCard = createActivityCard({
 			boardNo: board.boardNo,
 			boardTitle: board.boardTitle,
@@ -310,15 +225,17 @@ function renderUserBoards(resData) {
 
 
 function renderBoardRepeatedWithComments(resData) {
+
 	// 게시물 목록 컨테이너
 	const commentsContainer = document.createElement("div");
 	commentsContainer.className = "activity-container";
+
 	resData.forEach(board => {
 		board.comments.forEach(comment => {
 			const commentCard = createActivityCard({
 				boardNo: board.boardNo,
 				boardTitle: board.boardTitle,
-				content: comment.commentContent,
+				content: comment.cmtContent,
 				date: comment.cmtCreateDt,
 				link: `/dokky/detail?boardNo=${board.boardNo}`
 			});
@@ -344,7 +261,31 @@ function showProfile() {
 
 function clearContent(content) {
 	const activityContent = document.getElementById(content);
+	console.log(activityContent);
 	while (activityContent.firstChild) {
 		activityContent.removeChild(activityContent.firstChild);
 	};
+}
+
+function rebindEventListeners() {
+	// 비밀번호 변경 페이지 이동
+	document.getElementById("update-pw-btn").addEventListener("click", () => {
+		location.href = "/dokky/modify-password";
+	});
+	
+	// 체크박스 체크 시 회원 탈퇴 버튼 활성화
+	document.getElementById("withdrawal").addEventListener("change", (e) => {
+		if (e.target.checked) removeBtn.classList.remove("disabled");
+		else removeBtn.classList.add("disabled");
+	});
+	
+	// 페이지가 로드될 때 체크 해제
+	window.addEventListener("pageshow", e => {
+		document.getElementById("withdrawal").checked = false;
+	});
+	
+	// 회원 탈퇴 페이지 이동
+	removeBtn.addEventListener("click", () => {
+		location.href = "/dokky/remove-user";
+	});
 }
