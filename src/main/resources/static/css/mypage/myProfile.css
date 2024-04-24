@@ -48,15 +48,38 @@
 .my-profile form > * {padding: 0 10px;}
 .my-profile table > * {padding: 0 10px;}
 
+/* 프로필 이미지 감싸는 태그 */
+.my-profile .needs-validation > div:first-child {position: relative;}
+
 /* 프로필 이미지 */
-.my-profile .profile-img {
+.my-profile #profile-img {
     float: right;
 	width: 200px;
     height: 200px;
     margin-top: 15px;
     border: 1px solid #e6e7eb;
     border-radius: 100%;
+	object-fit: cover;
 }
+
+/* 프로필 이미지 hover */
+.my-profile #profile-img:hover {
+	filter: brightness(50%);
+	cursor: pointer;
+}
+
+/* 프로필 이미지 변경 텍스트 */
+.my-profile #update-img {
+	display: none;
+	position: absolute;
+    top: 109px;
+    right: 96px;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+/* 이미지 업로드 input */
+.my-profile #file-input {display: none;}
 
 /* 이메일, 닉네임, 성별, 휴대전화 */
 .my-profile .user-info {margin: 5px 0 !important;}
@@ -92,10 +115,10 @@
 
 .my-profile .phone1 {
 	margin-left: 0;
-	width: 80px;
+	width: 60px;
 }
 
-.my-profile .phone2 {width: 120px;}
+.my-profile .phone2 {width: 80px;}
 
 /* 버튼 */
 .my-profile .btn-lg {height: 30px;}
