@@ -14,11 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CommentDto {
-	private int commentNo;
+public class CommentInfoDto {
 	private String commentContent;
-	private Date createDt;
-	private Date modifyDt;
-	private UserDto user;
-	private BoardDto board;
+	private int userNo;
+	private int boardNo;
 }
