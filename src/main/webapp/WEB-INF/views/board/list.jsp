@@ -35,7 +35,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="board" items="${boardList}">
+					<c:forEach var="board" items="${pageResponse.items}">
 						<tr>
 							<td>${board.boardNo}</td>
 							<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
@@ -49,7 +49,7 @@
 				<ul class="pagination">
 					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a></li>
-					<c:forEach begin="${startPage}" end="${endPage}" var="p">
+					<c:forEach begin="${pageResponse.startPage}" end="${pageResponse.endPage}" var="p">
 					<li class="page-item"><a class="page-link" href="main?page=${p}">${p}</a></li>
 					</c:forEach>
 					<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>

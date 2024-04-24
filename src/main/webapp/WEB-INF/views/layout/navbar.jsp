@@ -10,10 +10,14 @@
 				<a class="navbar-brand fw-bold" href="/dokky/main" >DOKKY</a>
 				<ul class="navbar-nav ms-auto flex-row">
 					<li class="nav-item">
+					<c:if test="${sessionScope.user == null}">
 						<a role="button" class="btn btn-light me-2" id="signin" href="/dokky/signin">로그인</a>
+					 </c:if>
 					</li>
 					<li class="nav-item">
+					<c:if test="${sessionScope.user == null}">
 						<a role="button" class="btn btn-primary me-2" id="signup" href="/dokky/signup">회원가입</a>
+					</c:if>
 					</li>
 					<li class="nav-item">
 					  <!-- Sign In 안 된 경우 -->
@@ -21,8 +25,8 @@
 			      </c:if>
 			      <!-- Sign In 된 경우 -->
 			      <c:if test="${sessionScope.user != null}">
-			        ${sessionScope.user.userName}님 반갑습니다.
-			        <a href="/dokky/signout">로그아웃</a>
+			        <a href="/dokky/mypage/${user.userNo}"> ${sessionScope.user.userName}님 </a> 반갑습니다.
+			        <a href="/user/signout">로그아웃</a>
 			      </c:if>
 					</li>
 				</ul>

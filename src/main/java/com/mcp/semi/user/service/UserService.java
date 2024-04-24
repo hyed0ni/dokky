@@ -122,7 +122,7 @@ public class UserService {
 			
 			Map<String, Object> params = Map.of("userEmail", userEmail
 																				, "userPw", userPw
-																				, "accessIp", userIp
+																				, "accessIp", userIp 
 																				, "userAgent", userAgent
 																				, "sessionId", request.getSession().getId());
 
