@@ -135,7 +135,6 @@
 		</div>
 	</div>
 	
-	<script src="/js/mypage/myProfile.js"></script>
-	<script src="/js/mypage/activity.js"></script>
+	<script type="module" src="/js/mypage/activity.js"></script>
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>
