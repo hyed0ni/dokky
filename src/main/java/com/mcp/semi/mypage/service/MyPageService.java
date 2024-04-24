@@ -25,6 +25,17 @@ public class MyPageService {
         return userService.findByUserNo(userNo);
     }
 	
+	/**
+	 * 회원 정보 수정
+	 * 
+	 * @param userMap
+	 * @return result
+	 */
+	@Transactional
+	public int modifyUser(Map<String, Object> userMap) {
+		return myPageMapper.modifyUser(userMap);
+	}
+	
 	/** 
      * 비밀번호 변경
      * 
