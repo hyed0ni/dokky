@@ -25,17 +25,17 @@
     INSERT INTO BOARD_T (
         BOARD_NO
       , BOARD_TITLE
-      , BOARD_CONTENTS
-      , USER_NO
+      , BOARD_CONTENT
       , CREATE_DT
       , MODIFY_DT
+      , USER_NO
     ) VALUES (
         #{boardNo}
       , #{boardTitle}
-      , #{boardContents}
+      , #{boardContent}
+      , CURRENT_TIMESTAMP
+      , CURRENT_TIMESTAMP
       , #{user.userNo}
-      , CURRENT_TIMESTAMP
-      , CURRENT_TIMESTAMP
     )       
 	</insert>
 	

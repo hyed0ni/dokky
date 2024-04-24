@@ -207,12 +207,12 @@
   		})
   	}
   	
-  	fnRegistComment();
+  fnRegistComment();
 	fngetHotBoard();	
 	fnShowDetailBoard();
 	fnClickDelete();
 	fnClickModify();
-	fnAfterModifyUpdate();
+	
 	
 	
   </script>

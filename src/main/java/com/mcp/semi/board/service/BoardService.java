@@ -22,8 +22,8 @@ public class BoardService {
 
 	public int registerBoard(HttpServletRequest request) {
 		
-		String title = request.getParameter("title");
-		String contents = request.getParameter("contents");
+		String title = request.getParameter("boardTitle");
+		String contents = request.getParameter("boardContent");
 		int userNo = Integer.parseInt(request.getParameter("userNo"));
 		
 		UserDto user = new UserDto();
@@ -38,8 +38,7 @@ public class BoardService {
        return insertCount;
 		
 	}
-	
-	
+
 	
 	
 	public List<BoardDto> getBoardList(BoardDto boardDto) {
@@ -70,19 +69,19 @@ public class BoardService {
 	
 	public int modifyBoard(HttpServletRequest request) {
 	    
-	    // 수정할 제목/내용/블로그번호
+	 
 	    String title = request.getParameter("title");
-	    String contents = request.getParameter("contents");
+	    String contents = request.getParameter("content");
 	    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
 	    
-	    // 수정할 제목/내용/블로그번호를 가진 BlogDto
+	    
 	    BoardDto board = BoardDto.builder()
 	                    .boardTitle(title)
 	                    .boardContent(contents)
 	                    .boardNo(blogNo)
 	                    .build();
 	    
-	    // BLOG_T 수정
+	    
 	    int modifyResult = boardMapper.updateBoard(board);
 	    
 	    return modifyResult;
