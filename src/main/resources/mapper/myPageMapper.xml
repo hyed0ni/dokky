@@ -24,6 +24,15 @@
 	        </collection>
 	</resultMap>
 	
+	<!-- 회원 정보 수정 -->
+	<update id="modifyUser">
+		UPDATE USER_T 
+		SET USER_NAME = #{userName}, 
+			USER_GENDER = #{userGender}, 
+			USER_MOBILE = #{userMobile}
+		WHERE USER_NO = #{userNo}
+	</update>
+	
 	<!-- 비밀번호 변경 -->
 	<update id="modifyPw">
 		UPDATE USER_T 
