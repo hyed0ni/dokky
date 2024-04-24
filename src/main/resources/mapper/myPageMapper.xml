@@ -58,22 +58,48 @@
 	
 	<!-- 내가 작성한 글 조회 -->
 	<select id="getBoardsByUserNo" resultMap="MyPageMap">
-		SELECT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.BOARD_CREATE_DT, U.USER_NAME, U.USER_NO
-		  FROM BOARD_T B
-		 INNER JOIN USER_T U ON B.USER_NO = U.USER_NO
-		 WHERE U.USER_NO = #{userNo}
-		 ORDER BY B.BOARD_CREATE_DT DESC
+		SELECT A.BOARD_NO, A.BOARD_TITLE, A.BOARD_CONTENT, A.BOARD_HIT, A.BOARD_CREATE_DT, A.USER_NAME, A.USER_NO
+		  FROM ( SELECT ROW_NUMBER() OVER(ORDER BY B.BOARD_NO DESC) AS RN
+		, B.BOARD_NO
+		, B.BOARD_TITLE
+		, B.BOARD_HIT
+		, B.BOARD_CONTENT
+		, B.BOARD_CREATE_DT
+		, B.USER_NO
+		, U.USER_NAME
+		FROM BOARD_T B INNER JOIN USER_T U
+		ON B.USER_NO = U.USER_NO 
+		WHERE B.USER_NO = ${userNo}) A
+		WHERE RN BETWEEN #{begin} AND #{end}
 	</select>
 	
 	<!-- 내가 작성한 댓글 조회 -->
 	<select id="getBoardsWithCommentsByUserNo" resultMap="MyPageMap">
-		SELECT DISTINCT B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.BOARD_CREATE_DT, U.USER_NAME, U.USER_NO,
-			   C.CMT_NO, C.CMT_CONTENT, C.CMT_CREATE_DT
-	     FROM BOARD_T B
-	    INNER JOIN USER_T U ON B.USER_NO = U.USER_NO
-		 LEFT JOIN COMMENT_T C ON B.BOARD_NO = C.BOARD_NO
-		WHERE B.USER_NO = #{userNo} AND CMT_NO IS NOT NULL
-		ORDER BY B.BOARD_CREATE_DT DESC, C.CMT_CREATE_DT DESC
+		SELECT A.BOARD_NO, A.BOARD_TITLE, A.BOARD_CONTENT, A.BOARD_CREATE_DT, A.USER_NAME, A.USER_NO,
+                A.CMT_NO, A.CMT_CONTENT, A.CMT_CREATE_DT
+		  FROM ( 
+		  SELECT ROW_NUMBER() OVER(ORDER BY B.BOARD_NO DESC) AS RN
+        , B.BOARD_NO, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_CREATE_DT
+        , U.USER_NAME, C.USER_NO, C.CMT_NO, C.CMT_CONTENT, C.CMT_CREATE_DT
+           FROM BOARD_T B
+          INNER JOIN USER_T U ON B.USER_NO = U.USER_NO
+          INNER JOIN COMMENT_T C ON B.BOARD_NO = C.BOARD_NO
+          WHERE B.USER_NO = ${userNo}) A
+	 	 WHERE RN BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<!-- 특정 사용자가 작성한 글의 개수 -->
+	<select id="countBoardsByUserNo" resultType="int">
+		SELECT COUNT(*)
+		  FROM BOARD_T
+		 WHERE USER_NO = #{userNo} 	
+	</select>
+	
+	<!-- 특정 사용자가 작성한 댓글의 개수 -->
+	<select id="countCommentsByUserNo" resultType="int">
+		SELECT COUNT(*)
+		  FROM COMMENT_T
+		 WHERE USER_NO = #{userNo} 	
 	</select>
 	
 </mapper>

@@ -14,6 +14,8 @@ import com.mcp.semi.board.dto.CommentInfoDto;
 public interface CommentMapper {
 	List<CommentDto> getCommentList(int boardNo);	
 	int insertComment(CommentDto commentDto);
+	CommentDto getCommentByNo(int boardNo);
+	int getTotalCount();
 	int deleteComment(int commentNo);
 	int modifyComment(CommentInfoDto commentInfoDto);
 }

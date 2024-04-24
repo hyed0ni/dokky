@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.mapper.BoardMapper;
+import com.mcp.semi.common.page.PageResponse;
 import com.mcp.semi.common.util.SecurityUtils;
 import com.mcp.semi.user.dto.UserDto;
 
@@ -42,15 +43,16 @@ public class BoardService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<BoardDto> getBoardList(Integer page,int cnt) {
+	public PageResponse<BoardDto> getBoardList(int page, int cnt) {
 		int totalCount = getTotalCount(); 
-		int total = totalCount/cnt + ((totalCount%cnt>0) ? 1:0);
+		int total = totalCount / cnt + ((totalCount % cnt > 0) ? 1 : 0);
+		int startPage = Math.max(page - 2, 1);
+		int endPage = Math.min(page + 2,  total);
 		int begin = (page - 1) * cnt + 1;
 		int end = begin + cnt - 1;
-	
-		Map<String,Object> map = Map.of("begin",begin, "end",end, "total", total);
-
-		return boardMapper.getBoardList(map);
+		
+		List<BoardDto> items = boardMapper.getBoardList(Map.of("begin",begin, "end",end, "total", total));
+		return new PageResponse<>(items, page ,total, startPage, endPage);
 	}
 
 	

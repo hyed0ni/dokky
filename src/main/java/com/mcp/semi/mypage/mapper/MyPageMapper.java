@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mcp.semi.board.dto.BoardDto;
 
@@ -41,8 +42,12 @@ public interface MyPageMapper {
 	 */
 	int deleteUserData();
   	
-	List<BoardDto> getBoardsByUserNo(int userNo);
+	List<BoardDto> getBoardsByUserNo(@Param("userNo") int userNo, @Param("begin") int begin, @Param("end") int end);
 	
-	List<BoardDto> getBoardsWithCommentsByUserNo(int userNo);
+	List<BoardDto> getBoardsWithCommentsByUserNo(@Param("userNo") int userNo, @Param("begin") int begin, @Param("end") int end);
+	
+	int countBoardsByUserNo(int userNo);
+	
+	int countCommentsByUserNo(int userNo);
 
 }
