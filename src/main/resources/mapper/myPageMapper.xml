@@ -27,7 +27,8 @@
 	<!-- 비밀번호 변경 -->
 	<update id="modifyPw">
 		UPDATE USER_T 
-		SET USER_PW = #{newPw} 
+		SET USER_PW = #{newPw}, 
+			PW_MODIFY_DT = CURRENT_DATE
 		WHERE USER_NO = #{userNo} 
 			AND USER_PW = #{originPw}
 	</update>
