@@ -1,12 +1,16 @@
-const profileImg = document.getElementById("profile-img");		// 프로필 이미지
-const updateImg = document.getElementById("update-img");		// 이미지 변경 텍스트
-const fileInput = document.getElementById("file-input");		// 파일 업로드 input
-const phoneInputs = document.getElementsByClassName("p-inps");	// 휴대전화 입력 input
-const phone1 = document.getElementById("phone1");
-const phone2 = document.getElementById("phone2");
-const phone3 = document.getElementById("phone3");
-const modifyForm = document.getElementById("modify-form");		// 회원 정보 수정 form
-const removeBtn = document.getElementById("remove-user-btn");	// 회원 탈퇴 버튼
+export function rebindEventListeners() {
+	// 회원 탈퇴 버튼
+	const profileImg = document.getElementById("profile-img");		// 프로필 이미지
+	const updateImg = document.getElementById("update-img");		// 이미지 변경 텍스트
+	const fileInput = document.getElementById("file-input");		// 파일 업로드 input
+	const phoneInputs = document.getElementsByClassName("p-inps");	// 휴대전화 입력 input
+	const phone1 = document.getElementById("phone1");
+	const phone2 = document.getElementById("phone2");
+	const phone3 = document.getElementById("phone3");
+	const modifyForm = document.getElementById("modify-form");		// 회원 정보 수정 form
+	const removeBtn = document.getElementById("remove-user-btn");	// 회원 탈퇴 버튼
+
+
 
 // 이미지 변경 텍스트 노출
 profileImg.addEventListener("mouseenter", () => updateImg.style.display = "block");
@@ -38,7 +42,7 @@ for (const inp of phoneInputs) {
 }
 
 // 회원 정보 수정
-modifyForm.addEventListener("submit", () => {
+modifyForm.addEvantListener("submit", () => {
 
 	// 휴대전화 input 하나의 문자열로 합치기
 	const userMobile = `${phone1.value}${phone2.value}${phone3.value}`;
@@ -65,3 +69,4 @@ window.addEventListener("pageshow", () => {
 // 회원 탈퇴 페이지 이동
 removeBtn.addEventListener("click", () => 
 	location.href = "/dokky/remove-user");
+}

@@ -136,9 +136,8 @@
 		</div>
 	</div>
 	
-	<script src="/js/mypage/myProfile.js"></script>
-	<script src="/js/mypage/activity.js"></script>
-	
+	<script type="module" src="/js/mypage/activity.js"></script>
+
 	<!-- 회원 정보 변경  -->
 	<c:if test="${!empty resultMsg}">
 		<script>
