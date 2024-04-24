@@ -26,7 +26,6 @@ public class UserService {
 	private final UserMapper userMapper;
 	private final MailUtils mailUtils;
 
-	
 	// 회원가입하기
 	public void signup(HttpServletRequest request, HttpServletResponse response) {
 
@@ -47,7 +46,6 @@ public class UserService {
 		int insertCount = userMapper.insertUser(user);
 		
 		try {
-			
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -80,10 +78,8 @@ public class UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 
-	
 	// 인증코드 보내기
 	public ResponseEntity<Map<String, Object>> sendCode(Map<String, Object> params) {
 		
@@ -100,21 +96,18 @@ public class UserService {
         , HttpStatus.OK);
 	}
 
-	
 	// 사용된 이메일인지 확인하기
 	public ResponseEntity<Map<String, Object>> checkEmail(Map<String, Object> params) {
 		
 		boolean enableEmail = userMapper.getUserByMap(params) == null;
     return new ResponseEntity<>(Map.of("enableEmail", enableEmail)
-        , HttpStatus.OK);	
+    													, HttpStatus.OK);	
 	}
-	
 	
 	// 로그인
 	public void signin(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			
 			String userEmail = request.getParameter("userEmail");
 			String userPw = SecurityUtils.getSha256(request.getParameter("userPw"));
 			String userIp = request.getRemoteAddr();
@@ -156,15 +149,12 @@ public class UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
-
 	
 	// 로그아웃
 	public void signout(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			
 			// 로그아웃 기록
 			HttpSession session = request.getSession(false);
       if (session != null && session.getAttribute("user") != null) {
@@ -174,17 +164,14 @@ public class UserService {
         // 세션 무효화
         session.invalidate();
       }  
-			
 			// 메인화면 이동
 			response.sendRedirect(request.getContextPath() + "/dokky/main");  
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
 	}
 
-	
 	// 로그인 후 리다이렉트
 	public String getRedirectURLAfterSignin(HttpServletRequest request) {
     
@@ -198,12 +185,10 @@ public class UserService {
     return redirectURL;
 }
 
-	
 	public UserDto findByUserNo(int userNo) {
 		UserDto user = userMapper.findByUserNo(userNo);
-		
 		return Optional.ofNullable(user)
-				.orElseThrow(() -> new UserNotFoundException("사용자가 존재하지 않습니다."));
+									 .orElseThrow(() -> new UserNotFoundException("사용자가 존재하지 않습니다."));
 	}
 	
 }
