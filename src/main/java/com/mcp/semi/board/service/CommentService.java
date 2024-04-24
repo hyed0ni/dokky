@@ -8,10 +8,12 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.dto.CommentDto;
+import com.mcp.semi.board.dto.CommentInfoDto;
 import com.mcp.semi.board.mapper.BoardMapper;
 import com.mcp.semi.board.mapper.CommentMapper;
 import com.mcp.semi.user.dto.UserDto;
@@ -25,49 +27,44 @@ public class CommentService {
 
 	private final CommentMapper commentMapper;
 
-	public List<CommentDto> getCommentList(CommentDto commentDto) {
-		return commentMapper.getCommentList(commentDto);
+	@Transactional(readOnly=true)
+	public List<CommentDto> getCommentList(Model model, int boardNo) 
+	{
+		List<CommentDto> cmtList = commentMapper.getCommentList(boardNo);
+		model.addAttribute("commentList", cmtList);
+		return commentMapper.getCommentList(boardNo);
 	}
 
-	public int insertComment(HttpServletRequest request)
+	@Transactional
+	public int insertComment(CommentInfoDto commentInfoDto)
 	{
-		String comment = request.getParameter("comment");
-		int userNo = 1;
-		int boardNo = 4;
-		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@" + comment);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@" + boardNo);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@" + userNo);
-		
-		
+		String comment = commentInfoDto.getCommentContent();
+		int userNo = commentInfoDto.getUserNo();
+		int boardNo = commentInfoDto.getBoardNo();
 		UserDto user = new UserDto();
 		user.setUserNo(userNo);
 		
 		BoardDto board = new BoardDto();
 		board.setBoardNo(boardNo);
 		
-		Date date = new Date(System.currentTimeMillis());
-		
-		CommentDto commentDto = CommentDto.builder()
+		CommentDto commentdto = CommentDto.builder()
 							.commentContent(comment)
-							.cmtCreateDt(date)
-							.cmtModifyDt(date)
 							.user(user)
 							.board(board)
 							.build();
 		
-		return commentMapper.insertComment(commentDto);
+		return commentMapper.insertComment(commentdto);
 	}
 	
-	public int deleteComment(int boardNo) {
-      return commentMapper.deleteComment(boardNo);
+	@Transactional
+	public int deleteComment(int commentNo) 
+	{
+		return commentMapper.deleteComment(commentNo);
 	}
-	
-	public int modifyComment(int board) {
-		return commentMapper.modifyComment(board);
+
+	@Transactional
+	public int modifyComment(CommentInfoDto commentInfoDto) 
+	{
+		return commentMapper.modifyComment(commentInfoDto);
 	}
-	
-	public CommentDto getCommentByNo(int boardNo) {
-		return commentMapper.getCommentByNo(boardNo);
-	} 
 }

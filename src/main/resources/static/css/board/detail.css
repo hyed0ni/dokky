@@ -53,6 +53,7 @@
   	margin-left:5px;
   	font-size:1.5rem;
   	min-height: 300px;
+  	max-width: 655px;
    }
 	  
    .centerarea > .detail-contentinfo{
@@ -65,14 +66,15 @@
    
    .image-writer{
    	margin-left: 5px;
-   	
 	flex:0.5;
    }
    
    .contents-button {
 	flex:8;
-	text-align: right;
-	margin-right: 10px;
+	display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: flex-end;
    }
    
    .contents-block{
@@ -105,13 +107,13 @@
    }
    #btn-modify{
    font-size:1.5rem;
+   margin-right:2px;
    }
 
    .comment-input{
 	border: solid 1px grey !important;
 	padding:10px;
 	border-radius: 7px;
-/* 	display:flex; */
    }
    
    #comment-box{
@@ -125,7 +127,7 @@
    }
    
    ol{
-   margin-top:30px;
+   margin-top:20px;
    font-size:1.4rem;
    }
    
@@ -136,10 +138,68 @@
    #btn-comment{
    font-size:1.5rem;
    margin-top:10px;
-   margin-left:90%;
+   margin-left:85%;
    }
    
    .image-commenter-writer > img{
    padding: 10px 0 0 0;    	
    } 
    
+   .image-commenter {
+	display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    margin-bottom: 10px;
+   }
+   
+   .comment-buttons{
+   	margin-left : 60%;
+   }
+   
+   .comment-buttons  > button{
+    font-size:1.5rem;
+   	background-color: white !important;
+   	border: none;
+    text-decoration: underline;
+   }
+   
+   .btn-comment-modify{
+   	margin-right: 5px;
+   }
+
+	.comment-text{
+	margin-bottom : 5px;
+	min-height: 30px;
+	}
+
+	.modifybycomment{
+	display:flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: flex-end;
+	}
+	
+	.modifybycomment > button{
+	width:50px !important;
+	height:30px !important;
+	}
+	
+  	#btn-comment-updatecancle{
+   background-color: #DC3545 !important; 
+   border-color: #DC3545 !important;
+   margin-right:2px;
+   }
+   
+   #btn-comment-update{
+   margin-right:17px;
+   }
+   
+   #commentupdate-box{
+   font-size:1.4rem;
+   resize:none;
+   overflow: hidden;
+   background-color: rgba(255, 240, 241, 0.8);
+   border-radius: 7px;
+   margin: 10px 0 0 10px;
+   padding: 10px 0 0 10px; 
+   }

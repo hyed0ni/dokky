@@ -12,9 +12,8 @@ const newPwChkMsg = document.getElementById("new-pw-chk-msg");
 const modifyForm = document.getElementById("modify-form");
 
 // 현재 비밀번호
-originPw.addEventListener("blur", () => {
-	originPwMsg.className = empInput(originPw) ? "block" : "none";
-});
+originPw.addEventListener("blur", () => 
+	originPwMsg.className = empInput(originPw) ? "block" : "none");
 
 // 신규 비밀번호 유효성 검사
 newPw.addEventListener("change", e => {
