@@ -85,18 +85,21 @@ public class BoardController {
 		return "board/add";
 	}
 
+	@PostMapping("/add-form")
+	public String register(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		int insertCount = boardService.registerBoard(request);
+		redirectAttributes.addFlashAttribute("insertResult",insertCount == 1 ? "등록되었습니다." : "등록되지 않았습니다.");
+		return "redirect:/dokky/main";
+	}
+	 
+	
 	@ResponseBody
 	@GetMapping(value = "/getBoard", produces = "application/json") 	// 전체 게시글 가져오기
 	public List<BoardDto> getHotBoardList(Model model) {
 		return boardService.getHotBoardList(model);
 	}
 	
-	@PostMapping("/add-form")
-	public String boardAddForm(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		int insertCount = boardService.registerBoard(request);
-		redirectAttributes.addFlashAttribute("insertResult",insertCount == 1 ? "등록되었습니다." : "등록되지 않았습니다.");
-		return "redirect:/dokky/main";
-	}
+	
 	
 
 	@ResponseBody

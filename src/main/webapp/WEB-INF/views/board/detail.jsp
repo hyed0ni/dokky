@@ -300,10 +300,10 @@
   	
   	fnShowCommentList();
   	fnRegistComment();
-	fngetHotBoard();	
-	fnShowDetailBoard();
-	fnClickDelete();
-	fnClickModify();
+  	fngetHotBoard();	
+	  fnShowDetailBoard();
+  	fnClickDelete();
+  	fnClickModify();
   </script>
 </body>
 </html>
