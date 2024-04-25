@@ -44,6 +44,15 @@
 		
 	</div>
 </div>
+
+	<!-- 비밀번호 변경 성공 alert -->
+	<c:if test="${!empty resultMsg}">
+		<script>
+			alert("${resultMsg}");
+			document.getElementById("origin-pw").focus();
+		</script>
+	</c:if>
+
   
 <%@ include file=".././layout/copyright.jsp" %>
 <%@ include file=".././layout/footer.jsp" %>

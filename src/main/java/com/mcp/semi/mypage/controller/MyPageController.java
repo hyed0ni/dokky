@@ -23,7 +23,9 @@ import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.common.page.PageResponse;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("dokky")
 @RequiredArgsConstructor
@@ -61,12 +63,7 @@ public class MyPageController {
 		userMap.put("userNo", userNo);
 		int result = myPageService.modifyUser(userMap);
 		
-		System.out.println("userNo" + userNo);
-		System.out.println("userMap" + userMap);
-
-		if (result == 1) ra.addFlashAttribute("resultMsg", "성공 👍");
-		else ra.addFlashAttribute("resultMsg", "실패 😭");
-
+		if (result == 1) ra.addFlashAttribute("resultMsg", "회원 정보가 변경되었습니다. 🥰");
 		return "redirect:/dokky/mypage/" + userNo;
 
 	}
@@ -87,7 +84,7 @@ public class MyPageController {
 	 * @param userNo
 	 * @param pwMap
 	 * @param redirectAttributes
-	 * @return redirect (myProfile() or modifyPw())
+	 * @return redirect (signinPage() or modifyPw())
 	 */
 	@PostMapping("modify-password/{userNo}")
 	public String modifyPw(@PathVariable("userNo") int userNo, 
@@ -97,9 +94,12 @@ public class MyPageController {
 		pwMap.put("userNo", userNo);
 		int result = myPageService.modifyPw(pwMap);
 
-		if (result == 1) return "redirect:/dokky/mypage/" + userNo;
-		else {
-			redirectAttributes.addFlashAttribute("errorMsg", "현재 비밀번호가 일치하지 않습니다.");
+		if (result == 1) {
+			redirectAttributes.addFlashAttribute("resultMsg", "비밀번호가 성공적으로 변경되었습니다. 🥰");
+			return "redirect:/dokky/signin";
+			
+		} else {
+			redirectAttributes.addFlashAttribute("resultMsg", "현재 비밀번호가 일치하지 않습니다. 😭");
 			return "redirect:/dokky/modify-password";
 		}
 
@@ -121,7 +121,7 @@ public class MyPageController {
 	 * @param userNo
 	 * @param originPw
 	 * @param redirectAttributes
-	 * @return
+	 * @return redirect (board() or removeUser())
 	 */
 	@PostMapping("remove-user/{userNo}")
 	public String removeUser(@PathVariable("userNo") int userNo, 
@@ -134,9 +134,13 @@ public class MyPageController {
 
 		int result = myPageService.removeUser(removeUserMap);
 
-		if (result == 1) return "redirect:/dokky/main";
-		else {
-			ra.addFlashAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
+		if (result == 1) {
+			log.info("result : {}", result);
+			ra.addFlashAttribute("resultMsg", "그동안 DOKKY와 함께 해주셔서 감사드립니다. 🥰");
+			return "redirect:/dokky/main";
+			
+		} else {
+			ra.addFlashAttribute("resultMsg", "비밀번호가 일치하지 않습니다. 😭");
 			return "redirect:/dokky/remove-user";
 		}
 

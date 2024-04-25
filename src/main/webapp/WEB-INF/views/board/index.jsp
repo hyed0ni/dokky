@@ -59,5 +59,13 @@
 			</nav>
 		</div>
 	</div>
+	
+	<!-- 계정 삭제 성공 alert -->
+	<c:if test="${!empty resultMsg}">
+		<script>
+			alert("${resultMsg}");
+		</script>
+	</c:if>
+	
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>
