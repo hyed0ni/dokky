@@ -11,7 +11,7 @@
 
 <div class="main error-div">
 	<div class="centered-container">
-	<img class="error-image" src="/images/jenkins.png" alt="DOKKY 로고">
+	<img class="error-image" src="/images/jenkins.png" alt="죄송합니다. 이 페이지는 존재하지 않습니다.">
 		죄송합니다. 이 페이지는 이제 제껍니다.
 		<a href="/">홈으로 다시 가기</a>
 	</div>
