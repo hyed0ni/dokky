@@ -121,7 +121,7 @@ public class MyPageController {
 	 * @param userNo
 	 * @param originPw
 	 * @param redirectAttributes
-	 * @return redirect (board() or removeUser())
+	 * @return forward (goodBye.jsp) or redirect (removeUser())
 	 */
 	@PostMapping("remove-user/{userNo}")
 	public String removeUser(@PathVariable("userNo") int userNo, 
@@ -136,8 +136,7 @@ public class MyPageController {
 
 		if (result == 1) {
 			log.info("result : {}", result);
-			ra.addFlashAttribute("resultMsg", "그동안 DOKKY와 함께 해주셔서 감사드립니다. 🥰");
-			return "redirect:/dokky/main";
+			return "mypage/goodBye";
 			
 		} else {
 			ra.addFlashAttribute("resultMsg", "비밀번호가 일치하지 않습니다. 😭");
