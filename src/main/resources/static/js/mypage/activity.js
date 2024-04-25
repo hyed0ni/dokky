@@ -240,6 +240,7 @@ function clearPaginationContainer(paginationContainer) {
 
 function renderPagination(currentPage, totalPage, loadPage) {
 	const paginationContainer = document.getElementById("pagination-container");
+	
 	clearPaginationContainer(paginationContainer);
 
 	// 이전 페이지 버튼
@@ -257,7 +258,11 @@ function renderPagination(currentPage, totalPage, loadPage) {
 	}
 	paginationContainer.appendChild(prevLink);
 
-	for (let i = 1; i <= totalPage; i++) {
+	
+	let startPage = Math.max(1, currentPage -2);
+	let endPage = Math.min(totalPage, currentPage + 2);
+
+	for (let i = startPage; i <= endPage; i++) {
 		const pageLink = document.createElement("a");
 		pageLink.href = "#";
 		pageLink.textContent = i;
