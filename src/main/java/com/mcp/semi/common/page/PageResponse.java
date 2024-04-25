@@ -14,5 +14,15 @@ public class PageResponse<T> {
 	private int currentPage;
 	private int totalPage;
 	private int startPage;
+	private int nextPage;
+	private int prevPage;
 	private int endPage;
+	
+	public PageResponse(List<T> items, int currentPage, int totalPage, int startPage, int endPage) {
+		this.items = items;
+		this.currentPage = currentPage;
+		this.totalPage = totalPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
+	}
 }
