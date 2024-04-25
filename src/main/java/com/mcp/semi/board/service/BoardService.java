@@ -104,10 +104,8 @@ public class BoardService {
 	public List<BoardDto> getHotBoardList(Model model) {
 		
 		Map<String, Object> map = Map.of("begin", 1, "end", 3);
-		System.out.println(1);
 		List<BoardDto> boardList = boardMapper.getHotBoardList(map);
 		
-		System.out.println(boardList);
 		model.addAttribute(boardList);
 		return boardMapper.getHotBoardList(map);
 	}
