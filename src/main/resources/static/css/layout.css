@@ -71,20 +71,18 @@ body {
     color: #28a7e9;
 }
 
-/* Footer 스타일링 */
 footer {
-    position: absolute;
-    left: 0;
+    position: relative; /* 기존의 position: fixed;를 relative로 변경 */
     bottom: 0;
     width: 100%;
-    margin: 0 !important;
-    /* 마진 제거 */
     padding: 20px 0;
-    border-top: 1px solid rgb(208, 209, 214);
     background: #fff;
     text-align: center;
+    font-size: 14px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 15px;
 }
-
-footer .container>div {
-    font-size: 1.5rem;
+/* body 내용이 채워질 때 footer가 자동으로 아래로 밀려나가도록 설정 */
+main {
+   padding-bottom: 100px; /* footer의 높이보다 큰 값으로 설정 */
 }

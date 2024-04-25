@@ -7,8 +7,8 @@
 	<resultMap type="CommentDto" id="CommentMap">
 		<id property="commentNo" column="CMT_NO" />
 		<result property="commentContent" column="CMT_CONTENT" />
-		<result property="createDt" column="C_CREATE_DT" />
-		<result property="modifyDt" column="C_MODIFY_DT" />
+		<result property="cmtCreateDt" column="CMT_CREATE_DT" />
+		<result property="cmtModifyDt" column="CMT_MODIFY_DT" />
 		<association property="user" javaType="UserDto">
 			<id property="userNo" column="USER_NO" />
 			<result property="userName" column="USER_NAME" />
@@ -24,18 +24,48 @@
 		INSERT INTO COMMENT_T(
 				CMT_NO
 			,	CMT_CONTENT
-			,	C_CREATE_DT
-			,	C_MODIFY_DT
+			,	CMT_CREATE_DT
+			,	CMT_MODIFY_DT
 			,	USER_NO
 			,	BOARD_NO
 		) VALUES(
 				COMMENT_SEQ.NEXTVAL
 			,	#{commentContent}
-			,	TO_CHAR(SYSDATE, 'YY/MM/DD HH24:MI:SS')
-			,	TO_CHAR(SYSDATE, 'YY/MM/DD HH24:MI:SS')
+			,	CURRENT_DATE
+			,	CURRENT_DATE
 			,	#{user.userNo}
 			,	#{board.boardNo}
 		)
 	</insert>
+
+	<select id="getCommentList"
+			resultMap="CommentMap">
+	SELECT * FROM
+		(SELECT ROW_NUMBER() OVER(ORDER BY C.CMT_NO DESC) AS RN 
+			 , C.CMT_NO
+			 , C.CMT_CONTENT
+			 , C.CMT_CREATE_DT
+			 , C.CMT_MODIFY_DT
+			 , C.USER_NO
+			 , C.BOARD_NO
+			 , U.USER_NAME
+		  FROM COMMENT_T C 
+	  	INNER JOIN USER_T U
+		  ON C.USER_NO = U.USER_NO
+  		WHERE C.BOARD_NO = #{boardNo})
+	</select>
+
+	<delete id="deleteComment">
+		DELETE
+		FROM COMMENT_T
+		WHERE CMT_NO = #{commentNo}
+	</delete>
+	
+	<update id="modifyComment"
+			parameterType="CommentInfoDto">
+		UPDATE COMMENT_T
+			SET CMT_CONTENT = #{commentContent}
+		WHERE CMT_NO = #{userNo}
+	</update>
 	
 </mapper>

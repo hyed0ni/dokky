@@ -20,8 +20,12 @@ import com.mcp.semi.mypage.service.MyPageService;
 import com.mcp.semi.user.dto.UserDto;
 
 import com.mcp.semi.board.dto.BoardDto;
-import lombok.RequiredArgsConstructor;
+import com.mcp.semi.common.page.PageResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("dokky")
 @RequiredArgsConstructor
@@ -32,6 +36,7 @@ public class MyPageController {
 	/**
 	 * 회원 정보 조회
 	 * 
+	 * @param userNo
 	 * @param model
 	 * @return forward (myProfile.jsp)
 	 */
@@ -40,6 +45,27 @@ public class MyPageController {
 		UserDto userProfile = myPageService.getUserProfile(userNo);
 		model.addAttribute("user", userProfile);
 		return "mypage/myProfile";
+	}
+
+	/**
+	 * 회원 정보 수정
+	 * 
+	 * @param userNo
+	 * @param userMap
+	 * @param redirectAttributes
+	 * @return redirect (myProfile())
+	 */
+	@PostMapping("mypage/{userNo}")
+	public String modifyUser(@PathVariable("userNo") int userNo, 
+							@RequestParam Map<String, Object> userMap,
+							RedirectAttributes ra) {
+
+		userMap.put("userNo", userNo);
+		int result = myPageService.modifyUser(userMap);
+		
+		if (result == 1) ra.addFlashAttribute("resultMsg", "회원 정보가 변경되었습니다. 🥰");
+		return "redirect:/dokky/mypage/" + userNo;
+
 	}
 
 	/**
@@ -55,22 +81,25 @@ public class MyPageController {
 	/**
 	 * 비밀번호 변경
 	 * 
-	 * @param pwMap
 	 * @param userNo
+	 * @param pwMap
 	 * @param redirectAttributes
-	 * @return redirect (myProfile() or modifyPw())
+	 * @return redirect (signinPage() or modifyPw())
 	 */
 	@PostMapping("modify-password/{userNo}")
-	public String modifyPw(@RequestParam Map<String, Object> pwMap, @PathVariable("userNo") int userNo,
-			RedirectAttributes redirectAttributes) {
+	public String modifyPw(@PathVariable("userNo") int userNo, 
+							@RequestParam Map<String, Object> pwMap,
+							RedirectAttributes redirectAttributes) {
 
 		pwMap.put("userNo", userNo);
 		int result = myPageService.modifyPw(pwMap);
 
-		if (result == 1)
-			return "redirect:/dokky/mypage/" + userNo;
-		else {
-			redirectAttributes.addFlashAttribute("errorMsg", "현재 비밀번호가 일치하지 않습니다.");
+		if (result == 1) {
+			redirectAttributes.addFlashAttribute("resultMsg", "비밀번호가 성공적으로 변경되었습니다. 🥰");
+			return "redirect:/dokky/signin";
+			
+		} else {
+			redirectAttributes.addFlashAttribute("resultMsg", "현재 비밀번호가 일치하지 않습니다. 😭");
 			return "redirect:/dokky/modify-password";
 		}
 
@@ -92,11 +121,12 @@ public class MyPageController {
 	 * @param userNo
 	 * @param originPw
 	 * @param redirectAttributes
-	 * @return
+	 * @return redirect (board() or removeUser())
 	 */
 	@PostMapping("remove-user/{userNo}")
-	public String removeUser(@PathVariable("userNo") int userNo, @RequestParam("originPw") String originPw,
-			RedirectAttributes redirectAttributes) {
+	public String removeUser(@PathVariable("userNo") int userNo, 
+							@RequestParam("originPw") String originPw,
+							RedirectAttributes ra) {
 
 		Map<String, Object> removeUserMap = new HashMap<String, Object>();
 		removeUserMap.put("userNo", userNo);
@@ -104,10 +134,13 @@ public class MyPageController {
 
 		int result = myPageService.removeUser(removeUserMap);
 
-		if (result == 1)
+		if (result == 1) {
+			log.info("result : {}", result);
+			ra.addFlashAttribute("resultMsg", "그동안 DOKKY와 함께 해주셔서 감사드립니다. 🥰");
 			return "redirect:/dokky/main";
-		else {
-			redirectAttributes.addFlashAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
+			
+		} else {
+			ra.addFlashAttribute("resultMsg", "비밀번호가 일치하지 않습니다. 😭");
 			return "redirect:/dokky/remove-user";
 		}
 
@@ -115,9 +148,10 @@ public class MyPageController {
 
 	// 내가 작성한 글 조회
 	@GetMapping(value = "/api/my-board/{userNo}", produces = "application/json")
-	public ResponseEntity<?> myBoard(@PathVariable("userNo") int userNo) {
-		List<BoardDto> boardList = myPageService.getUserBoards(userNo);
-		if (boardList.isEmpty()) {
+	public ResponseEntity<?> myBoard(@PathVariable("userNo") int userNo,
+									 @RequestParam(value ="page", defaultValue = "1")int page) {
+		PageResponse<BoardDto> boardList = myPageService.getUserBoards(userNo, page, 10);
+		if (boardList.getItems().isEmpty()) {
 			return ResponseEntity.ok(Map.of("message", "아직 작성한 게시글이 없습니다."));
 		} else {
 			return ResponseEntity.ok(boardList);
@@ -126,9 +160,10 @@ public class MyPageController {
 
 	// 내가 댓글 단 게시글 정보 + 댓글 내용 조회
 	@GetMapping(value = "/api/my-comment/{userNo}", produces = "application/json")
-	public ResponseEntity<?> myComment(@PathVariable("userNo") int userNo) {
-		List<BoardDto> boardList = myPageService.getUserBoardsWithComments(userNo);
-		if (boardList.isEmpty()) {
+	public ResponseEntity<?> myComment(@PathVariable("userNo") int userNo,
+			 						  @RequestParam(value ="page", defaultValue = "1")int page) {
+		 PageResponse<BoardDto> boardList = myPageService.getUserBoardsWithComments(userNo, page, 10);
+		if (boardList.getItems().isEmpty()) {
 			return ResponseEntity.ok(Map.of("message", "아직 작성한 댓글이 없습니다."));
 		} else {
 			return ResponseEntity.ok(boardList);
