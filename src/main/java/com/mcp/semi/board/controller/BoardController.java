@@ -113,7 +113,8 @@ public class BoardController {
 
 	@ResponseBody
 	@GetMapping(value = "/getBoardByNo", produces = "application/json") // 특정 번호의 게시글만 가져오기
-	public BoardDto getBoardByNo(@RequestParam("boardNo") int boardNo) {
+	public BoardDto getBoardByNo(@RequestParam("boardNo") int boardNo, Model model) {
+		model.addAttribute("detailBoard", boardService.getBoardByNo(boardNo));
 		return boardService.getBoardByNo(boardNo);
 	}
 

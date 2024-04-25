@@ -30,32 +30,29 @@
 		<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/main" style="font-size:1.2rem;">목록으로</a> 
 		<hr style="border: solid 1px; margin-top:1px;">
 		
-		<div class="detail-contentinfo">
+		<div class="detail-contentinfo" id="detail-contentinfo">
+			<input type="hidden" id="hidden-userInfo" value="${sessionScope.user.userName}">
 			<div class="image-writer" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30"></div>
 			<div class="contents-block">
-				<a class="contents-writer" id="contents-writer">작성자이름</a>
+				<a class="contents-writer" id="contents-writer"></a>
 				<div class="contents-detailinfo">
-					<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">작성일</span>
-					&nbsp;&nbsp;<i class="fa-regular fa-eye"></i>&nbsp;<span id="board-hit">조회수</span>
+					<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt"></span>
+					&nbsp;&nbsp;<i class="fa-regular fa-eye"></i>&nbsp;<span id="board-hit"></span>
 				</div> 
 			</div>
 			
-			<div class="contents-button">
-				<button type="button" class="btn btn-primary" id="btn-modify">수정</button>
-				<button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
-			</div>
 		</div>
-		<div class="detail-title" id="detail-title">제목이 들어갈 공간이지롱</div>
+		<div class="detail-title" id="detail-title"></div>
 		<hr style="border:solid 1px;">
 		
-		<div class="detail-contents" id="detail-contents">안녕하세요 감사해요 잘 있어요 다시 만나요</div>
+		<div class="detail-contents" id="detail-contents"></div>
 		<hr style="border:solid 1px;">
 		
 		<form id="frm-comment">
 			<div class="comment-area" id="comment-area">
 				<div class="comment-input" id="comment-input">	<!-- 댓글 입력창 -->
 					<div class="image-commenter-writer" >
-						<input type="hidden" name="userNo" id="userNo" value="${1}">
+						<input type="hidden" name="userNo" id="userNo" value="${sessionScope.user.userNo}">
 						<img src="/images/dokky.png" alt="DOKKY 로고" height="50">
 						<textarea rows="5" cols="70" id="comment-box"></textarea>
 					</div>
@@ -75,6 +72,9 @@
  </div>
  
   <script>
+  var sessionUser = document.getElementById('hidden-userInfo').value;
+  console.log(sessionUser);
+  
   function getBoardNoFromURL() {
 	    var urlParams = new URLSearchParams(window.location.search);
 	    return urlParams.get('boardNo');	// 요청 파라미터에서 boardNo 를 찾아서 값을 리턴해줌
@@ -106,8 +106,19 @@
 				document.getElementById('contents-writer').innerHTML = data.user.userName;
 				document.getElementById('detail-title').innerHTML = data.boardTitle;
 				document.getElementById('detail-contents').innerHTML = data.boardContent;
-				document.getElementById('create-dt').innerHTML = moment(data.boardCreateDt).format('YYYY.MM.DD HH:mm');;
+				document.getElementById('create-dt').innerHTML = moment(data.boardCreateDt).format('YYYY.MM.DD HH:mm');
 				document.getElementById('board-hit').innerHTML = data.boardHit;
+				
+				if(sessionUser == data.user.userName)
+				{
+					let str = '<div class="contents-button">';
+					str += '<button type="button" class="btn btn-primary" id="btn-modify">수정</button>';
+					str += '<button type="button" class="btn btn-danger" id="btn-delete">삭제</button>';
+					str += '</div>';
+					$('#detail-contentinfo').append(str);
+				  	fnClickDelete();
+				  	fnClickModify();
+				}
 			},
 			error:function(jqXHR){
 				alert("디테일 에러");
@@ -167,30 +178,36 @@
 	
   	const fnRegistComment = ()=>{
   		document.getElementById('btn-comment').addEventListener('click', function(){
-  			$.ajax({
-  				type:'POST',
-  				url: '/detail/registCmt',
-  				contentType:'application/json',
-  				data: JSON.stringify({
-  					'commentContent' : $('#comment-box').val(),
-  					'userNo' : $('#userNo').val(),
-  					'boardNo' : boardNo
-  				}),
-  				dataType: 'json',
-  				success:(data)=>{
-  					if(data === 1)
-					{
-						$('#comment-box').val('');
-						location.reload();
-					}
-  					else
-  						alert('댓글 등록 실패');
-  				},
-  				error:(jqXHR)=>{
-  					console.log($('#comment-box').val());
-  					alert(jqXHR.statusText + '(' + jqXHR.status + ')');  					
-  				}
-  			})
+  			if(sessionUser == '')
+  				alert('댓글 달려면 로그인 하쇼');
+  			else
+			{
+	  			$.ajax({
+	  				type:'POST',
+	  				url: '/detail/registCmt',
+	  				contentType:'application/json',
+	  				data: JSON.stringify({
+	  					'commentContent' : $('#comment-box').val(),
+	  					'userNo' : $('#userNo').val(),
+	  					'boardNo' : boardNo
+	  				}),
+	  				dataType: 'json',
+	  				success:(data)=>{
+	  					if(data === 1)
+						{
+							$('#comment-box').val('');
+							location.reload();
+							alert('댓글 등록');
+						}
+	  					else
+	  						alert('댓글 등록 실패');
+	  				},
+	  				error:(jqXHR)=>{
+	  					console.log($('#comment-box').val());
+	  					alert(jqXHR.statusText + '(' + jqXHR.status + ')');  					
+	  				}
+	  			})
+			}
   		})
   	}
   	
@@ -206,20 +223,30 @@
 	 		        let str = '<ol>';
 	 		        str += '<div class="image-commenter" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30">'; 
 					str += '<a class="comment-writer" id="comment-writer">' + data[i].user.userName + '&nbsp;</a>';
-					str += '<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">' + data[i].createDt + '</span>';
+					str += '<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">' + data[i].cmtCreateDt + '</span>';
 					str += '<input type="hidden" value="' + i + '">';
-					str += '<div class="comment-buttons">';
-					str += '<button type="button" class="btn-comment-modify" id="btn-comment-modify' + i +'" data-commentNo="'
-							+ data[i].commentNo +'">수정</button>';
-					str += '<button type="button" class="btn-comment-remove" id="btn-comment-remove' + i +'" data-commentNo="'
-							+ data[i].commentNo +'">삭제</button>';
-					str += '</div>';
-					str += '</div>';
-					str += '<div class="comment-text" id="comment-text' + i +'">' + data[i].commentContent + '</div>'; 
-					str += '<hr style="border:solid 1px; margin-top:10px;"></ol>';	
-	 		        $('#comment-list').append(str);
-	 		       	fnRemoveComment(i);
-	 		       	fnModifyComment(i, data[i].commentContent, data[i].commentNo);
+					if(sessionUser == data[i].user.userName)
+					{
+						str += '<div class="comment-buttons">';
+						str += '<button type="button" class="btn-comment-modify" id="btn-comment-modify' + i +'" data-commentNo="'
+								+ data[i].commentNo +'">수정</button>';
+						str += '<button type="button" class="btn-comment-remove" id="btn-comment-remove' + i +'" data-commentNo="'
+								+ data[i].commentNo +'">삭제</button>';
+						str += '</div>';
+						str += '</div>';
+						str += '<div class="comment-text" id="comment-text' + i +'">' + data[i].commentContent + '</div>'; 
+						str += '<hr style="border:solid 1px; margin-top:10px;"></ol>';	
+		 		        $('#comment-list').append(str);
+		 		       	fnRemoveComment(i);
+		 		       	fnModifyComment(i, data[i].commentContent, data[i].commentNo);
+					}
+					else
+					{
+						str += '</div>';
+						str += '<div class="comment-text" id="comment-text' + i +'">' + data[i].commentContent + '</div>'; 
+						str += '<hr style="border:solid 1px; margin-top:10px;"></ol>';	
+		 		        $('#comment-list').append(str);						
+					}
 				}
 			},
 			error:function(jqXHR)
@@ -293,17 +320,13 @@
 	  				}
 				})
 			})
-			
       });  		
   	}
-  	
   	
   	fnShowCommentList();
   	fnRegistComment();
   	fngetHotBoard();	
-	  fnShowDetailBoard();
-  	fnClickDelete();
-  	fnClickModify();
+    fnShowDetailBoard();
   </script>
 </body>
 </html>
