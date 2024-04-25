@@ -37,10 +37,10 @@
 
 	<script src="/js/mypage/removeUser.js"></script>
 	
-	<!-- 회원 탈퇴 실패 -->
-	<c:if test="${!empty errorMsg}">
+	<!-- 계정 삭제 실패 alert -->
+	<c:if test="${!empty resultMsg}">
 		<script>
-			alert("${errorMsg}");
+			alert("${resultMsg}");
 			document.getElementById("origin-pw").focus();
 		</script>
 	</c:if>
