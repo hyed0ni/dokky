@@ -28,14 +28,15 @@
 	background-color: #0056b3;
 }
 
-#title {
+#boardTitle {
 	height: 5rem;
 	font-size: 2rem;
 }
 
-#content {
+#boardContent {
 	height: 45rem;
 	font-size: 2rem;
+	resize: none;
 }
 
 
