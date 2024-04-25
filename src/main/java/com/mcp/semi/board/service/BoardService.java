@@ -42,19 +42,28 @@ public class BoardService {
 		
 	}
 	
-	@Transactional(readOnly = true)
-	public PageResponse<BoardDto> getBoardList(int page, int cnt) {
-		int totalCount = getTotalCount(); 
-		int total = totalCount / cnt + ((totalCount % cnt > 0) ? 1 : 0);
-		int startPage = Math.max(page - 2, 1);
-		int endPage = Math.min(page + 2,  total);
+	public List<BoardDto> getBoardList(Integer page,int cnt, String search) {
+		int totalCount = getTotalCount(search); 
+		int total = totalCount/cnt + ((totalCount%cnt>0) ? 1:0);
 		int begin = (page - 1) * cnt + 1;
 		int end = begin + cnt - 1;
-		
-		List<BoardDto> items = boardMapper.getBoardList(Map.of("begin",begin, "end",end, "total", total));
-		return new PageResponse<>(items, page ,total, startPage, endPage);
-	}
+		if (search == null) search = "";
+		Map<String,Object> map = Map.of("begin",begin, "end",end, "total", total, "search", search);
 
+		return boardMapper.getBoardList(map);
+}
+// 	@Transactional(readOnly = true)
+// 	public PageResponse<BoardDto> getBoardList(int page, int cnt) {
+// 		int totalCount = getTotalCount(); 
+// 		int total = totalCount / cnt + ((totalCount % cnt > 0) ? 1 : 0);
+// 		int startPage = Math.max(page - 2, 1);
+// 		int endPage = Math.min(page + 2,  total);
+// 		int begin = (page - 1) * cnt + 1;
+// 		int end = begin + cnt - 1;
+		
+// 		List<BoardDto> items = boardMapper.getBoardList(Map.of("begin",begin, "end",end, "total", total));
+// 		return new PageResponse<>(items, page ,total, startPage, endPage);
+// 	}
 	
 	@Transactional
 	public int deleteBoard(int boardNo) {
@@ -63,7 +72,6 @@ public class BoardService {
 	
 	@Transactional(readOnly = true)
 	public BoardDto getBoardByNo(int boardNo) {
-		
 		return boardMapper.getBoardByNo(boardNo);
 	} 
 	
@@ -84,10 +92,8 @@ public class BoardService {
 	    
 	    
 	    int modifyResult = boardMapper.updateBoard(board);
-	    
 	    return modifyResult;
-	    
-	  }
+	}
 	
 	@Transactional
 	public int updateHit(int boardNo) {
@@ -111,17 +117,14 @@ public class BoardService {
 		return boardMapper.getBoardUpdateList(boardDto);
 	}
 
-
 	@Transactional
 	public int getBoardUpdate(BoardDto boardDto) {
 		return boardMapper.getBoardUpdate(boardDto);
-		
 	}
-
-	@Transactional(readOnly = true)
-	public int getTotalCount() {
-		// TODO Auto-generated method stub
-		return boardMapper.getTotalCount();
+  
+  @Transactional(readOnly = true)
+	public int getTotalCount(String search) {
+		return boardMapper.getTotalCount(search);
 	}
 
 }
