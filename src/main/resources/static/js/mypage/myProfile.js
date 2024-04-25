@@ -1,8 +1,10 @@
 export function rebindEventListeners() {
+	
 	// 회원 탈퇴 버튼
 	const profileImg = document.getElementById("profile-img");		// 프로필 이미지
 	const updateImg = document.getElementById("update-img");		// 이미지 변경 텍스트
 	const fileInput = document.getElementById("file-input");		// 파일 업로드 input
+	const userName = document.getElementById("user-name");			// 닉네임 입력 input
 	const phoneInputs = document.getElementsByClassName("p-inps");	// 휴대전화 입력 input
 	const phone1 = document.getElementById("phone1");
 	const phone2 = document.getElementById("phone2");
@@ -40,7 +42,14 @@ export function rebindEventListeners() {
 	}
 
 	// 회원 정보 수정
-	modifyForm.addEventListener("submit", () => {
+	modifyForm.addEventListener("submit", e => {
+
+		// 닉네임 미입력
+		if (userName.value.trim().length === 0) {
+			alert("닉네임은 필수로 입력해야 합니다.");
+			userName.focus();
+			e.preventDefault();
+		}
 
 		// 휴대전화 input 하나의 문자열로 합치기
 		const userMobile = `${phone1.value}${phone2.value}${phone3.value}`;
