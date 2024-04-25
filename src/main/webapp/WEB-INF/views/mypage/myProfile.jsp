@@ -42,8 +42,8 @@
 					
 					<!-- 닉네임 -->
 					<div class="col-12 user-info">
-						<label for="nickname" class="form-label">닉네임</label>
-						<input type="text" class="form-control" id="nickname" name="userName" value="${user.userName}" maxlength="50">
+						<label for="user-name" class="form-label">닉네임</label>
+						<input type="text" class="form-control" id="user-name" name="userName" value="${user.userName}" maxlength="50">
 					</div>
     
     				<!-- 성별 -->

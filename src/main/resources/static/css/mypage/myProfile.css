@@ -60,13 +60,11 @@
     border: 1px solid #e6e7eb;
     border-radius: 100%;
 	object-fit: cover;
+	cursor: pointer;
 }
 
 /* 프로필 이미지 hover */
-.my-profile #profile-img:hover {
-	filter: brightness(50%);
-	cursor: pointer;
-}
+.my-profile #profile-img:hover {filter: brightness(50%);}
 
 /* 프로필 이미지 변경 텍스트 */
 .my-profile #update-img {
