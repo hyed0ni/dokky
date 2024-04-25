@@ -46,6 +46,8 @@ public class MailUtils {
       MimeMessage mimeMessage = new MimeMessage(session);
       mimeMessage.setFrom(new InternetAddress(env.getProperty("spring.mail.username"), "dokky"));
       mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+      System.out.println(Message.RecipientType.TO);
+      System.out.println(new InternetAddress(to));
       mimeMessage.setSubject(subject);
       mimeMessage.setContent(content, "text/html; charset=UTF-8");
       

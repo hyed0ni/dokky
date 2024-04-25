@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.mcp.semi.common.exception.UserNotFoundException;
@@ -81,6 +82,7 @@ public class UserService {
 	}
 
 	// 인증코드 보내기
+	@Async
 	public ResponseEntity<Map<String, Object>> sendCode(Map<String, Object> params) {
 		
 		String code = SecurityUtils.getRandomString(6, true, true);
@@ -132,6 +134,10 @@ public class UserService {
         Optional<String> optUrl = Optional.ofNullable(request.getParameter("url"));
         String redirectUrl = optUrl.orElse(request.getContextPath() + "/dokky/main");
         
+        
+        // 이전 페이지를 세션에 저장     
+           session.setAttribute("prevPage", redirectUrl);
+        
         response.sendRedirect(redirectUrl);        
 				
 			} else {   // 실패
@@ -176,6 +182,7 @@ public class UserService {
 	public String getRedirectURLAfterSignin(HttpServletRequest request) {
     
     String redirectURL = "";
+    
     redirectURL = (String)request.getHeader("REFERER");
 
     // 기본적으로 돌아갈 URL
@@ -183,7 +190,8 @@ public class UserService {
     	redirectURL = request.getContextPath() + "/dokky/main";
     }
     return redirectURL;
-}
+    
+	}
 
 	public UserDto findByUserNo(int userNo) {
 		UserDto user = userMapper.findByUserNo(userNo);
