@@ -54,9 +54,12 @@
 					<div class="image-commenter-writer" >
 						<input type="hidden" name="userNo" id="userNo" value="${sessionScope.user.userNo}">
 						<img src="/images/dokky.png" alt="DOKKY 로고" height="50">
-						<textarea rows="5" cols="70" id="comment-box"></textarea>
+						<textarea rows="5" cols="70" id="comment-box" onkeydown="fncheckByte(this);"></textarea>
 					</div>
-					<button type="button" class="btn btn-primary" id="btn-comment">등록</button>
+					<div id="commentByte" class="commentByte">
+						<span id="messagebyte">0</span><span> / 1000byte</span>
+						<button type="button" class="btn btn-primary" id="btn-comment">등록</button>
+					</div>
 				</div>
 			</div>
 		</form>
@@ -72,8 +75,24 @@
  </div>
  
   <script>
+  var limitByte = 1000;
+  var totalByte = 0;
+
+  const fncheckByte = (obj)=>{			// 바이트 수 계산해주는 함수
+      totalByte = 0;
+      var cmtMessage = $(obj).val();
+      for(var i =0; i < cmtMessage.length; i++) {
+              var currentByte = cmtMessage.charCodeAt(i);
+              if(currentByte > 128){
+              	totalByte += 3;
+              }else {
+              	totalByte++;
+              }
+      }
+      $("#messagebyte").text(totalByte);
+  }  
+  
   var sessionUser = document.getElementById('hidden-userInfo').value;
-  console.log(sessionUser);
   
   function getBoardNoFromURL() {
 	    var urlParams = new URLSearchParams(window.location.search);
@@ -134,7 +153,6 @@
 				url: '/dokky/deleteBoard/' + boardNo,
 				dataType:'json',
 				success: function(data){
-					alert(boardNo + '번 게시글은 삭제됐다!');
 					location.href = "/dokky/main";
 				},
 				error:function(jqXHR){
@@ -182,31 +200,30 @@
   				alert('댓글 달려면 로그인 하쇼');
   			else
 			{
-	  			$.ajax({
-	  				type:'POST',
-	  				url: '/detail/registCmt',
-	  				contentType:'application/json',
-	  				data: JSON.stringify({
-	  					'commentContent' : $('#comment-box').val(),
-	  					'userNo' : $('#userNo').val(),
-	  					'boardNo' : boardNo
-	  				}),
-	  				dataType: 'json',
-	  				success:(data)=>{
-	  					if(data === 1)
-						{
+  				if(totalByte > 1000)
+  					alert('1000byte넘으면 등록안되지롱');
+  				else
+				{
+		  			$.ajax({
+		  				type:'POST',
+		  				url: '/detail/registCmt',
+		  				contentType:'application/json',
+		  				data: JSON.stringify({
+		  					'commentContent' : $('#comment-box').val(),
+		  					'userNo' : $('#userNo').val(),
+		  					'boardNo' : boardNo
+		  				}),
+		  				dataType: 'json',
+		  				success:(data)=>{
 							$('#comment-box').val('');
 							location.reload();
-							alert('댓글 등록');
-						}
-	  					else
-	  						alert('댓글 등록 실패');
-	  				},
-	  				error:(jqXHR)=>{
-	  					console.log($('#comment-box').val());
-	  					alert(jqXHR.statusText + '(' + jqXHR.status + ')');  					
-	  				}
-	  			})
+		  				},
+		  				error:(jqXHR)=>{
+		  					console.log($('#comment-box').val());
+		  					alert(jqXHR.statusText + '(' + jqXHR.status + ')');  					
+		  				}
+		  			})
+				}
 			}
   		})
   	}
@@ -234,7 +251,7 @@
 								+ data[i].commentNo +'">삭제</button>';
 						str += '</div>';
 						str += '</div>';
-						str += '<div class="comment-text" id="comment-text' + i +'">' + data[i].commentContent + '</div>'; 
+						str += '<p class="comment-text" id="comment-text' + i +'">' + data[i].commentContent + '</p>'; 
 						str += '<hr style="border:solid 1px; margin-top:10px;"></ol>';	
 		 		        $('#comment-list').append(str);
 		 		       	fnRemoveComment(i);
@@ -265,7 +282,6 @@
 				url:'/detail/deleteCmt/' + commentNo,
 				dataType:'json',
 				success: function(data){
-					alert('댓글은 삭제됐다!');
 					location.reload();
 				},
 				error:function(jqXHR){
@@ -305,14 +321,8 @@
 	  				}),
 	  				dataType: 'json',
 	  				success:(data)=>{
-	  					if(data === 1)
-						{
-	  						alert('댓글 수정 성공');
-							$('#commentupdate-box').val('');
-							location.reload();
-						}
-	  					else
-	  						alert('댓글 수정 실패');
+						$('#commentupdate-box').val('');
+						location.reload();
 	  				},
 	  				error:(jqXHR)=>{
 	  					console.log($('#comment-box').val());
