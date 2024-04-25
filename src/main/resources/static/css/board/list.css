@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 .box {
-	width: 102rem;
-	height: 22rem;
+	width: 109rem;
+	height: 28rem;
 	margin: auto;
 	padding: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -10,7 +10,7 @@
 	margin-right :7rem;
 	margin-bottom: 6rem;
 	margin-top: 3rem;
- 	background: url("/images/QNA.jpg") center no-repeat; /* 이미지 크기를 가로 세로 각각 80%로 설정합니다 */
+ 	background: url("/images/main.jpg") center no-repeat; /* 이미지 크기를 가로 세로 각각 80%로 설정합니다 */
 }
 
 .table>:not(caption)>*>* {
@@ -19,7 +19,7 @@
 
 .table-container {
 	margin-top: 20px;
-	width:103rem;
+	width:110rem;
 	text-align: center;
 }
 
@@ -33,7 +33,7 @@
 
 .search-container {
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	margin-bottom: 20px;
 }
@@ -41,6 +41,7 @@
 .search-container form {
 	display: flex;
 	align-items: center;
+	margin-left:31rem;
 }
 
 .search-container input[type="text"] {

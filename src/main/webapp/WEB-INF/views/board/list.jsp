@@ -4,20 +4,21 @@
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 <%@ include file="../layout/header.jsp" %>
-	<link href="/css/index.css" rel="stylesheet" type="text/css" />
 	<link href="/css/board/list.css" rel="stylesheet" type="text/css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	</head>
 <body>
-<%@ include file="../layout/navbar.jsp" %>
-<div class="main">
-    <div class="box"></div>
+	<%@ include file="../layout/navbar.jsp"%>
+	<div class="main">
+		<div class="box"></div>
 		<div class="table-container">
 			<div class="row mb-3">
 				<div class="col">
 					<div class="search-container">
-						<form action="/search" method="GET">
-							<input type="text" placeholder="검색어를 입력해주세요." name="q">
+						<a role="button" class="btn btn-primary me-2 " id="add" href="/dokky/add">작성하기</a>
+						<form action="/dokky/main" method="GET" name="searchform" onsubmit="return searchformaction(this,1)">
+							<input type="hidden" name="page" value="1" />
+							<input type="text" placeholder="검색어를 입력해주세요." name="search" <%-- value="${param.search}"> --%>>
 							<button type="submit" class="search-btn">
 								<i class="fa fa-search"></i>
 							</button>
@@ -35,28 +36,70 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="board" items="${pageResponse.items}">
+					<c:choose>
+						<c:when test="${boardList.size() > 0}">
+							<c:forEach var="board" items="${boardList}">
+								<tr>
+									<td>${board.user.userName}</td>
+									<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
+									<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
+									<td>${board.boardCreateDt}</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="5">검색된 게시물이 없습니다</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+<!-- 					<c:forEach var="board" items="${pageResponse.items}">
 						<tr>
 							<td>${board.boardNo}</td>
 							<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
 							<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
 							<td>${board.boardCreateDt}</td>
 						</tr>
-					</c:forEach>
+					</c:forEach> -->
 				</tbody>
 			</table>
 			<nav aria-label="Page navigation example">
 				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${prevPage})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+					<c:forEach begin="${startPage}" end="${endPage}" var="p">
+						<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${p})">${p}</a></li>
+<!-- 					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a></li>
 					<c:forEach begin="${pageResponse.startPage}" end="${pageResponse.endPage}" var="p">
-					<li class="page-item"><a class="page-link" href="main?page=${p}">${p}</a></li>
+					<li class="page-item"><a class="page-link" href="main?page=${p}">${p}</a></li> -->
 					</c:forEach>
-					<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-					</a></li>
+					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${nextPage})" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 				</ul>
 			</nav>
 		</div>
 	</div>
-<%@ include file="../layout/copyright.jsp" %>
-<%@ include file="../layout/footer.jsp" %>
+	<%@ include file="../layout/copyright.jsp" %>
+	<%@ include file="../layout/footer.jsp" %>
+	<script type="text/javascript">
+	
+	// 전역 변수 
+	var boardListSize = ${boardList.size()};
+	
+	// 페이징 검색 게시물 없을 시 hide 처리
+	if(boardListSize != 0){
+		let page = $('.pagination').show();	
+	}else{
+		let page = $('.pagination').hide();	
+	}
+	
+	// 검색 기능 처리
+	function searchformaction(f, p) {
+		if (f.search == '') {
+			alert("검색어를 입력하세요");
+			f.search.focus();
+			return false;
+		}
+			f.page.value = p;
+			f.submit();
+		}
+	</script>

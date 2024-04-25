@@ -12,15 +12,23 @@ import com.mcp.semi.common.page.PageResponse;
 public interface BoardMapper {
 	
 	int insertBoard(BoardDto board);
-	List<BoardDto> getBoardList(BoardDto boardDto);
+	
 	List<BoardDto> getBoardList(Map<String, Object> map);
+	
 	int deleteBoard(int boardNo);
+	
 	BoardDto getBoardByNo(int boardNo);
+	
 	int updateBoard(BoardDto board);
+	
 	int updateHit(int boardNo);
+	
 	List<BoardDto> getHotBoardList(Map<String, Object> map);
+	
 	BoardDto getBoardUpdateList(BoardDto boardDto);
+	
 	int getBoardUpdate(BoardDto boardDto);
-	int getTotalCount();
+	
+	int getTotalCount(String search);
 }
 	

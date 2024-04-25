@@ -4,7 +4,7 @@
 	<c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 	<c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 <%@ include file="../layout/header.jsp" %>
-	<link href="/css/board/modify.css" rel="stylesheet" type="text/css" />
+	<link href="/css/board/add.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <%@ include file="../layout/navbar.jsp" %>
@@ -20,11 +20,10 @@
             <label for="content" class="form-label mt-2">내용</label>
             <textarea type="text" name="boardContent" id="content" class="form-control"></textarea>
         </div>
-        <div class="d-flex justify-content-end">
-        		 <input type="hidden" name="userNo" value="${sessionScope.user.userNo}"> 
-           <!-- <input type="hidden" name="userNo" value="1">   -->
-            <a type="button" id="cancelBtn" class="btn btn btn-light mr-2">취소</a>
-            <button type="submit" id="writeBtn" class="btn btn-primary">등록</button>
+        <div class="d-flex justify-content-end" id="btn">
+        	<input type="hidden" name="userNo" value="${sessionScope.user.userNo}">
+            <a type="submit" id="cancelBtn" class="btn btn btn-light mr-2">취소</a>
+            	<button type="submit" id="addBtn" class="btn btn-primary">등록</button>
         </div>
     </form>
 </div>
@@ -38,9 +37,6 @@
 		window.location.href="/dokky/main";
 	})
 	
-
-		    
-		    
 	const fnRegisterBoard = (evt) => {
 		if(document.getElementById('title').value === ''){
 			alert('제목을 입력해주세요.');
@@ -50,8 +46,5 @@
 	}
 	
 	document.getElementById('frm-board-add').addEventListener()
-	
-	
-	
 	
 </script>
