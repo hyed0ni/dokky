@@ -26,7 +26,7 @@
 			<!-- 우측 -->
 			<div id="profile-container" class="col-md-7 col-lg-8">
  				<h4 class="mb-3">회원 정보</h4>
- 				<form action="1" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
+ 				<form action="mypage" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
  					<div>
  						<!-- 프로필 이미지 -->
  						<img src="/images/dokky_profile.png" id="profile-img">
@@ -97,7 +97,7 @@
 				
 				<hr class="my-4">
 				
-				<form action="remove-user/1" method="post" id="remove-user-form">
+				<form action="remove-user" method="post" id="remove-user-form">
 					<!-- 계정 삭제 -->
 					<label class="form-label">계정 삭제</label>
 					<div class="mt-3 space-y-2 rounded-md border border-gray-500/50 p-3">
