@@ -3,7 +3,6 @@ package com.mcp.semi.mypage.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -89,17 +88,17 @@ public class MyPageController {
 	@PostMapping("modify-password/{userNo}")
 	public String modifyPw(@PathVariable("userNo") int userNo, 
 							@RequestParam Map<String, Object> pwMap,
-							RedirectAttributes redirectAttributes) {
+							RedirectAttributes ra) {
 
 		pwMap.put("userNo", userNo);
 		int result = myPageService.modifyPw(pwMap);
 
 		if (result == 1) {
-			redirectAttributes.addFlashAttribute("resultMsg", "비밀번호가 성공적으로 변경되었습니다. 🥰");
+			ra.addFlashAttribute("resultMsg", "비밀번호가 성공적으로 변경되었습니다. 🥰");
 			return "redirect:/dokky/signin";
 			
 		} else {
-			redirectAttributes.addFlashAttribute("resultMsg", "현재 비밀번호가 일치하지 않습니다. 😭");
+			ra.addFlashAttribute("resultMsg", "현재 비밀번호가 일치하지 않습니다. 😭");
 			return "redirect:/dokky/modify-password";
 		}
 

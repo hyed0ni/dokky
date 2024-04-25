@@ -53,7 +53,7 @@
 	<!-- 계정 삭제: 데이터 삭제 -->
 	<delete id="deleteUserData">
 		DELETE FROM USER_T 
-		WHERE CURRENT_DATE - WITHDRAWAL_DT >= 1
+		WHERE (CURRENT_DATE - WITHDRAWAL_DT) * 1440 >= 1
 	</delete>
 	
 	<!-- 내가 작성한 글 조회 -->
