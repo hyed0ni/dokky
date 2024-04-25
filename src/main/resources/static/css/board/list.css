@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .box {
-	width: 102rem;
+	width: 109rem;
 	height: 28rem;
 	margin: auto;
 	padding: 20px;
@@ -19,7 +19,7 @@
 
 .table-container {
 	margin-top: 20px;
-	width:103rem;
+	width:110rem;
 	text-align: center;
 }
 
@@ -41,7 +41,7 @@
 .search-container form {
 	display: flex;
 	align-items: center;
-	margin-left:29.5rem;
+	margin-left:31rem;
 }
 
 .search-container input[type="text"] {
