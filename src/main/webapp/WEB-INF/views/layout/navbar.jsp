@@ -26,7 +26,7 @@
 			      <!-- Sign In 된 경우 -->
 			      <c:if test="${sessionScope.user != null}">
 			        <a href="/dokky/mypage/${user.userNo}"> ${sessionScope.user.userName}님 </a> 반갑습니다.
-			        <a href="/user/signout">로그아웃</a>
+			        <a href="/dokky/signout">로그아웃</a>
 			      </c:if>
 					</li>
 				</ul>
