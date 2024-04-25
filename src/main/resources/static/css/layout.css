@@ -71,20 +71,13 @@ body {
     color: #28a7e9;
 }
 
-/* Footer 스타일링 */
 footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    position: relative; 
     width: 100%;
-    margin: 0 !important;
-    /* 마진 제거 */
     padding: 20px 0;
-    border-top: 1px solid rgb(208, 209, 214);
     background: #fff;
     text-align: center;
-}
-
-footer .container>div {
-    font-size: 1.5rem;
+    font-size: 14px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 15px;
 }

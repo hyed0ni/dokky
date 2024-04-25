@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.mcp.semi.board.mapper.BoardMapper">
 
 	<resultMap type="BoardDto" id="BoardMap">
@@ -17,63 +16,70 @@
 	</resultMap>
 
 	<insert id="insertBoard" parameterType="BoardDto">
-		<selectKey order="BEFORE" keyProperty="boardNo"
-			resultType="int">
+		<selectKey order="BEFORE" keyProperty="boardNo" resultType="int">
 			SELECT BOARD_SEQ.NEXTVAL
-			FROM DUAL
+			  FROM DUAL
 		</selectKey>
 		INSERT INTO BOARD_T (
-		BOARD_NO
-		, BOARD_TITLE
-		, BOARD_CONTENTS
-		, USER_NO
-		, BOARD_CREATE_DT
-		, BOARD_MODIFY_DT
+					BOARD_NO
+				  , BOARD_TITLE
+				  , BOARD_CONTENTS
+				  , USER_NO
+				  , BOARD_CREATE_DT
+				  , BOARD_MODIFY_DT
 		) VALUES (
-		#{boardNo}
-		, #{boardTitle}
-		, #{boardContents}
-		, #{user.userNo}
-		, CURRENT_TIMESTAMP
-		, CURRENT_TIMESTAMP
-		)
+					#{boardNo}
+				  , #{boardTitle}
+				  , #{boardContents}
+				  , #{user.userNo}
+				  , CURRENT_TIMESTAMP
+				  , CURRENT_TIMESTAMP)
 	</insert>
 
-	<select id="getBoardList" resultMap="BoardMap"
-		parameterType="Map">
-		SELECT * FROM
-		( SELECT ROW_NUMBER() OVER(ORDER BY B.BOARD_NO DESC) AS RN
-		, B.BOARD_NO
-		, B.BOARD_TITLE
-		, B.BOARD_CONTENT
-		, B.BOARD_HIT
-		, B.BOARD_CREATE_DT
-		, B.BOARD_MODIFY_DT
-		, B.USER_NO
-		, U.USER_NAME
-		FROM BOARD_T B INNER JOIN USER_T U
-		ON B.USER_NO = U.USER_NO ) a
-		WHERE RN BETWEEN #{begin} AND #{end}
-	</select>
-
+	<sql id="search">
+	    <if test="search != null and search != ''">
+	        WHERE (B.BOARD_TITLE LIKE '%' || #{search} || '%'
+	           OR B.BOARD_CONTENT LIKE '%' || #{search} || '%'
+	           OR U.USER_NAME LIKE '%' || #{search} || '%')
+	    </if>
+	</sql>
+	
 	<select id="getTotalCount" resultType="int">
-		SELECT COUNT(*)
-		FROM
-		BOARD_T
+	    SELECT COUNT(*)
+	      FROM BOARD_T B
+	     INNER JOIN USER_T U 
+	        ON B.USER_NO = U.USER_NO
+	    <include refid="search"></include>
+	</select>
+	
+	<select id="getBoardList" resultMap="BoardMap" parameterType="Map">
+		SELECT *
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY B.BOARD_NO DESC) AS RN
+					 , B.BOARD_NO
+					 , B.BOARD_TITLE
+					 , B.BOARD_CONTENT
+					 , B.BOARD_HIT
+					 , B.BOARD_CREATE_DT
+					 , B.BOARD_MODIFY_DT
+					 , B.USER_NO
+					 , U.USER_NAME
+				  FROM BOARD_T B INNER JOIN USER_T U
+				    ON B.USER_NO = U.USER_NO <include refid="search"></include> ) a
+				 WHERE RN BETWEEN #{begin} AND #{end}
 	</select>
 
 	<select id="getBoardUpdateList" resultMap="BoardMap">
 		SELECT B.BOARD_TITLE
-		, B.BOARD_CONTENT
-		, B.BOARD_HIT
-		, B.BOARD_CREATE_DT
-		, B.BOARD_MODIFY_DT
-		, B.USER_NO
-		, U.USER_NAME
-		, B.BOARD_NO
-		FROM BOARD_T B INNER JOIN USER_T U
-		ON B.USER_NO = U.USER_NO
-		WHERE BOARD_NO = #{boardNo}
+			 , B.BOARD_CONTENT
+			 , B.BOARD_HIT
+			 , B.BOARD_CREATE_DT
+			 , B.BOARD_MODIFY_DT
+			 , B.USER_NO
+			 , U.USER_NAME
+			 , B.BOARD_NO
+		  FROM BOARD_T B INNER JOIN USER_T U
+			ON B.USER_NO = U.USER_NO
+		 WHERE BOARD_NO = #{boardNo}
 	</select>
 
 	<delete id="deleteBoard">
@@ -84,48 +90,53 @@
 
 	<update id="updateHit">
 		UPDATE BOARD_T
-		SET BOARD_HIT = BOARD_HIT + 1
-		WHERE BOARD_NO = #{boardNo}
+		   SET BOARD_HIT = BOARD_HIT + 1
+		 WHERE BOARD_NO = #{boardNo}
 	</update>
 
 	<select id="getBoardByNo" resultMap="BoardMap">
-		SELECT B.BOARD_NO,
-		B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_HIT, B.BOARD_CREATE_DT, B.BOARD_MODIFY_DT,
-		B.USER_NO, U.USER_NAME
-		FROM BOARD_T B INNER JOIN USER_T U
-		ON B.USER_NO =
-		U.USER_NO
+		SELECT B.BOARD_NO
+			 , B.BOARD_TITLE
+			 , B.BOARD_CONTENT
+			 , B.BOARD_HIT
+			 , B.BOARD_CREATE_DT
+			 , B.BOARD_MODIFY_DT
+			 , B.USER_NO
+			 , U.USER_NAME
+		  FROM BOARD_T B 
+    INNER JOIN USER_T U
+		    ON B.USER_NO = U.USER_NO
 		WHERE B.BOARD_NO = #{boardNo}
 	</select>
 
 	<update id="getBoardUpdate" parameterType="BoardDto">
 		UPDATE BOARD_T
-		SET BOARD_TITLE = #{boardTitle},
-		BOARD_CONTENT = #{boardContent},
-		BOARD_MODIFY_DT = CURRENT_TIMESTAMP
-		WHERE BOARD_NO = #{boardNo}
+		   SET BOARD_TITLE = #{boardTitle}
+		   	 , BOARD_CONTENT = #{boardContent}
+		     , BOARD_MODIFY_DT = CURRENT_TIMESTAMP
+		 WHERE BOARD_NO = #{boardNo}
 	</update>
+	
 	<update id="updateBoard" parameterType="BoardDto">
 		UPDATE BOARD_T
-		SET BOARD_TITLE = #{boardTitle},
-		BOARD_CONTENT = #{boardContent},
-		BOARD_MODIFY_DT = TO_CHAR(CURRENT_DATE,'YYYY-MM-DD HH24:MI:SS)
-		WHERE BOARD_NO = #{boardNo}
+		   SET BOARD_TITLE = #{boardTitle}
+		  	 , BOARD_CONTENT = #{boardContent}
+		   	 , BOARD_MODIFY_DT = TO_CHAR(CURRENT_DATE,'YYYY-MM-DD HH24:MI:SS)
+		 WHERE BOARD_NO = #{boardNo}
 	</update>
 
 	<select id="getHotBoardList" parameterType="Map"
 		resultMap="BoardMap">
 		SELECT B.BOARD_NO
-		, B.BOARD_TITLE
-		, B.BOARD_CONTENT
-		, B.BOARD_HIT
-		, B.BOARD_CREATE_DT
-		, B.BOARD_MODIFY_DT
-		, B.USER_NO
-		, U.USER_NAME
-		FROM BOARD_T B INNER JOIN USER_T U
-		ON B.USER_NO = U.USER_NO
+		 	 , B.BOARD_TITLE
+		 	 , B.BOARD_CONTENT
+			 , B.BOARD_HIT
+			 , B.BOARD_CREATE_DT
+			 , B.BOARD_MODIFY_DT
+			 , B.USER_NO
+			 , U.USER_NAME
+		  FROM BOARD_T B INNER JOIN USER_T U
+			ON B.USER_NO = U.USER_NO
 		<!-- WHERE B.BOARD_NO BETWEEN #{begin} AND #{end} -->
 	</select>
-
 </mapper>

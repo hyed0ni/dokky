@@ -39,31 +39,24 @@ public class BoardService {
 		
 	}
 	
-	
-	
-	
-	
-	public List<BoardDto> getBoardList(Integer page,int cnt) {
-		int totalCount = getTotalCount(); 
+	public List<BoardDto> getBoardList(Integer page,int cnt, String search) {
+		int totalCount = getTotalCount(search); 
 		int total = totalCount/cnt + ((totalCount%cnt>0) ? 1:0);
 		int begin = (page - 1) * cnt + 1;
 		int end = begin + cnt - 1;
-	
-		Map<String,Object> map = Map.of("begin",begin, "end",end, "total", total);
+		if (search == null) search = "";
+		Map<String,Object> map = Map.of("begin",begin, "end",end, "total", total, "search", search);
 
 		return boardMapper.getBoardList(map);
 	}
-
 	
 	public int deleteBoard(int boardNo) {
       return boardMapper.deleteBoard(boardNo);
 	}
 	
 	public BoardDto getBoardByNo(int boardNo) {
-		
 		return boardMapper.getBoardByNo(boardNo);
 	} 
-	
 	
 	public int modifyBoard(HttpServletRequest request) {
 	    
@@ -81,10 +74,8 @@ public class BoardService {
 	    
 	    // BLOG_T 수정
 	    int modifyResult = boardMapper.updateBoard(board);
-	    
 	    return modifyResult;
-	    
-	  }
+	}
 	
 	public int updateHit(int boardNo) {
 		return boardMapper.updateHit(boardNo);
@@ -100,20 +91,17 @@ public class BoardService {
 		model.addAttribute(boardList);
 		return boardMapper.getHotBoardList(map);
 	}
+	
 	public BoardDto getBoardUpdateList(BoardDto boardDto) {
 		return boardMapper.getBoardUpdateList(boardDto);
 	}
 
-
 	public int getBoardUpdate(BoardDto boardDto) {
 		return boardMapper.getBoardUpdate(boardDto);
-		
 	}
 
-
-	public int getTotalCount() {
-		// TODO Auto-generated method stub
-		return boardMapper.getTotalCount();
+	public int getTotalCount(String search) {
+		return boardMapper.getTotalCount(search);
 	}
 
 }
