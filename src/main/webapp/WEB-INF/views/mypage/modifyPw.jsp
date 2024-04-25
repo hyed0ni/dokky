@@ -42,10 +42,11 @@
 
 	<script src="/js/mypage/modifyPw.js"></script>
 	
-	<!-- 비밀번호 변경 실패 -->
-	<c:if test="${!empty errorMsg}">
+	<!-- 비밀번호 변경 실패 alert -->
+	<c:if test="${!empty resultMsg}">
 		<script>
-			alert("${errorMsg}");
+			alert("${resultMsg}");
+			document.getElementById("origin-pw").focus();
 		</script>
 	</c:if>
 	
