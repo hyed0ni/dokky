@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.service.BoardService;
+import com.mcp.semi.common.page.PageResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -66,8 +67,14 @@ public class BoardController {
 		model.addAttribute("endPage",endPage);
 		
 	    return "board/list";
-	}
-	
+}
+// 	public String board(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+// 		final int cnt = 10;
+// 		PageResponse<BoardDto> pageResponse = boardService.getBoardList(page, cnt);
+// 		model.addAttribute("pageResponse", pageResponse);
+// 		return "board/list";
+// 	}
+
 	@GetMapping("/detail")
 	public String boardDetail() {
 		return "board/detail";
@@ -92,21 +99,24 @@ public class BoardController {
 		return "board/add";
 	}
 
-	@ResponseBody
-	@GetMapping(value = "/getBoard.do", produces = "application/json") 	// 전체 게시글 가져오기
-	public List<BoardDto> getHotBoardList(Model model) {
-		return boardService.getHotBoardList(model);
-	}
-	
 	@PostMapping("/add-form")
-	public String boardAddForm(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public String register(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		int insertCount = boardService.registerBoard(request);
 		redirectAttributes.addFlashAttribute("insertResult",insertCount == 1 ? "등록되었습니다." : "등록되지 않았습니다.");
 		return "redirect:/dokky/main";
 	}
+	 
 	
 	@ResponseBody
-	@GetMapping(value = "/getBoardByNo.do", produces = "application/json") // 특정 번호의 게시글만 가져오기
+	@GetMapping(value = "/getBoard", produces = "application/json") 	// 전체 게시글 가져오기
+	public List<BoardDto> getHotBoardList(Model model) {
+		return boardService.getHotBoardList(model);
+	}
+	
+	
+	
+	@ResponseBody
+	@GetMapping(value = "/getBoardByNo", produces = "application/json") // 특정 번호의 게시글만 가져오기
 	public BoardDto getBoardByNo(@RequestParam("boardNo") int boardNo) {
 		return boardService.getBoardByNo(boardNo);
 	}
@@ -119,7 +129,7 @@ public class BoardController {
 	}
 	  
 	@ResponseBody
-	@GetMapping(value = "/putBoardHit.do", produces = "application/json") // 조회수 늘릴때 쓰는거
+	@GetMapping(value = "/putBoardHit", produces = "application/json") // 조회수 늘릴때 쓰는거
 	public int updateHit(@RequestParam("boardNo") int boardNo) {
 		return boardService.updateHit(boardNo);
 	}

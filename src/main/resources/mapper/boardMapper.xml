@@ -21,19 +21,20 @@
 			  FROM DUAL
 		</selectKey>
 		INSERT INTO BOARD_T (
-					BOARD_NO
-				  , BOARD_TITLE
-				  , BOARD_CONTENTS
-				  , USER_NO
-				  , BOARD_CREATE_DT
-				  , BOARD_MODIFY_DT
+		BOARD_NO
+		, BOARD_TITLE
+		, BOARD_CONTENT
+		, USER_NO
+		, BOARD_CREATE_DT
+		, BOARD_MODIFY_DT
 		) VALUES (
-					#{boardNo}
-				  , #{boardTitle}
-				  , #{boardContents}
-				  , #{user.userNo}
-				  , CURRENT_TIMESTAMP
-				  , CURRENT_TIMESTAMP)
+		#{boardNo}
+		, #{boardTitle}
+		, #{boardContent}
+		, #{user.userNo}
+		, CURRENT_TIMESTAMP
+		, CURRENT_TIMESTAMP
+		)
 	</insert>
 
 	<sql id="search">

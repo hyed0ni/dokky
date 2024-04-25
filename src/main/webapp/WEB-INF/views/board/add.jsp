@@ -10,15 +10,15 @@
 <%@ include file="../layout/navbar.jsp" %>
 
 <div class="main">
-    <form id="frm-board-add" action="/dokky/add-from" method="post" class="my-3">
+    <form id="frm-board-add" action="/dokky/add-form" method="POST" class="my-3">
         <!-- 제목 -->
         <h4 class="border-bottom py-2">게시물 작성하기</h4>
-        <label for="content" class="form-label">제목</label>
-        <input type="text" name="content" id="title" class="form-control"  style="white-space: pre-line;" />
-        <!-- 내용 -->
+        <label for="title" class="form-label">제목</label>
+        <input type="text" name="boardTitle" id="title" class="form-control"  style="white-space: pre-line;" />
+        <!-- 내용 -->              
         <div class="mb-3">
             <label for="content" class="form-label mt-2">내용</label>
-            <textarea type="text" name="content" id="content" class="form-control"></textarea>
+            <textarea type="text" name="boardContent" id="content" class="form-control"></textarea>
         </div>
         <div class="d-flex justify-content-end" id="btn">
         	<input type="hidden" name="userNo" value="${sessionScope.user.userNo}">
@@ -37,5 +37,14 @@
 		window.location.href="/dokky/main";
 	})
 	
+	const fnRegisterBoard = (evt) => {
+		if(document.getElementById('title').value === ''){
+			alert('제목을 입력해주세요.');
+			evt.preventDefault();
+			return;
+		}
+	}
+	
+	document.getElementById('frm-board-add').addEventListener()
 	
 </script>
