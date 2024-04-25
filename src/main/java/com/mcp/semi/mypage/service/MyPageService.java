@@ -96,5 +96,4 @@ public class MyPageService {
 		List<BoardDto> items = myPageMapper.getBoardsWithCommentsByUserNo(userNo, begin, end);
 		return new PageResponse<>(items, page ,total, startPage, endPage);
     }
-
 }
