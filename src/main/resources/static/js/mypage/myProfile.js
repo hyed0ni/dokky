@@ -4,11 +4,10 @@ export function rebindEventListeners() {
 	const updateImg = document.getElementById("update-img");		// 이미지 변경 텍스트
 	const fileInput = document.getElementById("file-input");		// 파일 업로드 input
 	const phoneInputs = document.getElementsByClassName("p-inps");	// 휴대전화 입력 input
-	const phone1 = document.getElementById("phone1");
-	const phone2 = document.getElementById("phone2");
-	const phone3 = document.getElementById("phone3");
+	const phoneInput = document.getElementById("phone");
 	const modifyForm = document.getElementById("modify-form");		// 회원 정보 수정 form
 	const removeBtn = document.getElementById("remove-user-btn");	// 회원 탈퇴 버튼
+	const userMobile = document.getElementById("phone");
 
 	// 이미지 변경 텍스트 노출
 	profileImg.addEventListener("mouseenter", () => updateImg.style.display = "block");
@@ -68,4 +67,19 @@ export function rebindEventListeners() {
 	removeBtn.addEventListener("click", () => 
 		location.href = "/dokky/remove-user");
 	
+	// 휴대폰 번호 하이픈 처리
+	function formatPhoneNumber(phone) {
+    	return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+	}
+
+	userMobile.value = formatPhoneNumber(userMobile.value); 
+	
+	phoneInput.addEventListener("focus", () => {
+	   userMobile.value = phoneInput.value.replace(/-/g, '');
+	});
+	
+	
+	phoneInput.addEventListener("blur", () => {
+    	userMobile.value = formatPhoneNumber(userMobile.value);
+	});
 }

@@ -68,30 +68,13 @@
 						</div>
  					</div>
 
-					<c:set var="userMobile" value="${user.userMobile}" />
-					<c:if test="${not empty userMobile}">
-						<c:set var="phoneParts" value="${fn:split(userMobile, '-')}"/>
-						<c:choose>
-							<c:when test="${fn:length(userMobile) == 11}">
-								<c:set var = "phone1" value="${fn:substring(userMobile, 0, 3)}"/>
-								<c:set var = "phone2" value="${fn:substring(userMobile, 3, 7)}"/>
-								<c:set var = "phone3" value="${fn:substring(userMobile, 7, 11)}"/>
-							</c:when>
-						</c:choose>
-					</c:if>
-					
 					<!-- 휴대전화 -->
 					<div class="my-3 user-info">
 						<label class="form-label">휴대전화</label>
 						<div class="flex" style="justify-content: space-between;">
 							<div class="p-inp">
-								<input type="text" class="form-control p-inps phone1" maxlength = "3"
-									   id="phone1" name="phone1" value="${phone1}">-
-								<input type="text" class="form-control p-inps phone2" maxlength = "4"
-									   id="phone2" name="phone2" value="${phone2}">-
-								<input type="text" class="form-control p-inps phone2" maxlength = "4" 
-									   id="phone3" name="phone3" value="${phone3}">
-								<input type="hidden" name="userMobile" id="userMobile">
+								<input type="text" class="form-control p-inps phone"
+									   id="phone" name="phone" value="${user.userMobile}">
 							</div>
 					
 							<!-- 저장 -->
