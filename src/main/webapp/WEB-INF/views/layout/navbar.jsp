@@ -18,17 +18,21 @@
 					</li>
 					<li class="nav-item">
 						<div class="nav-profile-ui">
+						<c:if test="${sessionScope.user != null}">
 					  	  <c:if test="${empty sessionScope.user.userImg}">
 							<img src="/images/dokky_profile.png" id="nav-profile-img" class="nav-img">
 						  </c:if>
+						</c:if>
 					      <!-- Sign In 된 경우 -->
+					      <c:if test="${sessionScope.user != null}">
 					      <c:if test="${!empty sessionScope.user.userImg}">
 					        <a><img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}" class="nav-img"></a>
 				          </c:if>
 				          	<div class="nav-welcome">
-						        <a href="/dokky/mypage"><span class="nav-username">${sessionScope.user.userName}</span></a>님
+						        <span class="nav-username">${sessionScope.user.userName}</span>님
 						        <span>반갑습니다.</span>
 					        </div>
+					       </c:if>
 					         <div class="my-menu-content">
 		       					 <ul class="my-menu-list">
 		        	    			 <li class="my-menu-item" id="my-profile">
