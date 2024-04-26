@@ -24,12 +24,20 @@
 			</div>
 			
 			<!-- 우측 -->
-			<div id="profile-container" class="col-md-7 col-lg-8">
+			<div id="profile-container" class="col-md-7 col-lg-8 profile-con">
  				<h4 class="mb-3">회원 정보</h4>
- 				<form action="1" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
+ 				<form action="mypage" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
  					<div>
+ 						<!-- 프로필 이미지: 기본 값 -->
+ 						<c:if test="${empty user.userImg}">
+ 							<img src="/images/dokky_profile.png" id="profile-img">
+ 						</c:if>
+ 						
  						<!-- 프로필 이미지 -->
- 						<img src="/images/dokky_profile.png" id="profile-img">
+ 						<c:if test="${!empty user.userImg}">
+ 							<img src="${user.userUploadPath}${user.userImg}" id="profile-img">
+ 						</c:if>
+ 					
 						<div id="update-img">변경</div>
 						<input type="file" id="file-input" accept="image/*" name="profileImg">
 					</div>
@@ -42,8 +50,8 @@
 					
 					<!-- 닉네임 -->
 					<div class="col-12 user-info">
-						<label for="nickname" class="form-label">닉네임</label>
-						<input type="text" class="form-control" id="nickname" name="userName" value="${user.userName}" maxlength="50">
+						<label for="user-name" class="form-label">닉네임</label>
+						<input type="text" class="form-control" id="user-name" name="userName" value="${user.userName}" maxlength="50">
 					</div>
     
     				<!-- 성별 -->
@@ -68,30 +76,13 @@
 						</div>
  					</div>
 
-					<c:set var="userMobile" value="${user.userMobile}" />
-					<c:if test="${not empty userMobile}">
-						<c:set var="phoneParts" value="${fn:split(userMobile, '-')}"/>
-						<c:choose>
-							<c:when test="${fn:length(userMobile) == 11}">
-								<c:set var = "phone1" value="${fn:substring(userMobile, 0, 3)}"/>
-								<c:set var = "phone2" value="${fn:substring(userMobile, 3, 7)}"/>
-								<c:set var = "phone3" value="${fn:substring(userMobile, 7, 11)}"/>
-							</c:when>
-						</c:choose>
-					</c:if>
-					
 					<!-- 휴대전화 -->
 					<div class="my-3 user-info">
 						<label class="form-label">휴대전화</label>
 						<div class="flex" style="justify-content: space-between;">
 							<div class="p-inp">
-								<input type="text" class="form-control p-inps phone1" maxlength = "3"
-									   id="phone1" name="phone1" value="${phone1}">-
-								<input type="text" class="form-control p-inps phone2" maxlength = "4"
-									   id="phone2" name="phone2" value="${phone2}">-
-								<input type="text" class="form-control p-inps phone2" maxlength = "4" 
-									   id="phone3" name="phone3" value="${phone3}">
-								<input type="hidden" name="userMobile" id="userMobile">
+								<input type="text" class="form-control p-inps phone"
+									   id="phone" name="userMobile" value="${user.userMobile}">
 							</div>
 					
 							<!-- 저장 -->
@@ -114,7 +105,7 @@
 				
 				<hr class="my-4">
 				
-				<form action="remove-user/1" method="post" id="remove-user-form">
+				<form action="remove-user" method="post" id="remove-user-form">
 					<!-- 계정 삭제 -->
 					<label class="form-label">계정 삭제</label>
 					<div class="mt-3 space-y-2 rounded-md border border-gray-500/50 p-3">

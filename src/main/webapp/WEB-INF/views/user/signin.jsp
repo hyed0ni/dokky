@@ -36,7 +36,6 @@
 	    		<button class="w-100 btn btn-lg btn-primary mb-3" type="submit">로그인</button>
 	    	</div>
 		</form>
-		  
 		<div id="bottom-wrap">
 		  <span>아직 회원이 아니신가요?</span>
 		  <a href="/dokky/signup">회원가입</a>

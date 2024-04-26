@@ -1,10 +1,5 @@
 package com.mcp.semi.board.dto;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-
-import com.mcp.semi.user.dto.UserDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

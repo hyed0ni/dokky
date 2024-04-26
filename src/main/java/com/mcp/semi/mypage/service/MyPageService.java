@@ -1,12 +1,17 @@
 package com.mcp.semi.mypage.service;
 	
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.common.page.PageResponse;
+import com.mcp.semi.common.util.FileUtils;
+import com.mcp.semi.common.util.SecurityUtils;
 import com.mcp.semi.mypage.mapper.MyPageMapper;
 import com.mcp.semi.user.dto.UserDto;
 import com.mcp.semi.user.service.UserService;
@@ -19,6 +24,7 @@ public class MyPageService {
 	
 	private final UserService userService;
 	private final MyPageMapper myPageMapper;
+	private final FileUtils fileUtils;
 	
 	// 사용자 프로필 조회
 	@Transactional(readOnly = true)
@@ -34,7 +40,47 @@ public class MyPageService {
 	 */
 	@Transactional
 	public int modifyUser(Map<String, Object> userMap) {
-		return myPageMapper.modifyUser(userMap);
+		
+		MultipartFile profileImg = (MultipartFile)userMap.get("profileImg");
+		
+		String osName = System.getProperty("os.name").toLowerCase();
+		String folderPath;
+		
+		// 프로필 이미지 저장 경로
+		if (osName.contains("win")) {
+			// Window
+			folderPath = "C:/GDJ77/mcp/user_img/";
+		} else {
+			// MacOS 및 기타 유닉스 계열
+			folderPath = "/Users/baeyeong-ug/Desktop/mcp/user_img/";
+		}
+		
+		String userUploadPath = "/dokky/user/";
+		String userImg = null;
+		
+		if (!profileImg.isEmpty()) {
+			userImg = fileUtils.getFileSystemName(profileImg.getOriginalFilename());
+			userMap.put("userImg", userImg);
+			userMap.put("userUploadPath", userUploadPath);
+		}
+		
+		int result = myPageMapper.modifyUser(userMap);
+		
+		// 프로필 이미지 저장
+		if (result == 1 && !profileImg.isEmpty()) {
+			try {
+				File directory = new File(folderPath);
+				if (!directory.exists()) directory.mkdirs();
+				profileImg.transferTo(new File(folderPath + userImg));
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new RuntimeException("프로필 이미지 저장 예외 발생");
+			}
+		}
+		
+		return result;
+		
 	}
 	
 	/** 
@@ -45,7 +91,17 @@ public class MyPageService {
 	 */
     @Transactional
 	public int modifyPw(Map<String, Object> pwMap) {
+    	
+    	// 현재 비밀번호 암호화
+    	String originPw = (String)pwMap.get("originPw");
+    	pwMap.put("originPw", SecurityUtils.getSha256(originPw));
+    	
+    	// 신규 비밀번호 암호화
+    	String newPw = (String)pwMap.get("newPw");
+    	pwMap.put("newPw", SecurityUtils.getSha256(newPw));
+    	
 		return myPageMapper.modifyPw(pwMap);
+		
 	}
 
     /**
@@ -56,7 +112,13 @@ public class MyPageService {
      */
     @Transactional
     public int removeUser(Map<String, Object> removeUserMap) {
+    	
+    	// 현재 비밀번호 암호화
+    	String originPw = (String)removeUserMap.get("originPw");
+    	removeUserMap.put("originPw", SecurityUtils.getSha256(originPw));
+    	
     	return myPageMapper.removeUser(removeUserMap);
+    	
     }
     
     /**
@@ -96,5 +158,4 @@ public class MyPageService {
 		List<BoardDto> items = myPageMapper.getBoardsWithCommentsByUserNo(userNo, begin, end);
 		return new PageResponse<>(items, page ,total, startPage, endPage);
     }
-
 }
