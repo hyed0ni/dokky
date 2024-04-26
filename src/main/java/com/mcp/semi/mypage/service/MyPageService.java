@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.common.page.PageResponse;
 import com.mcp.semi.common.util.FileUtils;
+import com.mcp.semi.common.util.SecurityUtils;
 import com.mcp.semi.mypage.mapper.MyPageMapper;
 import com.mcp.semi.user.dto.UserDto;
 import com.mcp.semi.user.service.UserService;
@@ -79,7 +80,17 @@ public class MyPageService {
 	 */
     @Transactional
 	public int modifyPw(Map<String, Object> pwMap) {
+    	
+    	// 현재 비밀번호 암호화
+    	String originPw = (String)pwMap.get("originPw");
+    	pwMap.put("originPw", SecurityUtils.getSha256(originPw));
+    	
+    	// 신규 비밀번호 암호화
+    	String newPw = (String)pwMap.get("newPw");
+    	pwMap.put("newPw", SecurityUtils.getSha256(newPw));
+    	
 		return myPageMapper.modifyPw(pwMap);
+		
 	}
 
     /**
@@ -90,7 +101,13 @@ public class MyPageService {
      */
     @Transactional
     public int removeUser(Map<String, Object> removeUserMap) {
+    	
+    	// 현재 비밀번호 암호화
+    	String originPw = (String)removeUserMap.get("originPw");
+    	removeUserMap.put("originPw", SecurityUtils.getSha256(originPw));
+    	
     	return myPageMapper.removeUser(removeUserMap);
+    	
     }
     
     /**
