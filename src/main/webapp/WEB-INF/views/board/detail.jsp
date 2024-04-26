@@ -311,25 +311,30 @@
 			
 			document.getElementById('btn-comment-update').addEventListener('click', function(){
 				console.log(evt);
-				$.ajax({
-					type:'POST',
-					url:'/detail/modifyCmt',
-	 				contentType:'application/json',
-	  				data: JSON.stringify({
-	  					'commentContent' : $('#commentupdate-box').val(),
-	  					'userNo' : evt3,
-	  					'boardNo' : evt3
-	  				}),
-	  				dataType: 'json',
-	  				success:(data)=>{
-						$('#commentupdate-box').val('');
-						location.reload();
-	  				},
-	  				error:(jqXHR)=>{
-	  					console.log($('#comment-box').val());
-	  					alert(jqXHR.statusText + '(' + jqXHR.status + ')');  					
-	  				}
-				})
+				if($.trim($('#comment-box').val()) === '')
+					alert('수정할 내용 입력해야하지롱');
+				else
+				{
+					$.ajax({
+						type:'POST',
+						url:'/detail/modifyCmt',
+		 				contentType:'application/json',
+		  				data: JSON.stringify({
+		  					'commentContent' : $('#commentupdate-box').val(),
+		  					'userNo' : evt3,
+		  					'boardNo' : evt3
+		  				}),
+		  				dataType: 'json',
+		  				success:(data)=>{
+							$('#commentupdate-box').val('');
+							location.reload();
+		  				},
+		  				error:(jqXHR)=>{
+		  					console.log($('#comment-box').val());
+		  					alert(jqXHR.statusText + '(' + jqXHR.status + ')');  					
+		  				}
+					})
+				}
 			})
       });  		
   	}
