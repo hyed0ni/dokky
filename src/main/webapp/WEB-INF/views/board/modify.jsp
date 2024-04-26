@@ -14,7 +14,7 @@
 
     <h4 class="border-bottom py-2">게시물 수정하기</h4>
     <label for="content" class="form-label">제목</label>
-    <input type="text" name="boardTitle" id="boardTitle" class="form-control" value="${board.boardTitle}" style="white-space: pre-line;" placeholder="내용을 입력해주세요."/>
+    <input type="text" name="boardTitle" id="boardTitle" class="form-control" value="${board.boardTitle}" style="white-space: pre-line;" placeholder="제목을 입력해주세요."/>
     <div class="mb-3">
         <label for="content" class="form-label mt-2">내용</label>
         <textarea name="boardContent" id="boardContent" class="form-control" placeholder="내용을 입력해주세요.">${board.boardContent}</textarea>

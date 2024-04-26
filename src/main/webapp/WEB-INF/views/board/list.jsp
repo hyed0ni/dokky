@@ -41,7 +41,7 @@
 									<td>${board.user.userName}</td>
 									<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
 									<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
-									<td><fmt:formatDate value="${board.boardCreateDt}" pattern="yyyy-MM-dd" /></td>
+									<td><fmt:formatDate value="${board.boardCreateDt}" pattern="yyyy-MM-dd HH:mm" /></td>
 								</tr>
 							</c:forEach>
 						</c:when>
