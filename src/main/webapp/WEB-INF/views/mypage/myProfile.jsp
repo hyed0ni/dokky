@@ -29,15 +29,15 @@
  				<form action="mypage" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
  					<div>
  						<!-- 프로필 이미지: 기본 값 -->
- 						<c:if test="${empty sessionScope.user.userImg}">
+ 						<c:if test="${empty user.userImg}">
  							<img src="/images/dokky_profile.png" id="profile-img">
  						</c:if>
  						
  						<!-- 프로필 이미지 -->
- 						<c:if test="${!empty sessionScope.user.userImg}">
- 							<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}" id="profile-img">
+ 						<c:if test="${!empty user.userImg}">
+ 							<img src="${user.userUploadPath}${user.userImg}" id="profile-img">
  						</c:if>
- 						
+ 					
 						<div id="update-img">변경</div>
 						<input type="file" id="file-input" accept="image/*" name="profileImg">
 					</div>
