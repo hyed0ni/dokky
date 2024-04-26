@@ -24,7 +24,7 @@
 			</div>
 			
 			<!-- 우측 -->
-			<div id="profile-container" class="col-md-7 col-lg-8">
+			<div id="profile-container" class="col-md-7 col-lg-8 profile-con">
  				<h4 class="mb-3">회원 정보</h4>
  				<form action="1" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
  					<div>
