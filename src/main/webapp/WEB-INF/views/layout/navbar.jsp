@@ -17,14 +17,42 @@
 					</c:if>
 					</li>
 					<li class="nav-item">
-					  <!-- Sign In 안 된 경우 -->
-			      <c:if test="${sessionScope.user == null}">  
-			      </c:if>
-			      <!-- Sign In 된 경우 -->
-			      <c:if test="${sessionScope.user != null}">
-			        <a href="/dokky/mypage"> ${sessionScope.user.userName}님 </a> 반갑습니다.
-			        <a href="/dokky/signout">로그아웃</a>
-			      </c:if>
+						<div class="nav-profile-ui">
+					  	  <c:if test="${empty sessionScope.user.userImg}">
+							<img src="/images/dokky_profile.png" id="nav-profile-img" class="nav-img">
+						  </c:if>
+					      <!-- Sign In 된 경우 -->
+					      <c:if test="${!empty sessionScope.user.userImg}">
+					        <a><img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}" class="nav-img"></a>
+				          </c:if>
+				          	<div class="nav-welcome">
+						        <a href="/dokky/mypage"><span class="nav-username">${sessionScope.user.userName}</span></a>님
+						        <span>반갑습니다.</span>
+					        </div>
+					         <div class="my-menu-content">
+		       					 <ul class="my-menu-list">
+		        	    			 <li class="my-menu-item" id="my-profile">
+		        	    			 <c:if test="${empty sessionScope.user.userImg}">
+										<img src="/images/dokky_profile.png" id="nav-profile-img" class="nav-img">
+						  			 </c:if>
+						  		  	 <c:if test="${!empty sessionScope.user.userImg}">
+		         						<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}" class="nav-img">
+						  			 </c:if>
+		         						<div class="my-menu-info">
+			         						<p>${sessionScope.user.userName}</p>
+			            					<a href="/dokky/mypage">내 프로필</a>
+		            					</div>
+		          					</li>
+		          					<hr>
+		          					<li class="my-menu-item">
+		           						<a class="my-menu-logout" href="/dokky/signout">
+		           							<i class="fa-solid fa-arrow-right-from-bracket"></i>
+		           							<span>로그아웃</span>
+		           						</a>
+		          				    </li>
+		        				</ul>
+		     				 </div>
+     				 	</div>
 					</li>
 				</ul>
 			</div>
