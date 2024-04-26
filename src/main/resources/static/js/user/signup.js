@@ -48,6 +48,7 @@ const fnCheckEmail = () => {
                         let btnVerifyCode = $('#btn-verify-code');
                         inpCode.prop('disabled', false);
                         btnVerifyCode.prop('disabled', false);
+                        console.log(resData.code);
                         btnVerifyCode.on('click', function (evt) {
                             if (resData.code === inpCode.val()) {
                                 alert('인증되었습니다.');
@@ -75,10 +76,11 @@ const fnCheckPassword = () => {
                  + /[0-9]/.test(inpPw.val()) 
                  + /[^A-Za-z0-9]/.test(inpPw.val());
   let passwordLength = inpPw.val().length;
-  passwordCheck = passwordLength >= 6
+  pwCheck = passwordLength >= 6
                && validCount >= 2;
+  
   let msgPw = $('#msg-pw');
-  if(passwordCheck){
+  if(pwCheck){
     msgPw.html('사용 가능한 비밀번호입니다.');
   } else {
     msgPw.html('비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.');
@@ -156,7 +158,7 @@ const fnSignup = () => {
       evt.preventDefault();
       alert('닉네임을 입력해주세요.');
       return;
-    } else if (!passwordCheck) {
+    } else if (!pwCheck && $.trim($('#inp-pw').val()) === '') {
       evt.preventDefault();
       alert('비밀번호를 입력해주세요.');
       return;
@@ -182,4 +184,4 @@ $('#btn-code').on('click', fnCheckEmail);
 $('#inp-pw').on('keyup', fnCheckPassword);
 $('#inp-name').on('blur', fnCheckName);
 $('#inp-mobile').on('blur', fnCheckMobile);
-fnSignup();
+//fnSignup();

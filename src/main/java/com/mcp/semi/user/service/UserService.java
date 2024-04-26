@@ -89,9 +89,9 @@ public class UserService {
 		
 		System.out.println("인증코드 : " + code);
 		
-		mailUtils.sendMail((String)params.get("email")
-							        , "DOKKY 인증요청"
-							        , "<div>인증코드는 <strong>" + code + "</strong>입니다.");
+//		mailUtils.sendMail((String)params.get("email")
+//							        , "DOKKY 인증요청"
+//							        , "<div>인증코드는 <strong>" + code + "</strong>입니다.");
     
     // 인증코드 입력화면으로 보내주는 값
     return new ResponseEntity<>(Map.of("code", code)
