@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.service.BoardService;
-import com.mcp.semi.common.page.PageResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -68,9 +67,10 @@ public class BoardController {
 		
 	    return "board/list";
 }
-// 	public String board(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+// 	public String board(@RequestParam(value = "page", defaultValue = "1") int page
+// 					  , @RequestParam(value = "search", required = false) String search, Model model) {
 // 		final int cnt = 10;
-// 		PageResponse<BoardDto> pageResponse = boardService.getBoardList(page, cnt);
+// 		PageResponse<BoardDto> pageResponse = boardService.getBoardList(page, cnt, search);
 // 		model.addAttribute("pageResponse", pageResponse);
 // 		return "board/list";
 // 	}

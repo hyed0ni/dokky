@@ -14,6 +14,7 @@ import com.mcp.semi.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/dokky")
@@ -25,7 +26,14 @@ public class UserController {
 	
 	@GetMapping("/signin")
 	public String signinPage(HttpServletRequest request, Model model) {
-		model.addAttribute("url",  userService.getRedirectURLAfterSignin(request));
+		String redirectURL = request.getHeader("REFERER");
+		HttpSession session = request.getSession();		
+		if(redirectURL.indexOf("sign") >= 0) {			
+			redirectURL = (String)session.getAttribute("redirectURL");
+		}
+		//System.out.println("REDIRECTURL=====>"+redirectURL);
+		session.setAttribute("redirectURL", redirectURL);
+		model.addAttribute("url",  redirectURL);
 		return "user/signin";
 	}
 	

@@ -36,7 +36,6 @@ function formatDate(dateString) {
 		day: "2-digit",
 		hour: "2-digit",
 		minute: "2-digit",
-		second: "2-digit",
 		hour12: false
 	});
 };
@@ -50,7 +49,7 @@ function removeActiveClass() {
 }
 
 function showActivityRecords() {
-	const nickname = document.getElementById("nickname").value;
+	const nickname = document.getElementById("user-name").value;
 	clearContent("profile-container");
 	const profileContainer = document.getElementById("profile-container");
 	profileContainer.textContent = "";
@@ -194,7 +193,7 @@ function showBoards(page = 1) {
 
 }
 
-function createActivityCard({ boardNo, boardTitle, content, date, link, contentLength = 20 }) {
+function createActivityCard({ boardNo, boardTitle, content, date, link, contentLength = 20, type }) {
 	const activityCard = document.createElement("div");
 	activityCard.className = "activity-card";
 
@@ -213,14 +212,21 @@ function createActivityCard({ boardNo, boardTitle, content, date, link, contentL
 
 
 	activityTitle.appendChild(activityLink);
-	activityTitle.appendChild(activityDate);
+	
 
 	const activityText = document.createElement("p");
 	activityText.className = "activity-text";
 	activityText.textContent = content.length > contentLength ? `${content.substring(0, contentLength)}...` : content;
 
-	activityCard.appendChild(activityTitle);
-	activityCard.appendChild(activityText);
+	if(type === 'comment') {
+		activityCard.appendChild(activityTitle);
+		activityText.appendChild(activityDate); 
+		activityCard.appendChild(activityText);
+	} else {
+		activityTitle.appendChild(activityDate);
+		activityCard.appendChild(activityTitle);
+		activityCard.appendChild(activityText);
+	}
 	return activityCard;
 }
 
@@ -240,8 +246,33 @@ function clearPaginationContainer(paginationContainer) {
 
 function renderPagination(currentPage, totalPage, loadPage) {
 	const paginationContainer = document.getElementById("pagination-container");
+	
 	clearPaginationContainer(paginationContainer);
 
+    const pageGroupSize = 10;
+    let currentGroup = Math.floor((currentPage - 1) / pageGroupSize);
+    let startPage = currentGroup * pageGroupSize + 1;
+    let endPage = Math.min(startPage + pageGroupSize - 1, totalPage);
+	let PrevGroupPage = Math.max(currentPage - 10, 1);
+	let NextGroupPage = Math.min(currentPage + 10, totalPage);
+
+	// 10페이지 이전 버튼	
+	const prevGroupLink = document.createElement("a");
+	prevGroupLink.href = "#";
+	prevGroupLink.textContent = "<<";
+	prevGroupLink.className = "page-link";
+	if(currentPage > startPage) {
+	console.log(startPage);
+		prevGroupLink.addEventListener("click", (e) => {
+			e.preventDefault();
+			loadPage(PrevGroupPage);
+		});
+	} else {
+		prevGroupLink.classList.add("disabled");
+	};
+	
+	paginationContainer.appendChild(prevGroupLink);
+	
 	// 이전 페이지 버튼
 	const prevLink = document.createElement("a");
 	prevLink.href = "#";
@@ -257,7 +288,8 @@ function renderPagination(currentPage, totalPage, loadPage) {
 	}
 	paginationContainer.appendChild(prevLink);
 
-	for (let i = 1; i <= totalPage; i++) {
+
+	for (let i = startPage; i <= endPage; i++) {
 		const pageLink = document.createElement("a");
 		pageLink.href = "#";
 		pageLink.textContent = i;
@@ -287,10 +319,24 @@ function renderPagination(currentPage, totalPage, loadPage) {
 		nextLink.classList.add("disabled");
 	}
 	paginationContainer.appendChild(nextLink);
+	
+	// 다음 10페이지 이동 버튼
+	const nextGroupLink = document.createElement("a");
+	nextGroupLink.href = "#";
+	nextGroupLink.textContent = ">>";
+	nextGroupLink.className = "page-link";
+	if(currentPage < totalPage) {
+		nextGroupLink.addEventListener("click", (e) => {
+			e.preventDefault();
+			loadPage(NextGroupPage);
+		});
+	} else {
+		nextGroupLink.classList.add("disabled");
+	}
+	
+	paginationContainer.appendChild(nextGroupLink);
 
 }
-
-
 
 
 function renderUserBoards(resData) {
@@ -304,7 +350,8 @@ function renderUserBoards(resData) {
 			boardTitle: board.boardTitle,
 			content: board.boardContent,
 			date: board.boardCreateDt,
-			link: `/dokky/detail?boardNo=${board.boardNo}`
+			link: `/dokky/detail?boardNo=${board.boardNo}`,
+			type: "post"
 		});
 		postsContainer.appendChild(postCard);
 	});
@@ -326,7 +373,8 @@ function renderBoardRepeatedWithComments(resData) {
 				boardTitle: board.boardTitle,
 				content: comment.commentContent,
 				date: comment.cmtCreateDt,
-				link: `/dokky/detail?boardNo=${board.boardNo}`
+				link: `/dokky/detail?boardNo=${board.boardNo}`,
+				type: "comment"
 			});
 			commentsContainer.appendChild(commentCard);
 		});

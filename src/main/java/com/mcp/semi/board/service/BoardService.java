@@ -53,15 +53,19 @@ public class BoardService {
 		return boardMapper.getBoardList(map);
 }
 // 	@Transactional(readOnly = true)
-// 	public PageResponse<BoardDto> getBoardList(int page, int cnt) {
-// 		int totalCount = getTotalCount(); 
-// 		int total = totalCount / cnt + ((totalCount % cnt > 0) ? 1 : 0);
-// 		int startPage = Math.max(page - 2, 1);
-// 		int endPage = Math.min(page + 2,  total);
+// 	public PageResponse<BoardDto> getBoardList(int page, int cnt, String search) {
+// 		int totalCount = getTotalCount(search); 
+// 		int total = (int) Math.ceil((double) totalCount / cnt);
+// 		int startPage = Math.max(((page - 1) / cnt) * cnt + 1, 1);
+// 		int endPage = Math.min(startPage + cnt - 1, total);
+// 		int nextPage = Math.min(page + 10, total);
+//		int prevPage = Math.max(page - 10, 1); 
+// 		
 // 		int begin = (page - 1) * cnt + 1;
 // 		int end = begin + cnt - 1;
-		
-// 		List<BoardDto> items = boardMapper.getBoardList(Map.of("begin",begin, "end",end, "total", total));
+// 		
+// 		if (search == null) search = "";
+// 		List<BoardDto> items = boardMapper.getBoardList(Map.of("begin", begin, "end", end, "total", total, "search", search));
 // 		return new PageResponse<>(items, page ,total, startPage, endPage);
 // 	}
 	

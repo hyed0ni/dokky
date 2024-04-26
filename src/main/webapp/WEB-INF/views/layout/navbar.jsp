@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
-
 		<nav class="navbar fixed-top">
 			<div class="container-fluid">
-			<img src="/images/dokky.png" alt="DOKKY 로고" height="30">
+			<a href="/"><img src="/images/dokky.png" alt="DOKKY 로고" height="30"></a>
 				<a class="navbar-brand fw-bold" href="/dokky/main" >DOKKY</a>
 				<ul class="navbar-nav ms-auto flex-row">
 					<li class="nav-item">
@@ -25,7 +22,7 @@
 			      </c:if>
 			      <!-- Sign In 된 경우 -->
 			      <c:if test="${sessionScope.user != null}">
-			        <a href="/dokky/mypage/${user.userNo}"> ${sessionScope.user.userName}님 </a> 반갑습니다.
+			        <a href="/dokky/mypage"> ${sessionScope.user.userName}님 </a> 반갑습니다.
 			        <a href="/dokky/signout">로그아웃</a>
 			      </c:if>
 					</li>

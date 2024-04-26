@@ -27,7 +27,7 @@
 		  <div class="col-12">
 		    <label for="inp-email" class="form-label">아이디</label>
 		    <div class="input-group mb-3">
-		      <input type="email" class="form-control frm-ctrl" name="userEmail" id="inp-email" placeholder="you@example.com">
+		      <input type="email" class="form-control frm-ctrl" name="userEmail" id="inp-email" placeholder="you@example.com" autocomplete="off">
 		      <button type="button" class="btn btn-primary" id="btn-code">인증코드받기</button>
 		    </div>
     		<div id="msg-email"></div>

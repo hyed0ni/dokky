@@ -3,7 +3,6 @@ package com.mcp.semi.mypage.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -14,10 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mcp.semi.mypage.service.MyPageService;
 import com.mcp.semi.user.dto.UserDto;
+
+import jakarta.servlet.http.HttpSession;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.common.page.PageResponse;
@@ -36,13 +39,13 @@ public class MyPageController {
 	/**
 	 * 회원 정보 조회
 	 * 
-	 * @param userNo
+	 * @param user
 	 * @param model
 	 * @return forward (myProfile.jsp)
 	 */
-	@GetMapping("mypage/{userNo}")
-	public String myProfile(@PathVariable("userNo") int userNo, Model model) {
-		UserDto userProfile = myPageService.getUserProfile(userNo);
+	@GetMapping("mypage")
+	public String myProfile(@SessionAttribute("user") UserDto user, Model model) {
+		UserDto userProfile = myPageService.getUserProfile(user.getUserNo());
 		model.addAttribute("user", userProfile);
 		return "mypage/myProfile";
 	}
@@ -50,21 +53,33 @@ public class MyPageController {
 	/**
 	 * 회원 정보 수정
 	 * 
-	 * @param userNo
+	 * @param user
+	 * @param profileImg
 	 * @param userMap
-	 * @param redirectAttributes
+	 * @param ra
 	 * @return redirect (myProfile())
 	 */
-	@PostMapping("mypage/{userNo}")
-	public String modifyUser(@PathVariable("userNo") int userNo, 
+	@PostMapping("mypage")
+	public String modifyUser(@SessionAttribute("user") UserDto user, 
+							@RequestParam("profileImg") MultipartFile profileImg,
 							@RequestParam Map<String, Object> userMap,
 							RedirectAttributes ra) {
 
-		userMap.put("userNo", userNo);
+		userMap.put("userNo", user.getUserNo());
+		userMap.put("profileImg", profileImg);
 		int result = myPageService.modifyUser(userMap);
 		
-		if (result == 1) ra.addFlashAttribute("resultMsg", "회원 정보가 변경되었습니다. 🥰");
-		return "redirect:/dokky/mypage/" + userNo;
+		if (result == 1) {
+			ra.addFlashAttribute("resultMsg", "회원 정보가 변경되었습니다. 🥰");
+			
+			user.setUserName((String)userMap.get("userName"));
+			user.setUserGender((String)userMap.get("userGender"));
+			user.setUserMobile((String)userMap.get("userMobile"));
+			user.setUserImg((String)userMap.get("userImg"));
+			user.setUserUploadPath((String)userMap.get("userUploadPath"));
+		}
+		
+		return "redirect:/dokky/mypage";
 
 	}
 
@@ -81,25 +96,28 @@ public class MyPageController {
 	/**
 	 * 비밀번호 변경
 	 * 
-	 * @param userNo
+	 * @param user
 	 * @param pwMap
-	 * @param redirectAttributes
+	 * @param ra
+	 * @param session
 	 * @return redirect (signinPage() or modifyPw())
 	 */
-	@PostMapping("modify-password/{userNo}")
-	public String modifyPw(@PathVariable("userNo") int userNo, 
+	@PostMapping("modify-password")
+	public String modifyPw(@SessionAttribute("user") UserDto user, 
 							@RequestParam Map<String, Object> pwMap,
-							RedirectAttributes redirectAttributes) {
+							RedirectAttributes ra, 
+							HttpSession session) {
 
-		pwMap.put("userNo", userNo);
+		pwMap.put("userNo", user.getUserNo());
 		int result = myPageService.modifyPw(pwMap);
 
 		if (result == 1) {
-			redirectAttributes.addFlashAttribute("resultMsg", "비밀번호가 성공적으로 변경되었습니다. 🥰");
+			ra.addFlashAttribute("resultMsg", "비밀번호가 성공적으로 변경되었습니다. 🥰");
+			session.invalidate();
 			return "redirect:/dokky/signin";
 			
 		} else {
-			redirectAttributes.addFlashAttribute("resultMsg", "현재 비밀번호가 일치하지 않습니다. 😭");
+			ra.addFlashAttribute("resultMsg", "현재 비밀번호가 일치하지 않습니다. 😭");
 			return "redirect:/dokky/modify-password";
 		}
 
@@ -118,26 +136,28 @@ public class MyPageController {
 	/**
 	 * 계정 삭제
 	 * 
-	 * @param userNo
+	 * @param user
 	 * @param originPw
-	 * @param redirectAttributes
-	 * @return redirect (board() or removeUser())
+	 * @param ra
+	 * @param session
+	 * @return forward (goodBye.jsp) or redirect (removeUser())
 	 */
-	@PostMapping("remove-user/{userNo}")
-	public String removeUser(@PathVariable("userNo") int userNo, 
+	@PostMapping("remove-user")
+	public String removeUser(@SessionAttribute("user") UserDto user, 
 							@RequestParam("originPw") String originPw,
-							RedirectAttributes ra) {
+							RedirectAttributes ra, 
+							HttpSession session) {
 
 		Map<String, Object> removeUserMap = new HashMap<String, Object>();
-		removeUserMap.put("userNo", userNo);
+		removeUserMap.put("userNo", user.getUserNo());
 		removeUserMap.put("originPw", originPw);
 
 		int result = myPageService.removeUser(removeUserMap);
 
 		if (result == 1) {
 			log.info("result : {}", result);
-			ra.addFlashAttribute("resultMsg", "그동안 DOKKY와 함께 해주셔서 감사드립니다. 🥰");
-			return "redirect:/dokky/main";
+			session.invalidate();
+			return "mypage/goodBye";
 			
 		} else {
 			ra.addFlashAttribute("resultMsg", "비밀번호가 일치하지 않습니다. 😭");
