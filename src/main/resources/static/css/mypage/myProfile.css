@@ -94,6 +94,17 @@
 	width: 200px;
 }
 
+/* 닉네임 검증 메시지 미노출 */
+.my-profile .none {display: none;}
+
+/* 닉네임 검증 메시지 노출 */
+.my-profile .block {
+	display: block;
+	padding: 5px 3px 0;
+	font-size: 1.3rem;
+    color: #d02927;
+}
+
 /* flex 설정: 성별, 휴대전화, 비밀번호 */
 .my-profile .flex {
 	display: flex;
