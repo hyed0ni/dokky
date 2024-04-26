@@ -20,7 +20,7 @@
 				<p class="break-keep bk2">작성된 게시물은 삭제되지 않으며, 익명처리 후 OKKY로 소유권이 귀속됩니다. <br>
 				게시물 삭제가 필요한 경우에는 <a href="mailto:info@okky.kr" class="underline">관리자 메일</a>로 문의해 주시기 바랍니다.</p>
 			</div>
-			<form action="remove-user/1" method="post" id="remove-form">
+			<form action="remove-user" method="post" id="remove-form">
 				<div>
 					<div class="col-12">
 						<label for="origin-pw" class="form-label">비밀번호를 입력해 주세요.</label>

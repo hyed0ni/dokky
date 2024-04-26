@@ -29,7 +29,11 @@
 		UPDATE USER_T 
 		SET USER_NAME = #{userName}, 
 			USER_GENDER = #{userGender}, 
-			USER_MOBILE = #{userMobile}
+			USER_MOBILE = #{userMobile}, 
+			<if test="userImg != null">
+				USER_IMG = #{userImg}, 
+				USER_UPLOAD_PATH = #{userUploadPath}
+			</if>
 		WHERE USER_NO = #{userNo}
 	</update>
 	

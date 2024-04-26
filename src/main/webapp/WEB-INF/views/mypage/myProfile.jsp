@@ -26,10 +26,18 @@
 			<!-- 우측 -->
 			<div id="profile-container" class="col-md-7 col-lg-8 profile-con">
  				<h4 class="mb-3">회원 정보</h4>
- 				<form action="1" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
+ 				<form action="mypage" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
  					<div>
+ 						<!-- 프로필 이미지: 기본 값 -->
+ 						<c:if test="${empty sessionScope.user.userImg}">
+ 							<img src="/images/dokky_profile.png" id="profile-img">
+ 						</c:if>
+ 						
  						<!-- 프로필 이미지 -->
- 						<img src="/images/dokky_profile.png" id="profile-img">
+ 						<c:if test="${!empty sessionScope.user.userImg}">
+ 							<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}" id="profile-img">
+ 						</c:if>
+ 						
 						<div id="update-img">변경</div>
 						<input type="file" id="file-input" accept="image/*" name="profileImg">
 					</div>
@@ -74,7 +82,7 @@
 						<div class="flex" style="justify-content: space-between;">
 							<div class="p-inp">
 								<input type="text" class="form-control p-inps phone"
-									   id="phone" name="phone" value="${user.userMobile}">
+									   id="phone" name="userMobile" value="${user.userMobile}">
 							</div>
 					
 							<!-- 저장 -->
@@ -97,7 +105,7 @@
 				
 				<hr class="my-4">
 				
-				<form action="remove-user/1" method="post" id="remove-user-form">
+				<form action="remove-user" method="post" id="remove-user-form">
 					<!-- 계정 삭제 -->
 					<label class="form-label">계정 삭제</label>
 					<div class="mt-3 space-y-2 rounded-md border border-gray-500/50 p-3">
