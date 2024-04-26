@@ -30,12 +30,12 @@
  					<div>
  						<!-- 프로필 이미지: 기본 값 -->
  						<c:if test="${empty user.userImg}">
- 							<img src="/images/dokky_profile.png" id="profile-img">
+ 							<img src="/images/dokky_profile.png" id="profile-img"  data-src="/images/dokky_profile.png">
  						</c:if>
  						
  						<!-- 프로필 이미지 -->
  						<c:if test="${!empty user.userImg}">
- 							<img src="${user.userUploadPath}${user.userImg}" id="profile-img">
+ 							<img src="${user.userUploadPath}${user.userImg}" id="profile-img" data-src="${user.userUploadPath}${user.userImg}">
  						</c:if>
  					
 						<div id="update-img">변경</div>
