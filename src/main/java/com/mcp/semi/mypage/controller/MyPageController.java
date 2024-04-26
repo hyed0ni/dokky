@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mcp.semi.mypage.service.MyPageService;
@@ -53,19 +54,31 @@ public class MyPageController {
 	 * 회원 정보 수정
 	 * 
 	 * @param user
+	 * @param profileImg
 	 * @param userMap
 	 * @param ra
 	 * @return redirect (myProfile())
 	 */
 	@PostMapping("mypage")
 	public String modifyUser(@SessionAttribute("user") UserDto user, 
+							@RequestParam("profileImg") MultipartFile profileImg,
 							@RequestParam Map<String, Object> userMap,
 							RedirectAttributes ra) {
 
 		userMap.put("userNo", user.getUserNo());
+		userMap.put("profileImg", profileImg);
 		int result = myPageService.modifyUser(userMap);
 		
-		if (result == 1) ra.addFlashAttribute("resultMsg", "회원 정보가 변경되었습니다. 🥰");
+		if (result == 1) {
+			ra.addFlashAttribute("resultMsg", "회원 정보가 변경되었습니다. 🥰");
+			
+			user.setUserName((String)userMap.get("userName"));
+			user.setUserGender((String)userMap.get("userGender"));
+			user.setUserMobile((String)userMap.get("userMobile"));
+			user.setUserImg((String)userMap.get("userImg"));
+			user.setUserUploadPath((String)userMap.get("userUploadPath"));
+		}
+		
 		return "redirect:/dokky/mypage";
 
 	}

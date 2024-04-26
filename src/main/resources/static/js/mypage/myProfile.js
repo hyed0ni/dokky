@@ -49,10 +49,6 @@ export function rebindEventListeners() {
 			userName.focus();
 			e.preventDefault();
 		}
-
-		// 휴대전화 input 하나의 문자열로 합치기
-		const userMobile = `${phone1.value}${phone2.value}${phone3.value}`;
-		document.querySelector("#userMobile").value = userMobile;
 		
 	});
 
@@ -75,20 +71,5 @@ export function rebindEventListeners() {
 	// 회원 탈퇴 페이지 이동
 	removeBtn.addEventListener("click", () => 
 		location.href = "/dokky/remove-user");
-	
-	// 휴대폰 번호 하이픈 처리
-	function formatPhoneNumber(phone) {
-    	return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-	}
 
-	userMobile.value = formatPhoneNumber(userMobile.value); 
-	
-	phoneInput.addEventListener("focus", () => {
-	   userMobile.value = phoneInput.value.replace(/-/g, '');
-	});
-	
-	
-	phoneInput.addEventListener("blur", () => {
-    	userMobile.value = formatPhoneNumber(userMobile.value);
-	});
 }

@@ -28,8 +28,16 @@
  				<h4 class="mb-3">회원 정보</h4>
  				<form action="mypage" method="post" enctype="multipart/form-data" id="modify-form" class="needs-validation" novalidate>
  					<div>
+ 						<!-- 프로필 이미지: 기본 값 -->
+ 						<c:if test="${empty sessionScope.user.userImg}">
+ 							<img src="/images/dokky_profile.png" id="profile-img">
+ 						</c:if>
+ 						
  						<!-- 프로필 이미지 -->
- 						<img src="/images/dokky_profile.png" id="profile-img">
+ 						<c:if test="${!empty sessionScope.user.userImg}">
+ 							<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}" id="profile-img">
+ 						</c:if>
+ 						
 						<div id="update-img">변경</div>
 						<input type="file" id="file-input" accept="image/*" name="profileImg">
 					</div>
@@ -74,7 +82,7 @@
 						<div class="flex" style="justify-content: space-between;">
 							<div class="p-inp">
 								<input type="text" class="form-control p-inps phone"
-									   id="phone" name="phone" value="${user.userMobile}">
+									   id="phone" name="userMobile" value="${user.userMobile}">
 							</div>
 					
 							<!-- 저장 -->
