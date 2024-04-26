@@ -202,6 +202,9 @@
 			{
   				if(totalByte > 1000)
   					alert('1000byte넘으면 등록안되지롱');
+  				else if($.trim($('#comment-box').val()) === ''){
+  					alert('내용이 없으면 등록안되지롱');
+  				}
   				else
 				{
 		  			$.ajax({
