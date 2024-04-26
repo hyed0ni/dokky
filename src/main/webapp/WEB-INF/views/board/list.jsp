@@ -53,14 +53,6 @@
 							</tr>
 						</c:otherwise>
 					</c:choose>
-<!-- 					<c:forEach var="board" items="${pageResponse.items}">
-						<tr>
-							<td>${board.boardNo}</td>
-							<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
-							<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
-							<td>${board.boardCreateDt}</td>
-						</tr>
-					</c:forEach> -->
 				</tbody>
 			</table>
 			<nav aria-label="Page navigation example">
@@ -68,10 +60,6 @@
 					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${prevPage})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
 					<c:forEach begin="${startPage}" end="${endPage}" var="p">
 						<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${p})">${p}</a></li>
-<!-- 					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-					</a></li>
-					<c:forEach begin="${pageResponse.startPage}" end="${pageResponse.endPage}" var="p">
-					<li class="page-item"><a class="page-link" href="main?page=${p}">${p}</a></li> -->
 					</c:forEach>
 					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${nextPage})" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 				</ul>
