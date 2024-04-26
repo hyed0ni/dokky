@@ -61,13 +61,15 @@
 	background-color: #0056b3;
 }
 
-#title {
+#boardTitle {
 	height: 30px;
 	height: 2rem;
 }
 
-#content {
+#boardContent {
 	height: 13rem;
+	resize: none;
+	
 }
 
 .form-control {
@@ -78,8 +80,4 @@
 	margin-right: 5px;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     
-}
-
-#content{
-	resize: none;
 }
