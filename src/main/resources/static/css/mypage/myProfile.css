@@ -178,6 +178,14 @@
 .my-profile-ui {
 	display:flex;
 	align-items: center;
+    border: 1px solid #e5e7eb;
+    border-bottom: 0;
+    
+}
+
+.my-profile-ui span {
+	font-size: 2rem !important;
+    font-weight: bold;
 }
 
 .my-profile-ui .profile-img {
@@ -186,8 +194,4 @@
     height: 75px;
     margin: 10px 0 10px 10px;
     border-radius: 100%;
-}
-
-.my-profile-border {
-	border: 1px solid #e5e7eb;
 }

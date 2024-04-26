@@ -50,6 +50,9 @@ function removeActiveClass() {
 
 function showActivityRecords() {
 	const nickname = document.getElementById("user-name").value;
+	const profileImg = document.getElementById("profile-img");
+	const profileImgSrc = profileImg.getAttribute('data-src'); 
+	
 	clearContent("profile-container");
 	const profileContainer = document.getElementById("profile-container");
 	profileContainer.textContent = "";
@@ -76,7 +79,7 @@ function showActivityRecords() {
 	myProfileUI.className = "my-profile-ui";
 
 	const profileImage = document.createElement("img");
-	profileImage.src = "/images/dokky.png";
+	profileImage.src = profileImgSrc;
 	profileImage.className = "profile-img me-4";
 
 	const span = document.createElement("span");
