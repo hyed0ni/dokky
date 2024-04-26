@@ -10,7 +10,10 @@ public class FileUploadConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/dokky/user/**")
-				.addResourceLocations("file:///C://GDJ77//mcp//user_img/");
+				.addResourceLocations("file:///C://GDJ77//mcp//user_img/", 
+									"file:/Users/baeyeong-ug/Desktop/mcp/user_img/");
+
+				
 	}
 	
 }
