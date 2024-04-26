@@ -21,7 +21,6 @@ const fnCheckEmail = () => {
     let inpEmail = $('#inp-email');
     let regEmail = /^[A-Za-z0-9-_]{2,}@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
     if (!regEmail.test(inpEmail.val())) {
-        alert('이메일 형식을 다시 확인해주세요.');
         emailCheck = false;
         return;
     }
@@ -49,6 +48,7 @@ const fnCheckEmail = () => {
                         let btnVerifyCode = $('#btn-verify-code');
                         inpCode.prop('disabled', false);
                         btnVerifyCode.prop('disabled', false);
+                        console.log(resData.code);
                         btnVerifyCode.on('click', function (evt) {
                             if (resData.code === inpCode.val()) {
                                 alert('인증되었습니다.');
@@ -76,10 +76,11 @@ const fnCheckPassword = () => {
                  + /[0-9]/.test(inpPw.val()) 
                  + /[^A-Za-z0-9]/.test(inpPw.val());
   let passwordLength = inpPw.val().length;
-  passwordCheck = passwordLength >= 6
+  pwCheck = passwordLength >= 6
                && validCount >= 2;
+  
   let msgPw = $('#msg-pw');
-  if(passwordCheck){
+  if(pwCheck){
     msgPw.html('사용 가능한 비밀번호입니다.');
   } else {
     msgPw.html('비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.');
@@ -115,34 +116,72 @@ const fnCheckMobile = () => {
   mobileCheck = /^010[0-9]{8}$/.test(mobile);
   let msgMobile = $('#msg-mobile');
   if (mobileCheck) {
-    msgMobile.html('');
-  } else {
     msgMobile.html('휴대전화를 확인하세요.');
-  }
+  } else {
+		msgMobile.html('');
+	}
 }
+
+// 입력값이 없을 때 검증 메시지 숨기기
+$('#inp-email').on('blur', function() {
+  if ($(this).val() === '') {
+      $('#msg-email').html('');
+  }
+});
+
+$('#inp-pw').on('blur', function() {
+  if ($(this).val() === '') {
+      $('#msg-pw').html('');
+  }
+});
+
+$('#inp-name').on('blur', function() {
+  if ($(this).val() === '') {
+      $('#msg-name').html('');
+  }
+});
+
+$('#inp-mobile').on('blur', function() {
+  if ($(this).val() === '') {
+      $('#msg-mobile').html('');
+  }
+});
 
 // 회원가입 절차
 const fnSignup = () => {
   $('#frm-signup').on('submit', function (evt) {
     if (!emailCheck) {
-      alert('이메일을 확인하세요.');
       evt.preventDefault();
+      alert('이메일을 입력해주세요.');
       return;
     } else if (!nameCheck) {
-      alert('이름을 확인하세요.');
       evt.preventDefault();
+      alert('닉네임을 입력해주세요.');
       return;
-    } else if (!mobileCheck) {
-      alert('휴대전화를 확인하세요.');
+    } else if (!pwCheck && $.trim($('#inp-pw').val()) === '') {
       evt.preventDefault();
+      alert('비밀번호를 입력해주세요.');
       return;
     }
   });
-}
+};
+
+// 페이지 이동 시 입력값 초기화
+window.addEventListener('beforeunload', function() {
+  let inputElements = $('input[type=text], input[type=email], input[type=password], textarea');
+  inputElements.each(function() {
+      $(this).val('');
+  });
+});
+
+// 문서 로딩 시 회원가입 절차 실행
+$(document).ready(function() {
+    fnSignup();
+});
 
 // 호출
 $('#btn-code').on('click', fnCheckEmail);
 $('#inp-pw').on('keyup', fnCheckPassword);
 $('#inp-name').on('blur', fnCheckName);
 $('#inp-mobile').on('blur', fnCheckMobile);
-fnSignup();
+//fnSignup();

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.mcp.semi.common.exception.UserNotFoundException;
@@ -81,15 +82,16 @@ public class UserService {
 	}
 
 	// 인증코드 보내기
+	@Async
 	public ResponseEntity<Map<String, Object>> sendCode(Map<String, Object> params) {
 		
 		String code = SecurityUtils.getRandomString(6, true, true);
 		
 		System.out.println("인증코드 : " + code);
 		
-		mailUtils.sendMail((String)params.get("email")
-							        , "DOKKY 인증요청"
-							        , "<div>인증코드는 <strong>" + code + "</strong>입니다.");
+//		mailUtils.sendMail((String)params.get("email")
+//							        , "DOKKY 인증요청"
+//							        , "<div>인증코드는 <strong>" + code + "</strong>입니다.");
     
     // 인증코드 입력화면으로 보내주는 값
     return new ResponseEntity<>(Map.of("code", code)
@@ -131,6 +133,10 @@ public class UserService {
         
         Optional<String> optUrl = Optional.ofNullable(request.getParameter("url"));
         String redirectUrl = optUrl.orElse(request.getContextPath() + "/dokky/main");
+        
+        
+        // 이전 페이지를 세션에 저장     
+           session.setAttribute("prevPage", redirectUrl);
         
         response.sendRedirect(redirectUrl);        
 				
@@ -176,6 +182,7 @@ public class UserService {
 	public String getRedirectURLAfterSignin(HttpServletRequest request) {
     
     String redirectURL = "";
+    
     redirectURL = (String)request.getHeader("REFERER");
 
     // 기본적으로 돌아갈 URL
@@ -183,12 +190,12 @@ public class UserService {
     	redirectURL = request.getContextPath() + "/dokky/main";
     }
     return redirectURL;
-}
+    
+	}
 
 	public UserDto findByUserNo(int userNo) {
-		UserDto user = userMapper.findByUserNo(userNo);
-		return Optional.ofNullable(user)
-									 .orElseThrow(() -> new UserNotFoundException("사용자가 존재하지 않습니다."));
+		return Optional.ofNullable(userMapper.findByUserNo(userNo))
+						 .orElseThrow(() -> new UserNotFoundException("사용자가 존재하지 않습니다."));
 	}
 	
 }

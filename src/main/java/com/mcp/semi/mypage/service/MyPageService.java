@@ -43,6 +43,9 @@ public class MyPageService {
 		
 		MultipartFile profileImg = (MultipartFile)userMap.get("profileImg");
 		
+		String osName = System.getProperty("os.name").toLowerCase();
+		String folderPath;
+		
 		String userUploadPath = "/dokky/user/";
 		String userImg = null;
 		
@@ -55,11 +58,14 @@ public class MyPageService {
 		int result = myPageMapper.modifyUser(userMap);
 		
 		// 프로필 이미지 저장 경로
-		String folderPath = "C:/GDJ77/mcp/user_img/";
+		if (osName.contains("win")) folderPath = "C:/GDJ77/mcp/user_img/";	// Windows
+		else folderPath = "/Users/baeyeong-ug/Desktop/mcp/user_img/";		// macOS, Unix ...
 		
 		// 프로필 이미지 저장
 		if (result == 1 && !profileImg.isEmpty()) {
 			try {
+				File directory = new File(folderPath);
+				if (!directory.exists()) directory.mkdirs();
 				profileImg.transferTo(new File(folderPath + userImg));
 				
 			} catch (IOException e) {
