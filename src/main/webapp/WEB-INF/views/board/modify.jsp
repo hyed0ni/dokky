@@ -11,15 +11,15 @@
 
 
 <div class="main">
-<form id="frm-board-modify" action="/dokky/modify-form" method="POST" class="my-3">
+<form id="frm-board-modify" action="/dokky/modify-form" method="POST" class="my-3" onsubmit="return fnModifyBoard()">
     <input type="hidden" name="boardNo" value="${board.boardNo}" />
 
     <h4 class="border-bottom py-2">게시물 수정하기</h4>
     <label for="content" class="form-label">제목</label>
-    <input type="text" name="boardTitle" id="title" class="form-control" value="${board.boardTitle}" style="white-space: pre-line;" placeholder="내용을 입력해주세요."/>
+    <input type="text" name="boardTitle" id="boardTitle" class="form-control" value="${board.boardTitle}" style="white-space: pre-line;" placeholder="내용을 입력해주세요."/>
     <div class="mb-3">
         <label for="content" class="form-label mt-2">내용</label>
-        <textarea name="boardContent" id="content" class="form-control" placeholder="내용을 입력해주세요.">${board.boardContent}</textarea>
+        <textarea name="boardContent" id="boardContent" class="form-control" placeholder="내용을 입력해주세요.">${board.boardContent}</textarea>
     </div>
     <div class="d-flex justify-content-end" id="btn">
             <a type="submit" id="cancelBtn" class="btn btn btn-light mr-2">취소</a>
@@ -42,12 +42,24 @@
 	      window.history.back();
 	    });
 	   
-	   $("#modifyBtn").click(function() {
-		      window.location.href = '/dokky/detail';
-		    });
-	   
-	   
+//	   $("#modifyBtn").click(function() {
+//		      window.location.href = '/dokky/detail?boardNo=${board.boardNo}';
+//		    });
+	   const fnModifyBoard = () => {
+//		   document.getElementById('frm-board-modify').addEventListener('submit', (evt) => {
+		     if(document.getElementById('boardTitle').value === '') {
+		       alert('제목 입력은 필수입니다.');
+	//	       evt.preventDefault();
+		       return false;
+		     } else {
+		    	 window.location.href = '/dokky/detail?boardNo=${board.boardNo}';
+		     }
+		     
+	//	   })
+		 }
 
+		
+//		 fnModifyBoard();
    
    
    
