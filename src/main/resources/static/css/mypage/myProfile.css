@@ -65,6 +65,7 @@
 
 /* 프로필 이미지 hover */
 .my-profile #profile-img:hover {filter: brightness(50%);}
+.my-profile #profile-img:hover + #update-img {display: block;}
 
 /* 프로필 이미지 변경 텍스트 */
 .my-profile #update-img {
@@ -82,6 +83,8 @@
 /* 이메일, 닉네임, 성별, 휴대전화 */
 .my-profile .user-info {margin: 5px 0 !important;}
 
+.my-profile .col-12 {width: 350px;}
+
 /* label 태그 */
 .my-profile .form-label {
 	margin: 10px 5px 7px 0;
@@ -92,6 +95,17 @@
 .my-profile .col-12 > input {
 	margin: 0;
 	width: 200px;
+}
+
+/* 닉네임 검증 메시지 미노출 */
+.my-profile .none {display: none;}
+
+/* 닉네임 검증 메시지 노출 */
+.my-profile .block {
+	display: block;
+	padding: 5px 3px 0;
+	font-size: 1.3rem;
+    color: #d02927;
 }
 
 /* flex 설정: 성별, 휴대전화, 비밀번호 */
@@ -105,18 +119,6 @@
 
 /* 휴대전화 */
 .my-profile .form-control {margin: 0 7px;}
-
-.my-profile .p-inp {
-	display: flex;
-    align-items: center;
-}
-
-.my-profile .phone1 {
-	margin-left: 0;
-	width: 60px;
-}
-
-.my-profile .phone2 {width: 80px;}
 
 /* 버튼 */
 .my-profile .btn-lg {height: 30px;}
@@ -144,6 +146,8 @@
 
 /* 계정 삭제 정책 */
 .my-profile .mt-3 {margin: 0 10px !important;}
+
+.my-profile .text-sm {margin: 5px;}
 
 /* 체크박스, 버튼 */
 .my-profile .remove-user {
@@ -178,16 +182,22 @@
 .my-profile-ui {
 	display:flex;
 	align-items: center;
+    border: 1px solid #e5e7eb;
+    border-bottom: 0;
+    
+}
+
+.my-profile-ui span {
+	font-size: 2rem !important;
+    font-weight: bold;
 }
 
 .my-profile-ui .profile-img {
 	float: right;
 	width: 75px;
     height: 75px;
+    border: 1px solid #e6e7eb;
     margin: 10px 0 10px 10px;
     border-radius: 100%;
-}
-
-.my-profile-border {
-	border: 1px solid #e5e7eb;
+    object-fit: cover;
 }
