@@ -3,18 +3,19 @@ import { rebindEventListeners } from "./myProfile.js";
 
 let originalProfileContent = null;
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
 	const profileContainer = document.getElementById("profile-container");
 	originalProfileContent = document.createElement("div");
 	Array.from(profileContainer.children).forEach(child => {
 		originalProfileContent.appendChild(child.cloneNode(true));
 	});
 	
-	document.getElementById("my-activity").addEventListener("click", function(event) {
+	document.getElementById("my-activity").addEventListener("click", async function(event) {
 		event.preventDefault();
 		removeActiveClass();
 		this.classList.add("active");
 		showActivityRecords();
+		
 	});
 
 	const profileLink = document.getElementById("profile-link");
@@ -96,7 +97,7 @@ function showActivityRecords() {
 	const boardsLink = document.createElement("a");
 	boardsLink.href = "#";
 	boardsLink.id = "my-boards-button";
-	boardsLink.className = "tab-link";
+	boardsLink.className = "tab-link active";
 
 	const boardsLinkSpan = document.createElement("span");
 	boardsLinkSpan.textContent = "작성한 글";
@@ -127,6 +128,7 @@ function showActivityRecords() {
 	activityRecords.appendChild(myProfileBorder);
 	profileContainer.appendChild(activityRecords);
 	setupActivityTabs();
+	showBoards();
 }
 
 function setupActivityTabs() {
@@ -191,12 +193,19 @@ function showComments(page = 1) {
 	showContent(`/dokky/api/my-comment/${userNo}?page=${page}`, renderBoardRepeatedWithComments, (newPage) => showComments(newPage));
 }
 function showBoards(page = 1) {
+	return new Promise((resolve, reject) => {
 	const userNo = document.getElementById("user-no").value;
-	showContent(`/dokky/api/my-board/${userNo}?page=${page}`, renderUserBoards, (newPage) => showBoards(newPage));
-
+	showContent(`/dokky/api/my-board/${userNo}?page=${page}`, renderUserBoards, (newPage) => showBoards(newPage))
+	.then(() => {
+		resolve();
+	})
+	.catch(error => {
+		reject(error);
+		});
+	});
 }
 
-function createActivityCard({ boardNo, boardTitle, content, date, link, contentLength = 20, type }) {
+function createActivityCard({ boardNo, boardTitle, content, date, link, contentLength = 40, type }) {
 	const activityCard = document.createElement("div");
 	activityCard.className = "activity-card";
 

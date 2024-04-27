@@ -20,6 +20,7 @@
 
 .nav-welcome span {
 	margin-left: 3px;
+    cursor: pointer;
 }
 
 .nav-username {

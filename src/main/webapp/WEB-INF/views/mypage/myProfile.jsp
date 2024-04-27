@@ -131,7 +131,7 @@
 		</div>
 	</div>
 	
-	<script type="module" src="/js/mypage/activity.js"></script>
+	<script defer type="module" src="/js/mypage/activity.js"></script>
 
 	<!-- 회원 정보 수정 alert  -->
 	<c:if test="${!empty resultMsg}">

@@ -50,4 +50,4 @@
 		<link rel="stylesheet" href="/css/common/common.css">
 		<link rel="stylesheet" href="/css/common/navbar.css">
 		
-		<script src="/js/nav.js"></script>
+		<script src="/js/common/nav.js"></script>
