@@ -146,7 +146,7 @@
    }
    
    .comment-buttons{
-   	margin-left:415px;
+   	margin-left:410px;
    	position: relative;
    }
    
@@ -204,7 +204,7 @@
    }
    
    .commentByte > span{
-   min-width:10px;
+   min-width:20px;
    line-height:45px;
    }
    
@@ -216,7 +216,7 @@
    #btn-comment{
    font-size:1.5rem;
    margin-top:10px;
-   margin-left:76%;
+   margin-left:75%;
    position: relative;
    }
    

@@ -106,12 +106,7 @@ public class BoardService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<BoardDto> getHotBoardList(Model model) {
-		
-		Map<String, Object> map = Map.of("begin", 1, "end", 3);
-		List<BoardDto> boardList = boardMapper.getHotBoardList(map);
-		
-		model.addAttribute(boardList);
+	public List<BoardDto> getHotBoardList(Map<String, Object> map) {
 		return boardMapper.getHotBoardList(map);
 	}
 	

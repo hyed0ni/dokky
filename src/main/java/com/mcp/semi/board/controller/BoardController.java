@@ -1,6 +1,7 @@
 package com.mcp.semi.board.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
@@ -110,7 +111,10 @@ public class BoardController {
 	@ResponseBody
 	@GetMapping(value = "/getBoard", produces = "application/json") 	// 전체 게시글 가져오기
 	public List<BoardDto> getHotBoardList(Model model) {
-		return boardService.getHotBoardList(model);
+		Map<String, Object> map = Map.of("begin", 1, "end", 3);
+		List<BoardDto> boardList = boardService.getHotBoardList(map);
+		model.addAttribute(boardList);
+		return boardService.getHotBoardList(map);
 	}
 	
 	
