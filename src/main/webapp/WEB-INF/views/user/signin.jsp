@@ -51,6 +51,15 @@
 			document.getElementById("origin-pw").focus();
 		</script>
 	</c:if>
+	
+	<script>
+	window.addEventListener('beforeunload', function() {
+	  let inputElements = $('input[type=text], input[type=email], input[type=password], textarea');
+	  inputElements.each(function() {
+	      $(this).val('');
+	  });
+  });
+	</script>
 
   
 <%@ include file=".././layout/copyright.jsp" %>
