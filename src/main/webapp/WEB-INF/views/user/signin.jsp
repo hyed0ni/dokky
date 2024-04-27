@@ -52,6 +52,13 @@
 		</script>
 	</c:if>
 	
+	<!-- 로그인 실패 alert -->
+	<c:if test="${!empty errorMsg}">
+		<script>
+			alert("${errorMsg}");
+		</script>
+	</c:if>
+	
 	<script>
 	window.addEventListener('beforeunload', function() {
 	  let inputElements = $('input[type=text], input[type=email], input[type=password], textarea');
