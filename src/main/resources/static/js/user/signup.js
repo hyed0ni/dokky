@@ -20,8 +20,8 @@ const fnGetContextPath = () => {
 const fnCheckEmail = () => {
   let inpEmail = $('#inp-email');
   let email = inpEmail.val();
-//  let regEmail = /^[A-Za-z0-9-_]{2,}@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
-  let regEmail = /^[a-zA-Z0-9-_]{2,}+@[a-zA-Z0-9]+(\.[a-zA-Z]){3}$/;
+  let regEmail = /^[A-Za-z0-9-_]{2,}@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
+   //  let regEmail = /^[a-zA-Z0-9-_]{2,}+@[a-zA-Z0-9]+(\.[a-zA-Z]){3}$/;
   
   if (!regEmail.test(email)) {
       emailCheck = false;
