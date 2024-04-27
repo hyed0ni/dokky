@@ -55,7 +55,7 @@ export function rebindEventListeners() {
 	// 회원 정보 수정
 	modifyForm.addEventListener("submit", e => {
 
-		const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+		const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/;
 
 		// 닉네임 미입력
 		if (empInput(userName)) {
