@@ -46,15 +46,6 @@ public class MyPageService {
 		String osName = System.getProperty("os.name").toLowerCase();
 		String folderPath;
 		
-		// 프로필 이미지 저장 경로
-		if (osName.contains("win")) {
-			// Window
-			folderPath = "C:/GDJ77/mcp/user_img/";
-		} else {
-			// MacOS 및 기타 유닉스 계열
-			folderPath = "/Users/baeyeong-ug/Desktop/mcp/user_img/";
-		}
-		
 		String userUploadPath = "/dokky/user/";
 		String userImg = null;
 		
@@ -65,6 +56,10 @@ public class MyPageService {
 		}
 		
 		int result = myPageMapper.modifyUser(userMap);
+		
+		// 프로필 이미지 저장 경로
+		if (osName.contains("win")) folderPath = "C:/GDJ77/mcp/user_img/";	// Windows
+		else folderPath = "/Users/baeyeong-ug/Desktop/mcp/user_img/";		// macOS, Unix ...
 		
 		// 프로필 이미지 저장
 		if (result == 1 && !profileImg.isEmpty()) {

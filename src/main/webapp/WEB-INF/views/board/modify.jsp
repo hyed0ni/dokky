@@ -34,34 +34,23 @@
 <%@ include file="../layout/footer.jsp" %>
 
 <script>
-
- 
 	   $("#cancelBtn").click(function() {
 	      window.history.back();
 	    });
 	   
-//	   $("#modifyBtn").click(function() {
-//		      window.location.href = '/dokky/detail?boardNo=${board.boardNo}';
-//		    });
+	   /* 수정 예외처리 */
 	   const fnModifyBoard = () => {
-//		   document.getElementById('frm-board-modify').addEventListener('submit', (evt) => {
 		     if(document.getElementById('boardTitle').value === '') {
 		       alert('제목 입력은 필수입니다.');
-	//	       evt.preventDefault();
 		       return false;
-		     } else {
+		     } else if(document.getElementById('boardContent').value === '') {
+			   alert('내용 입력은 필수입니다.');
+			   return false;
+		     }else{ 
+		     	 alert('게시물이 수정되었습니다.');
 		    	 window.location.href = '/dokky/detail?boardNo=${board.boardNo}';
 		     }
-		     
-	//	   })
 		 }
-
-		
-//		 fnModifyBoard();
-   
-   
-   
-   
    
 </script>
 

@@ -42,6 +42,7 @@ public class BoardService {
 		
 	}
 	
+	@Transactional(readOnly = true)
 	public List<BoardDto> getBoardList(Integer page,int cnt, String search) {
 		int totalCount = getTotalCount(search); 
 		int total = totalCount/cnt + ((totalCount%cnt>0) ? 1:0);
@@ -105,12 +106,7 @@ public class BoardService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<BoardDto> getHotBoardList(Model model) {
-		
-		Map<String, Object> map = Map.of("begin", 1, "end", 3);
-		List<BoardDto> boardList = boardMapper.getHotBoardList(map);
-		
-		model.addAttribute(boardList);
+	public List<BoardDto> getHotBoardList(Map<String, Object> map) {
 		return boardMapper.getHotBoardList(map);
 	}
 	
@@ -124,7 +120,7 @@ public class BoardService {
 		return boardMapper.getBoardUpdate(boardDto);
 	}
   
-  @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
 	public int getTotalCount(String search) {
 		return boardMapper.getTotalCount(search);
 	}

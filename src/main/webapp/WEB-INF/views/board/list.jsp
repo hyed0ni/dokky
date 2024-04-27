@@ -53,17 +53,20 @@
 					</c:choose>
 				</tbody>
 			</table>
+			
 			<nav aria-label="Page navigation example">
 				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${prevPage})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+					<li class="page-item">
+					<a class="page-link" href="javascript:searchformaction(document.searchform, ${prevPage})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
 					<c:forEach begin="${startPage}" end="${endPage}" var="p">
-						<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${p})">${p}</a></li>
+					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${p})">${p}</a></li>
 					</c:forEach>
 					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${nextPage})" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 				</ul>
 			</nav>
 		</div>
 	</div>
+	
 	<%@ include file="../layout/copyright.jsp" %>
 	<%@ include file="../layout/footer.jsp" %>
 	<script type="text/javascript">
