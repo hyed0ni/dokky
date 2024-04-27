@@ -30,7 +30,7 @@
 		
 		<div class="detail-contentinfo" id="detail-contentinfo">
 			<input type="hidden" id="hidden-userInfo" value="${sessionScope.user.userName}">
-			<div class="image-writer" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30"></div>
+			<div class="image-writer" ></div>
 			<div class="contents-block">
 				<a class="contents-writer" id="contents-writer"></a>
 				<div class="contents-detailinfo">
@@ -51,8 +51,15 @@
 				<div class="comment-input" id="comment-input">	<!-- 댓글 입력창 -->
 					<div class="image-commenter-writer" >
 						<input type="hidden" name="userNo" id="userNo" value="${sessionScope.user.userNo}">
-						<img src="/images/dokky.png" alt="DOKKY 로고" height="50">
-						<textarea rows="5" cols="70" id="comment-box" onkeydown="fncheckByte(this);"></textarea>
+						<c:choose>
+							<c:when test="${!empty sessionScope.user}">
+								<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}" alt="DOKKY 로고" height="50">
+							</c:when>
+							<c:otherwise>
+								<img src="/images/dokky_profile.png" alt="DOKKY 로고" height="50">
+							</c:otherwise>
+						</c:choose>
+						<textarea rows="5" cols="70" id="comment-box" onkeydown="fncheckByte(this);" wrap="hard"></textarea>
 					</div>
 					<div id="commentByte" class="commentByte">
 						<span id="messagebyte">0</span><span> / 1000byte</span>
@@ -68,6 +75,6 @@
     <div class="rightarea"></div>
   </form>
  </div>
-  <script type="module" src="/js/board/detail.js"></script>
+  <script src="/js/board/detail.js"></script>
 </body>
 </html>
