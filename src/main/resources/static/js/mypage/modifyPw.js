@@ -18,7 +18,7 @@ originPw.addEventListener("blur", () =>
 // 신규 비밀번호 유효성 검사
 newPw.addEventListener("change", e => {
 
-    if (empInput(e.target) === 0) {
+    if (empInput(e.target)) {
         newPwMsg.className = "none";
         return;
     }

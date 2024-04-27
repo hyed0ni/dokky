@@ -66,6 +66,10 @@ body {
     color: #666;
 }
 
+.nav-item {
+	 position: relative;
+}
+
 .nav-link:hover,
 .nav-link:focus {
     color: #28a7e9;

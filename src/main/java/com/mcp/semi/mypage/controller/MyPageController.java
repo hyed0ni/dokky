@@ -67,8 +67,13 @@ public class MyPageController {
 
 		userMap.put("userNo", user.getUserNo());
 		userMap.put("profileImg", profileImg);
-		int result = myPageService.modifyUser(userMap);
 		
+		 if (user.getUserImg() != null && !user.getUserImg().isEmpty()) {
+	            userMap.put("userImg", user.getUserImg());
+	            userMap.put("userUploadPath", user.getUserUploadPath());
+	        }
+		int result = myPageService.modifyUser(userMap);
+		 
 		if (result == 1) {
 			ra.addFlashAttribute("resultMsg", "회원 정보가 변경되었습니다. 🥰");
 			

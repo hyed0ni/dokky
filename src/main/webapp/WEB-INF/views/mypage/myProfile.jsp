@@ -30,12 +30,12 @@
  					<div>
  						<!-- 프로필 이미지: 기본 값 -->
  						<c:if test="${empty user.userImg}">
- 							<img src="/images/dokky_profile.png" id="profile-img">
+ 							<img src="/images/dokky_profile.png" id="profile-img"  data-src="/images/dokky_profile.png">
  						</c:if>
  						
  						<!-- 프로필 이미지 -->
  						<c:if test="${!empty user.userImg}">
- 							<img src="${user.userUploadPath}${user.userImg}" id="profile-img">
+ 							<img src="${user.userUploadPath}${user.userImg}" id="profile-img" data-src="${user.userUploadPath}${user.userImg}">
  						</c:if>
  					
 						<div id="update-img">변경</div>
@@ -51,7 +51,11 @@
 					<!-- 닉네임 -->
 					<div class="col-12 user-info">
 						<label for="user-name" class="form-label">닉네임</label>
-						<input type="text" class="form-control" id="user-name" name="userName" value="${user.userName}" maxlength="50">
+						<input type="text" class="form-control" id="user-name" name="userName" value="${user.userName}" maxlength="16">
+						<div class="none" id="user-name-msg">
+							닉네임은 2~16자의 영어/숫자/한글로 구성되어야 하며, <br>
+							한글 초성 및 모음은 허용되지 않습니다.
+						</div>
 					</div>
     
     				<!-- 성별 -->
@@ -80,9 +84,9 @@
 					<div class="my-3 user-info">
 						<label class="form-label">휴대전화</label>
 						<div class="flex" style="justify-content: space-between;">
-							<div class="p-inp">
-								<input type="text" class="form-control p-inps phone"
-									   id="phone" name="userMobile" value="${user.userMobile}">
+							<div class="col-12">
+								<input type="text" class="form-control phone" id="user-mobile" name="userMobile" value="${user.userMobile}" maxlength="11">
+								<div class="none" id="user-mobile-msg">휴대전화는 11자리로 구성되어야 합니다.</div>
 							</div>
 					
 							<!-- 저장 -->
@@ -127,7 +131,7 @@
 		</div>
 	</div>
 	
-	<script type="module" src="/js/mypage/activity.js"></script>
+	<script defer type="module" src="/js/mypage/activity.js"></script>
 
 	<!-- 회원 정보 수정 alert  -->
 	<c:if test="${!empty resultMsg}">

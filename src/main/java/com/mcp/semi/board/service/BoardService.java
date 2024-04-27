@@ -42,6 +42,7 @@ public class BoardService {
 		
 	}
 	
+	@Transactional(readOnly = true)
 	public List<BoardDto> getBoardList(Integer page,int cnt, String search) {
 		int totalCount = getTotalCount(search); 
 		int total = totalCount/cnt + ((totalCount%cnt>0) ? 1:0);
@@ -124,7 +125,7 @@ public class BoardService {
 		return boardMapper.getBoardUpdate(boardDto);
 	}
   
-  @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
 	public int getTotalCount(String search) {
 		return boardMapper.getTotalCount(search);
 	}
