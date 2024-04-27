@@ -114,10 +114,10 @@
 					<label class="form-label">계정 삭제</label>
 					<div class="mt-3 space-y-2 rounded-md border border-gray-500/50 p-3">
 						<p class="text-sm text-gray-500">
-							회원 탈퇴일로부터 계정과 닉네임을 포함한 계정 정보(아이디/이메일/닉네임)는<br>
-							<a class="font-semibold underline" href="/legal/20220101-privacy">개인정보 처리방침</a>에 따라 <strong>60일간 보관(잠김)</strong>되며, 
-							60일 경과된 후에는 모든 개인 정보는 완전히 삭제되며 더 이상 복구할 수 없게 됩니다.</p>
-						<p class="text-sm text-gray-500">작성된 게시물은 삭제되지 않으며, 익명처리 후 DOKKY 로 소유권이 귀속됩니다.</p>
+							회원 탈퇴 일로부터 모든 계정 정보(이메일, 닉네임, 휴대전화 등)는<br>
+							<a class="font-semibold underline" href="#">개인정보 처리 방침</a>에 따라 <strong>60일간 보관(잠김)</strong>되며, 
+							60일 경과된 후에는 완전히 삭제되어 더 이상 복구할 수 없게 됩니다.<br>
+							작성한 게시물 및 댓글 또한 모두 삭제됩니다.</p>
 					</div>
 					<div class="form-check flex remove-user">
 						<div>

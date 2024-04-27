@@ -13,10 +13,6 @@ export function rebindEventListeners() {
 	const modifyForm = document.getElementById("modify-form");			// 회원 정보 수정 form
 	const removeBtn = document.getElementById("remove-user-btn");		// 회원 탈퇴 버튼
 
-	// 이미지 변경 텍스트 노출
-	profileImg.addEventListener("mouseenter", () => updateImg.style.display = "block");
-	profileImg.addEventListener("mouseleave", () => updateImg.style.display = "none");
-
 	// 파일 선택 창 열기
 	profileImg.addEventListener("click", () => fileInput.click());
 
