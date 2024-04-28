@@ -58,7 +58,7 @@ export function rebindEventListeners() {
 		}
 
 		// 중복 검사
-		fetch ("/dokky/mypage/checkNickname", {
+		fetch ("/dokky/checkNickname", {
 			method: "POST",
 			headers: {'Content-Type': 'application/json'}, 
 			body: e.target.value
