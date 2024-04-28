@@ -16,7 +16,7 @@
 						<a role="button" class="btn btn-primary me-2 " id="add" href="/dokky/add">작성하기</a>
 						<form action="/dokky/main" method="GET" name="searchform" onsubmit="return searchformaction(this,1)">
 							<input type="hidden" name="page" value="1" />
-							<input type="text" placeholder="검색어를 입력해주세요." name="search" <%-- value="${param.search}"> --%>>
+							<input type="text" placeholder="검색어를 입력해주세요." name="search" value="${param.search}">>
 							<button type="submit" class="search-btn">
 								<i class="fa fa-search"></i>
 							</button>
@@ -57,11 +57,15 @@
 			<nav aria-label="Page navigation example">
 				<ul class="pagination">
 					<li class="page-item">
-					<a class="page-link" href="javascript:searchformaction(document.searchform, ${prevPage})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+					<a class="page-link ${currentPage == 1 ? 'disabled' : ''}" href="javascript:searchformaction(document.searchform, ${prevPage})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
 					<c:forEach begin="${startPage}" end="${endPage}" var="p">
-					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${p})">${p}</a></li>
+					<li class="page-item">
+						<a class="page-link ${currentPage == p ? 'active' : ''}" href="javascript:searchformaction(document.searchform, ${p})">${p}</a>
+					</li>
 					</c:forEach>
-					<li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${nextPage})" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+					<li class="page-item">
+					<a class="page-link ${currentPage == maxPage ? 'disabled' : ''}" href="javascript:searchformaction(document.searchform, ${nextPage})" aria-label="Next"> 
+					<span aria-hidden="true">&raquo;</span></a></li>
 				</ul>
 			</nav>
 		</div>

@@ -12,7 +12,7 @@ body {
 /* Navigation 변경사항 적용 */
 .navbar {
     height: 70px !important;
-    border-bottom: 1px solid rgb(208, 209, 214);
+    border-bottom: 1px solid #d0d1d6;
     /* 기존 border-color 스타일 변경 */
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background: #fff;
@@ -84,6 +84,7 @@ footer {
     text-align: center;
     font-size: 14px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-top: 1px solid #d0d1d6;
     margin-top: 15px;
 }
 /* body 내용이 채워질 때 footer가 자동으로 아래로 밀려나가도록 설정 */
