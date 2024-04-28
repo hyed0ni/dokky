@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<% request.setAttribute("title", "DOKKY - 마이 페이지"); %>
+<% request.setAttribute("title", "DOKKY | 마이 페이지"); %>
 <%@ include file="../layout/header.jsp" %>
 <%@ include file="../layout/navbar.jsp" %>
 		<link rel="stylesheet" href="/css/mypage/myProfile.css" type="text/css">

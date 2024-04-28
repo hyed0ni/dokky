@@ -44,13 +44,13 @@
 		
 		  <div class="col-12">
 		    <label for="inp-pw" class="form-label">비밀번호</label>
-		    <input type="password" class="form-control" id="inp-pw" name="userPw" placeholder="비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함">
+		    <input type="password" class="form-control" id="inp-pw" name="userPw" placeholder="비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함" maxlength="12">
 		    <div id="msg-pw"></div>
 		  </div>
 		
 		  <div class="col-12">
 		    <label for="inp-name" class="form-label">닉네임</label>
-		    <input type="text" class="form-control" name="userName" id="inp-name" placeholder="닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)">
+		    <input type="text" class="form-control" name="userName" id="inp-name" placeholder="닉네임 2~8자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)" maxlength="8">
 		    <div id="msg-name"></div>
 		  </div>
 		
@@ -74,7 +74,7 @@
 				
 		  <div class="col-12">
 		    <label for="inp-mobile" class="form-label">휴대전화</label>
-		    <input type="text" class="form-control" name="userMoblie" id="inp-mobile" placeholder="- 제외하고 입력해주세요.">
+		    <input type="text" class="form-control" name="userMoblie" id="inp-mobile" placeholder="- 제외하고 입력해주세요." maxlength="11">
 		    <div id="msg-mobile"></div>
 		  </div>
 		

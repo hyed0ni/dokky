@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<% request.setAttribute("title", "DOKKY - 회원 탈퇴"); %>
+<% request.setAttribute("title", "DOKKY | 회원 탈퇴"); %>
 <%@ include file="../layout/header.jsp" %>
 		<link rel="stylesheet" href="/css/mypage/removeUser.css" type="text/css">
 	</head>
