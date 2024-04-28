@@ -36,7 +36,8 @@ public class WebConfig implements WebMvcConfigurer{
 				"/dokky/getBoard",
 				"/dokky/getBoardByNo",
 				"/dokky/putBoardHit",
-				"/detail/**");
+				"/detail/**",
+				"/dokky/mypage/checkNickname");
 	}
 	
 	

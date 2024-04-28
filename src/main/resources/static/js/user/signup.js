@@ -1,5 +1,8 @@
 var emailCheck = false;
 
+// 닉네임 유효 여부 저장 변수
+let nicknameCheck = false;
+
 function fnCheckEmail() {
     return new Promise((resolve) => {
         let inpEmail = document.getElementById('inp-email').value;
@@ -126,13 +129,29 @@ function fnCheckName() {
 
     if (name === '') {
         msgName.textContent = "닉네임을 입력해주세요";
-        return false;
+        nicknameCheck = false; 
     } else if (!namePattern.test(name)) {
         msgName.textContent = '닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)';
-        return false;
+        nicknameCheck = false;
     } else {
-        msgName.textContent = '사용 가능한 닉네임입니다.';
-        return true;
+
+        // 중복 검사
+        fetch ("/dokky/mypage/checkNickname", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'}, 
+            body: name
+        })
+        .then (response => response.text())
+        .then (result => {
+            if (result == 0) {
+                msgName.textContent = '사용 가능한 닉네임입니다.';
+                nicknameCheck = ture;
+            } else {
+                msgName.textContent = '이미 사용 중인 닉네임입니다.';
+                nicknameCheck = false;
+            }
+        });
+        
     }
 }
 
@@ -164,7 +183,7 @@ document.getElementById('frm-signup').addEventListener('submit', function(event)
         return;
     }
     
-    if(fnCheckPassword() && fnCheckName() && fnCheckMobile()){
+    if(fnCheckPassword() && nicknameCheck && fnCheckMobile()){
         this.submit();
     }
 });
