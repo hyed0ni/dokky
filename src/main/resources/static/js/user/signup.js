@@ -1,182 +1,180 @@
-/**
- * 
- */
-
 var emailCheck = false;
-var pwCheck = false;
-var nameCheck = false;
-var mobileCheck = false;
- 
-// 경로 설정
-const fnGetContextPath = () => {
-	const host = location.host;
-	const url = location.href;
-	const begin = url.indexOf(host) + host.length;
-	const end = url.indexOf('/', begin + 1);
-	return url.substring(begin, end);
-}
- 
-// 메일 형식 확인
-const fnCheckEmail = () => {
-  let inpEmail = $('#inp-email');
-  let email = inpEmail.val();
-  let regEmail = /^[A-Za-z0-9-_]{2,}@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
-   //  let regEmail = /^[a-zA-Z0-9-_]{2,}+@[a-zA-Z0-9]+(\.[a-zA-Z]){3}$/;
-  
-  if (!regEmail.test(email)) {
-      emailCheck = false;
-      alert('이메일 형식을 확인하세요.');
-      return;
-  }
-    
-  $.ajax({
-      url: fnGetContextPath() + '/user/checkEmail',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-          'userEmail': inpEmail.val()
-      }),
-        success: function (resData) {
-          if (resData.enableEmail) {
-            $('#msg-email').html('');
-              $.ajax({
-                url: fnGetContextPath() + '/user/sendCode',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    'userEmail': inpEmail.val()
-                }),
-                success: function (resData) {
-                  alert(inpEmail.val() + '로 인증코드를 전송되었습니다.');
-                  let inpCode = $('#inp-code');
-                  let btnVerifyCode = $('#btn-verify-code');
-                  inpCode.prop('disabled', false);
-                  btnVerifyCode.prop('disabled', false);
-                  // 인증코드 로그찍기
-                  console.log(resData.code);    
-                  btnVerifyCode.on('click', function (evt) {
-                    if (resData.code === inpCode.val()) {
-                      alert('인증되었습니다.');
-                      emailCheck = true;
-                    } else {
-                      alert('인증되지 않았습니다.');
-                      emailCheck = false;
-                    }
-                  });
-                }
-              });
-	        } else {
-            $('#msg-email').html('이미 사용 중인 이메일입니다.');
-            emailCheck = false;
+
+function fnCheckEmail() {
+    return new Promise((resolve) => {
+        let inpEmail = document.getElementById('inp-email').value;
+        let email = inpEmail.trim();
+        let msgEmail = document.getElementById('msg-email');
+        let regEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+        if (email === '') {
+            msgEmail.textContent = "이메일을 입력해주세요";
             return;
-	        }
-      	}
-  	});
-}
-  
-// 비번 정규식 확인
-const fnCheckPassword = () => {
-  let inpPw = $('#inp-pw');
-  let validCount = /[A-Za-z]/.test(inpPw.val())
-                 + /[0-9]/.test(inpPw.val()) 
-                 + /[^A-Za-z0-9]/.test(inpPw.val());
-  let passwordLength = inpPw.val().length;
-  pwCheck = passwordLength >= 6
-               && validCount >= 2; 
-  let msgPw = $('#msg-pw');
-  if(pwCheck){
-    msgPw.html('사용 가능한 비밀번호입니다.');
-  } else {
-    msgPw.html('비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.');
-  }
-}
-  
-// 닉네임 확인
-const fnCheckName = () => {
-  let inpName = $('#inp-name');
-  let name = inpName.val();
-  let nameCheck = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
-  let msgName = $('#msg-name'); 
-  if (!nameCheck.test(name)) { 
-    msgName.html('닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)');
-  } else {
-    msgName.html('사용 가능한 닉네임입니다.');
-  }
+        } else if (!regEmail.test(email)) {
+            msgEmail.textContent = '이메일 형식을 확인하세요.';
+            return;
+        } else {
+            msgEmail.textContent = '';
+        }
+
+        fetch('/dokky/user/checkEmail', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 'userEmail': email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.enableEmail) {
+                fnSendCode(email).then(() => {
+                    emailCheck = true;
+                    resolve();
+                });
+            } else {
+                msgEmail.textContent = '이미 사용 중인 이메일입니다.';
+            }
+        })
+        .catch(() => {
+            msgEmail.textContent = '이메일 확인 중 에러가 발생했습니다.';
+        });
+    });   
 }
 
-// 휴대전화 확인
-const fnCheckMobile = () => {
-  let inpMobile = $('#inp-mobile');
-  let mobile = inpMobile.val().replace(/[^0-9]/g, ''); 
-  let mobileCheck = /^010\d{8}$/; 
-  let msgMobile = $('#msg-mobile');
-  if (!mobileCheck.test(mobile)) {
-    msgMobile.html('휴대전화 번호를 확인하세요.');
-  } else {
-    msgMobile.html('사용 가능한 전화번호입니다.');
-  }
+// 이메일 인증 코드 발송
+function fnSendCode(email) {
+    return new Promise((resolve) => {
+        let msgEmail = document.getElementById('msg-email');
+        fetch('/dokky/user/sendCode', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 'userEmail': email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(email + '로 인증코드가 전송되었습니다.');
+            document.getElementById('inp-code').disabled = false;
+            document.getElementById('btn-verify-code').disabled = false;
+            document.getElementById('btn-verify-code').onclick = () => fnVerifyCode(data.code, resolve);
+        })
+        .catch(() => {
+            msgEmail.textContent = '인증코드 발송 중 에러가 발생했습니다.';
+        });
+    });
 }
 
-// 입력값이 없을 때 검증 메시지 숨기기
-$('#inp-email').on('blur', function() {
-  if ($(this).val() === '') {
-      $('#msg-email').html('');
-  }
-});
+// 이메일 인증 코드 발송
+function fnSendCode(email) {
+    return new Promise((resolve, reject) => {
+        fetch('/dokky/user/sendCode', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 'userEmail': email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            alert(email + '로 인증코드가 전송되었습니다.');
+            document.getElementById('inp-code').disabled = false;
+            document.getElementById('btn-verify-code').disabled = false;
+            document.getElementById('btn-verify-code').onclick = () => fnVerifyCode(data.code, resolve, reject);
+        })
+        .catch(() => {
+            document.getElementById('msg-email').textContent = '인증코드 발송 중 에러가 발생했습니다.';
+            reject(new Error("Error while sending verification code"));
+        });
+    });
+}
 
-$('#inp-pw').on('blur', function() {
-  if ($(this).val() === '') {
-      $('#msg-pw').html('');
-  }
-});
-
-$('#inp-name').on('blur', function() {
-  if ($(this).val() === '') {
-      $('#msg-name').html('');
-  }
-});
-
-$('#inp-mobile').on('blur', function() {
-  if ($(this).val() === '') {
-      $('#msg-mobile').html('');
-  }
-});
-
-// 필수입력 절차
-const fnSignup = () => {
-  $('#frm-signup').on('submit', function (evt) {
-    if ($.trim($('#inp-email').val()) === '') {
-      evt.preventDefault();
-      alert('이메일을 입력해주세요.');
-      return;
-    } else if ($.trim($('#inp-pw').val()) === '') {
-      evt.preventDefault();
-      alert('비밀번호를 입력해주세요.');
-      return;
-    } else if ($.trim($('#inp-name').val()) === '') {
-      evt.preventDefault();
-      alert('닉네임을 입력해주세요.');
-      return;
+// 인증코드 검증
+function fnVerifyCode(expectedCode, resolve, reject) {
+    let enteredCode = document.getElementById('inp-code').value;
+    if (enteredCode === expectedCode) {
+        alert('인증되었습니다.');
+        emailCheck = true;
+        resolve(true);
+    } else {
+        alert('인증코드가 일치하지 않습니다. 다시 확인해주세요.');
+        reject(new Error("Invalid verification code"));
     }
-  });
-};
+}
+
+function fnCheckPassword() {
+    let inpPw = document.getElementById('inp-pw');
+    let password = inpPw.value.trim();
+    let passwordLength = password.length;
+    let validCount = /[A-Za-z]/.test(password) + /[0-9]/.test(password) + /[^A-Za-z0-9]/.test(password);
+    let msgPw = document.getElementById('msg-pw');
+    if (password === '') {
+        msgPw.textContent = "비밀번호를 입력해주세요";
+        return false;
+    } else if (passwordLength < 4) {
+        msgPw.textContent = "비밀번호는 최소 4자 이상이어야 합니다.";
+        return false;
+    } else if (validCount < 2) {
+        msgPw.textContent = '비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.';
+        return false;
+    } else {
+        msgPw.textContent = '사용 가능한 비밀번호입니다.';
+        return true;
+    }
+}
+
+function fnCheckName() {
+    let inpName = document.getElementById('inp-name');
+    let name = inpName.value.trim();
+    let namePattern = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+    let msgName = document.getElementById('msg-name');
+
+    if (name === '') {
+        msgName.textContent = "닉네임을 입력해주세요";
+        return false;
+    } else if (!namePattern.test(name)) {
+        msgName.textContent = '닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)';
+        return false;
+    } else {
+        msgName.textContent = '사용 가능한 닉네임입니다.';
+        return true;
+    }
+}
+
+function fnCheckMobile() {
+    let inpMobile = document.getElementById("inp-mobile");
+    let mobileValue = inpMobile.value.replace(/[^0-9]/g, '');
+    let mobilePattern = /^010\d{8}$/;
+    let msgMobile = document.getElementById('msg-mobile');
+
+    if (!mobilePattern.test(mobileValue)) {
+        msgMobile.textContent = '휴대전화 번호를 확인하세요.';
+        return false;
+    } else {
+        msgMobile.textContent = '사용 가능한 전화번호입니다.';
+        return true;
+    }
+}
 
 // 페이지 이동 시 입력값 초기화
 window.addEventListener('beforeunload', function() {
-  let inputElements = $('input[type=text], input[type=email], input[type=password], textarea');
-  inputElements.each(function() {
-      $(this).val('');
-  });
+    let inputElements = document.querySelectorAll('input[type=text], input[type=email], input[type=password], textarea');
+    inputElements.forEach(input => input.value = '');
 });
 
-// 문서 로딩 시 회원가입 절차 실행
-$(document).ready(function() {
-    fnSignup();
+document.getElementById('frm-signup').addEventListener('submit', function(event) {
+    event.preventDefault();
+    if (!emailCheck) {
+        alert('이메일 인증이 필요합니다.');
+        return;
+    }
+    
+    if(fnCheckPassword() && fnCheckName() && fnCheckMobile()){
+        this.submit();
+    }
 });
 
-// 호출
-$('#btn-code').on('click', fnCheckEmail);
-$('#inp-pw').on('keyup', fnCheckPassword);
-$('#inp-name').on('blur', fnCheckName);
-$('#inp-mobile').on('blur', fnCheckMobile);
-//fnSignup();
+document.getElementById('btn-code').addEventListener('click', fnCheckEmail);
+
+document.getElementById('inp-pw').addEventListener('input', fnCheckPassword);
+
+document.getElementById('inp-name').addEventListener('input', fnCheckName);
+
+document.getElementById('inp-mobile').addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
