@@ -1,8 +1,6 @@
 export function rebindEventListeners() {
 	
 	const profileImg = document.getElementById("profile-img");			// 프로필 이미지
-	const updateImg = document.getElementById("update-img");			// 이미지 변경 텍스트
-
 	const fileInput = document.getElementById("file-input");			// 파일 업로드 input
 	const userName = document.getElementById("user-name");				// 닉네임 입력 input
 	const userMobile = document.getElementById("user-mobile");			// 휴대전화 입력 input
@@ -24,7 +22,7 @@ export function rebindEventListeners() {
 
 		const reader = new FileReader();
 		reader.readAsDataURL(selectedFile);
-		reader.onload = e => 
+		reader.onload = () => 
 			profileImg.src = reader.result;
 
 	});

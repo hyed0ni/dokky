@@ -30,7 +30,7 @@
  					<div>
  						<!-- 프로필 이미지: 기본 값 -->
  						<c:if test="${empty user.userImg}">
- 							<img src="/images/dokky_profile.png" id="profile-img"  data-src="/images/dokky_profile.png">
+ 							<img src="/images/dokky_profile.png" id="profile-img" data-src="/images/dokky_profile.png">
  						</c:if>
  						
  						<!-- 프로필 이미지 -->
