@@ -115,56 +115,44 @@ public class UserService {
 						  HttpServletRequest request) {
 			String userPw = SecurityUtils.getSha256(request.getParameter("userPw"));
 			String userIp = request.getRemoteAddr();
+			String sessionId = request.getSession().getId();
 			String userAgent = request.getHeader("User-Agent");
 			
-			Map<String, Object> params = Map.of("userEmail", userEmail
-																				, "userPw", userPw
-																				, "accessIp", userIp 
-																				, "userAgent", userAgent
-																				, "sessionId", request.getSession().getId());
+			Map<String, Object> params = Map.of("userEmail", userEmail,
+												"userPw", userPw,
+												"accessIp", userIp,
+												"userAgent", userAgent,
+												"sessionId", sessionId);
 
 			UserDto user = userMapper.getUserByMap(params);
 			
-			if(user != null) {   // 성공
+			if (user != null) {   // 성공
 				
-        userMapper.insertAccessHistory(params);
-
-        HttpSession session = request.getSession();
-        session.setAttribute("user", user);
-        session.setMaxInactiveInterval(1800);     
-        return true;
+		        userMapper.insertAccessHistory(params);
+		
+		        HttpSession session = request.getSession();
+		        session.setAttribute("user", user);
+		        session.setMaxInactiveInterval(1800);     
+		        return true;
 			} else {
 				return false;
 			}
-//			} else {   // 실패
-//				
-//				response.setContentType("text/html; charset=UTF-8");
-//				PrintWriter out = response.getWriter();
-//				out.println("<script>");
-//				out.println("alert('일치하는 회원 정보가 없습니다.')");
-//				out.println("location.href='" + request.getContextPath() + "/dokky/signin';");
-//				out.println("</script>");
-//				out.flush();
-//				out.close();
-//				
-//				return false;
-//			}
 		}
 	
 	// 로그아웃
 	public void signout(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			// 로그아웃 기록
-			HttpSession session = request.getSession(false);
-      if (session != null && session.getAttribute("user") != null) {
-        String sessionId = session.getId();
-        userMapper.updateAccessHistory(sessionId);
-
-        // 세션 무효화
-        session.invalidate();
-        
-      }  
+			 // 로그아웃 기록
+			 HttpSession session = request.getSession(false);
+	      if (session != null && session.getAttribute("user") != null) {
+	         String sessionId = session.getId();
+	         userMapper.updateAccessHistory(sessionId);
+	
+	         // 세션 무효화
+	         session.invalidate();
+         
+	       	 }  
       
 //      // 브라우저의 페이지 이력 삭제
 //      response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
@@ -183,21 +171,6 @@ public class UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	// 로그인 후 리다이렉트
-	public String getRedirectURLAfterSignin(HttpServletRequest request) {
-    
-    String redirectURL = "";
-    
-    redirectURL = (String)request.getHeader("REFERER");
-
-    // 기본적으로 돌아갈 URL
-    if (redirectURL == null || redirectURL.isEmpty()) {
-    	redirectURL = request.getContextPath() + "/dokky/main";
-    }
-    return redirectURL;
-    
 	}
 	
 	@Transactional
