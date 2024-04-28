@@ -79,6 +79,11 @@ function pwCheck() {
 
 }
 
+// 페이지가 로드될 때 input 내용 초기화
+window.addEventListener("pageshow", () => {
+	modifyForm.reset();
+});
+
 // form 태그 제출 중단 함수
 function prevForm(inp, e) {
 	inp.focus();

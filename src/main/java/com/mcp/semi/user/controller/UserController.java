@@ -28,7 +28,7 @@ public class UserController {
 	public String signinPage(HttpServletRequest request, Model model) {
 		String redirectURL = request.getHeader("REFERER");
 		HttpSession session = request.getSession();		
-		if(redirectURL.indexOf("sign") >= 0) {			
+		if(redirectURL.indexOf("sign") >= 0 || redirectURL.indexOf("modify-") >= 0) {			
 			redirectURL = (String)session.getAttribute("redirectURL");
 		}
 		//System.out.println("REDIRECTURL=====>"+redirectURL);

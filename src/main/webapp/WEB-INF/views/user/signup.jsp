@@ -50,7 +50,7 @@
 		
 		  <div class="col-12">
 		    <label for="inp-name" class="form-label">닉네임</label>
-		    <input type="text" class="form-control" name="userName" id="inp-name" placeholder="별명을 알파벳, 한글, 숫자를 10자 이하로 입력해주세요.">
+		    <input type="text" class="form-control" name="userName" id="inp-name" placeholder="닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)">
 		    <div id="msg-name"></div>
 		  </div>
 		

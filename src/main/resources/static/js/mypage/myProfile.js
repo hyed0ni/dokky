@@ -1,8 +1,6 @@
 export function rebindEventListeners() {
 	
 	const profileImg = document.getElementById("profile-img");			// 프로필 이미지
-	const updateImg = document.getElementById("update-img");			// 이미지 변경 텍스트
-
 	const fileInput = document.getElementById("file-input");			// 파일 업로드 input
 	const userName = document.getElementById("user-name");				// 닉네임 입력 input
 	const userMobile = document.getElementById("user-mobile");			// 휴대전화 입력 input
@@ -12,10 +10,6 @@ export function rebindEventListeners() {
 
 	const modifyForm = document.getElementById("modify-form");			// 회원 정보 수정 form
 	const removeBtn = document.getElementById("remove-user-btn");		// 회원 탈퇴 버튼
-
-	// 이미지 변경 텍스트 노출
-	profileImg.addEventListener("mouseenter", () => updateImg.style.display = "block");
-	profileImg.addEventListener("mouseleave", () => updateImg.style.display = "none");
 
 	// 파일 선택 창 열기
 	profileImg.addEventListener("click", () => fileInput.click());
@@ -28,7 +22,7 @@ export function rebindEventListeners() {
 
 		const reader = new FileReader();
 		reader.readAsDataURL(selectedFile);
-		reader.onload = e => 
+		reader.onload = () => 
 			profileImg.src = reader.result;
 
 	});
@@ -59,7 +53,7 @@ export function rebindEventListeners() {
 	// 회원 정보 수정
 	modifyForm.addEventListener("submit", e => {
 
-		const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+		const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/;
 
 		// 닉네임 미입력
 		if (empInput(userName)) {

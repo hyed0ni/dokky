@@ -89,9 +89,9 @@ public class UserService {
 		
 		System.out.println("인증코드 : " + code);
 		
-//		mailUtils.sendMail((String)params.get("email")
-//							        , "DOKKY 인증요청"
-//							        , "<div>인증코드는 <strong>" + code + "</strong>입니다.");
+		mailUtils.sendMail((String)params.get("userEmail")
+							        , "DOKKY 인증요청"
+							        , "<div>인증코드는 <strong>" + code + "</strong>입니다.");
     
     // 인증코드 입력화면으로 보내주는 값
     return new ResponseEntity<>(Map.of("code", code)
@@ -169,9 +169,18 @@ public class UserService {
 
         // 세션 무효화
         session.invalidate();
+        
       }  
+      
+//      // 브라우저의 페이지 이력 삭제
+//      response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+//      response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+//      response.setDateHeader("Expires", 0); // Proxies
+      
 			// 메인화면 이동
-			response.sendRedirect(request.getContextPath() + "/dokky/main");  
+			response.sendRedirect(request.getContextPath() + "/dokky/main");
+//			// 사용자 속성 제거
+//			session.removeAttribute("user");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

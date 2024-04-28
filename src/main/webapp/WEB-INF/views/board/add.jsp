@@ -35,17 +35,23 @@
 		window.location.href="/dokky/main";
 	})
 	
+	/* 게시물 등록 예외처리 */
 	const fnRegisterBoard = (evt) => {
-	document.getElementById('frm-board-add').addEventListener()
-  if(document.getElementById('boardTitle').value === '') {
-    alert('제목 입력은 필수입니다.');
-    evt.preventDefault();
-    return;
-  }
-}
-
-document.getElementById('frm-board-add').addEventListener('submit', (evt) => {
-  fnRegisterBoard(evt);
-})
+	  if(document.getElementById('boardTitle').value === '') {
+	    alert('제목 입력은 필수입니다.');
+	    evt.preventDefault();
+	    return;
+	  }else if(document.getElementById('boardContent').value === '') {
+		alert('내용 입력은 필수입니다.');
+		evt.preventDefault();
+		return;
+	   }else{
+		   alert("게시물이 등록되었습니다.");
+	   }
+	}
+	
+	document.getElementById('frm-board-add').addEventListener('submit', (evt) => {
+	  fnRegisterBoard(evt);
+	});
 	
 </script>

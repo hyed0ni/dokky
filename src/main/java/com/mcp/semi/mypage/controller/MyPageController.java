@@ -82,7 +82,8 @@ public class MyPageController {
 			user.setUserMobile((String)userMap.get("userMobile"));
 			user.setUserImg((String)userMap.get("userImg"));
 			user.setUserUploadPath((String)userMap.get("userUploadPath"));
-		}
+			
+		} else ra.addFlashAttribute("resultMsg", "이미 사용 중인 닉네임입니다. 😭");
 		
 		return "redirect:/dokky/mypage";
 

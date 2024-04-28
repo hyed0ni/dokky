@@ -65,6 +65,7 @@
 
 /* 프로필 이미지 hover */
 .my-profile #profile-img:hover {filter: brightness(50%);}
+.my-profile #profile-img:hover + #update-img {display: block;}
 
 /* 프로필 이미지 변경 텍스트 */
 .my-profile #update-img {
@@ -145,6 +146,8 @@
 
 /* 계정 삭제 정책 */
 .my-profile .mt-3 {margin: 0 10px !important;}
+
+.my-profile .text-sm {margin: 5px;}
 
 /* 체크박스, 버튼 */
 .my-profile .remove-user {
