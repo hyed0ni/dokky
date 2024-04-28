@@ -6,6 +6,7 @@ const state = {
 // 닉네임 유효 여부 저장 변수
 let nicknameCheck = false;
 
+// DOM 요소 가져오기
 const inpEmail = document.getElementById("inp-email");
 const inpPw = document.getElementById("inp-pw");
 const inpName = document.getElementById("inp-name");
@@ -17,37 +18,39 @@ const msgMobile = document.getElementById("msg-mobile");
 const inpCode = document.getElementById("inp-code");
 const btnVerifyCode = document.getElementById("btn-verify-code");
 
-
+// 모든 입력값 유효성 검사
 async function validateForm() {
-	try {
-		const emailResult = await fnCheckEmail();
-		if (!emailResult.isValid) {
-			emailResult.element.focus();
-			return false;
-		}
-		
-		const passwordResult = fnCheckPassword();
-		if (!passwordResult.isValid) {
-			passwordResult.element.focus();
-			return false;
-		}
-		
-		const nameResult = fnCheckName();
-		if (!nameResult.isValid) {
-			nameResult.element.focus();
-			return false;
-		}
-		
-		const mobileResult = fnCheckMobile();
-		if (!mobileResult.isValid) {
-			mobileResult.element.focus();
-			return false;
-		} 
-		
-		return true; // 모든 검증 통과
-	} catch(error) {
-		return false;
-	}
+    try {
+        const emailResult = await fnCheckEmail();
+        if (!emailResult.isValid) {
+            emailResult.element.focus();
+            return false;
+        }
+        
+        const passwordResult = fnCheckPassword();
+        if (!passwordResult.isValid) {
+            passwordResult.element.focus();
+            return false;
+        }
+        
+        const nameResult = await fnCheckName();
+        if (!nameResult.isValid) {
+            nameResult.element.focus();
+            return false;
+        }
+        
+        const mobileResult = fnCheckMobile();
+        if (!mobileResult.isValid) {
+            mobileResult.element.focus();
+            return false;
+        } 
+        
+        return true; // 모든 검증 통과
+    } catch(error) {
+        console.error("Validation failed", error);
+        return false;
+    }
+}
 
 // 이메일 검증
 async function fnCheckEmail() {
@@ -63,7 +66,7 @@ async function fnCheckEmail() {
     }
     
     try {
-		const response = await fetch("/dokky/user/checkEmail", {
+        const response = await fetch("/dokky/user/checkEmail", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ "userEmail": userEmail })
@@ -80,11 +83,10 @@ async function fnCheckEmail() {
     }
 }
 
-
 // 이메일 인증 코드 발송
 async function fnSendCode(userEmail) {
-	try {
-		const response = await fetch("/dokky/user/sendCode", {
+    try {
+        const response = await fetch("/dokky/user/sendCode", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ "userEmail": userEmail })
@@ -95,10 +97,10 @@ async function fnSendCode(userEmail) {
         inpCode.disabled = false;
         btnVerifyCode.disabled = false;
         btnVerifyCode.addEventListener("click", () => fnVerifyCode(data.code));
-	} catch {
+    } catch {
         msgEmail.textContent = "인증코드 발송 중 에러가 발생했습니다.";
         throw new Error("인증코드 발송 중 에러가 발생했습니다.");
-	}
+    }
 }
 
 // 인증코드 검증
@@ -120,8 +122,8 @@ function fnCheckPassword() {
     const userPw = inpPw.value.trim();
     const passwordLength = userPw.length;
     const validCount = /[A-Za-z]/.test(userPw)
-    				 + /[0-9]/.test(userPw)
-    				 + /[^A-Za-z0-9]/.test(userPw);
+                     + /[0-9]/.test(userPw)
+                     + /[^A-Za-z0-9]/.test(userPw);
     
     if (userPw === "") {
         msgPw.textContent = "비밀번호를 입력해주세요";
@@ -137,47 +139,45 @@ function fnCheckPassword() {
         
     } else {
         msgPw.textContent = "사용 가능한 비밀번호입니다.";
-        return { isValid: true };
-        
+        return { isValid: true, element: inpPw };
     }
 }
 
-// 닉네임 검증 
-function fnCheckName() {
+// 닉네임 검증
+async function fnCheckName() {
     const userName = inpName.value.trim();
     const namePattern = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
 
     if (userName === "") {
         msgName.textContent = "닉네임을 입력해주세요";
+        nicknameCheck = false;
         return { isValid: false, element: inpName };
     } else if (!namePattern.test(userName)) {
         msgName.textContent = "닉네임 2~8자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)";
-        return { isValid: false, element: inpName };
-    } else {
-        msgName.textContent = "사용 가능한 닉네임입니다.";
-        return { isValid: true };
-        nicknameCheck = false; 
-    } else if (!namePattern.test(name)) {
-        msgName.textContent = '닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)';
         nicknameCheck = false;
-    } else {
-
-        // 중복 검사
-        fetch ("/dokky/mypage/checkNickname", {
+        return { isValid: false, element: inpName };
+    } 
+    try {
+        const response = await fetch("/dokky/mypage/checkNickname", {
             method: "POST",
-            headers: {'Content-Type': 'application/json'}, 
-            body: name
-        })
-        .then (response => response.text())
-        .then (result => {
-            if (result == 0) {
-                msgName.textContent = '사용 가능한 닉네임입니다.';
-                nicknameCheck = ture;
-            } else {
-                msgName.textContent = '이미 사용 중인 닉네임입니다.';
-                nicknameCheck = false;
-            }
+            headers: { 'Content-Type': 'application/json' },
+            body: userName
         });
+        const result = await response.json();
+        if (result === 0) {
+            msgName.textContent = '사용 가능한 닉네임입니다.';
+            nicknameCheck = true;
+            return { isValid: true, element: inpName };
+        } else {
+            msgName.textContent = '이미 사용 중인 닉네임입니다.';
+            nicknameCheck = false;
+            return { isValid: false, element: inpName };
+        }
+    } catch (error) {
+        console.error("Error checking nickname:", error);
+        msgName.textContent = '닉네임 확인 중 문제가 발생했습니다.';
+        nicknameCheck = false;
+        return { isValid: false, element: inpName };
     }
 }
 
@@ -186,10 +186,10 @@ function fnCheckMobile() {
     const mobileValue = inpMobile.value.replace(/[^0-9]/g, "");
     const mobilePattern = /^010\d{8}$/;
 
-	if (mobileValue === "") {
-		msgMobile.textContent = "";
-		return { isValid: true, element: inpMobile };
-	} else if (!mobilePattern.test(mobileValue)) {
+    if (mobileValue === "") {
+        msgMobile.textContent = "";
+        return { isValid: true, element: inpMobile };
+    } else if (!mobilePattern.test(mobileValue)) {
         msgMobile.textContent = "휴대전화 번호를 확인하세요.";
         return { isValid: false, element: inpMobile };
         
@@ -203,7 +203,6 @@ function fnCheckMobile() {
 window.addEventListener("beforeunload", function() {
    document.getElementById("frm-signup").reset();
 });
-
 
 // 인증 코드 요청 이벤트
 document.getElementById("btn-code").addEventListener("click", async function() {
@@ -234,13 +233,7 @@ document.getElementById("frm-signup").addEventListener("submit", async function(
     // 검증 완료시 회원가입
     if (await validateForm()) {
         this.submit();  // 폼 제출
-    } else {
-		alert("입력한 정보를 확인해 주세요.");
-	}
-    
-    if(fnCheckPassword() && nicknameCheck && fnCheckMobile()){
-        this.submit();
-    }
+    } 
 });
 
 // 비밀 번호 입력 필드 이벤트 
@@ -251,13 +244,14 @@ document.getElementById("inp-name").addEventListener("input", fnCheckName);
 
 // 휴대폰 번호 입력 필드 숫자만 입력되게 처리하는 이벤트
 document.getElementById("inp-mobile").addEventListener("input", function() {
-	let inputValue = this.value.replace(/[^0-9]/g, "");
+    let inputValue = this.value.replace(/[^0-9]/g, "");
     
     if(inputValue.length > 11) {
-		inputValue = inputValue.slice(0, -1);
-	}
-	
-	this.value = inputValue;
-	
-	fnCheckMobile();
+        inputValue = inputValue.slice(0, -1);
+    }
+    
+    this.value = inputValue;
+    
+    fnCheckMobile();
 });
+
