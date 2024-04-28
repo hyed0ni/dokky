@@ -1,11 +1,14 @@
 export function rebindEventListeners() {
+
+	const originName = document.getElementById("user-name").value;		// 현재 닉네임
 	
 	const profileImg = document.getElementById("profile-img");			// 프로필 이미지
 	const fileInput = document.getElementById("file-input");			// 파일 업로드 input
 	const userName = document.getElementById("user-name");				// 닉네임 입력 input
 	const userMobile = document.getElementById("user-mobile");			// 휴대전화 입력 input
 
-	const userNameMsg = document.getElementById("user-name-msg");		// 닉네임 검증 메시지
+	const userNameMsg1 = document.getElementById("user-name-msg-1");	// 닉네임 검증 메시지: 형식
+	const userNameMsg2 = document.getElementById("user-name-msg-2");	// 닉네임 검증 메시지: 중복
 	const userMobileMsg = document.getElementById("user-mobile-msg");	// 휴대전화 검증 메시지
 
 	const modifyForm = document.getElementById("modify-form");			// 회원 정보 수정 form
@@ -27,12 +30,45 @@ export function rebindEventListeners() {
 
 	});
 
-	// 닉네임 검증 메시지 미노출
+	// 닉네임 검증
 	userName.addEventListener("blur", e => {
+
+		const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/;
+
+		// 미입력 상태
 		if (empInput(e.target)) {
-			userNameMsg.className = "none";
+			userNameMsg1.className = "none";
+			userNameMsg2.className = "none";
         	return;
 		}
+
+		// 형식 체크
+		if (!regExp.test(e.target.value)) {
+			userNameMsg1.className = "block";
+			userNameMsg2.className = "none";
+			return;
+		}
+
+		userNameMsg1.className = "none";
+
+		// 현재 닉네임
+		if (e.target.value === originName) {
+			userNameMsg2.className = "none";
+			return;
+		}
+
+		// 중복 검사
+		fetch ("/dokky/mypage/checkNickname", {
+			method: "POST",
+			headers: {'Content-Type': 'application/json'}, 
+			body: e.target.value
+		})
+		.then (response => response.text())
+		.then (result => {
+			if (result == 0) userNameMsg2.className = "none";
+			else userNameMsg2.className = "block";
+		});
+
 	});
 	
 	// 휴대전화 숫자만 입력 가능
@@ -42,35 +78,30 @@ export function rebindEventListeners() {
 		if (!regExp.test(inpValue)) e.target.value = inpValue.slice(0, -1);
 	});
 
-	// 휴대전화 검증 메시지 미노출
+	// 휴대전화 검증
 	userMobile.addEventListener("blur", e => {
+
 		if (empInput(e.target)) {
 			userMobileMsg.className = "none";
         	return;
-		}
+		} 
+		
+		const isValid = e.target.value.trim().length >= 11;
+		userMobileMsg.className = isValid ? "none" : "block";
+
 	});
 
 	// 회원 정보 수정
 	modifyForm.addEventListener("submit", e => {
 
-		const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/;
+		const nameEmpExist = empInput(userName)
+		 || userNameMsg1.className === "block"
+		 || userNameMsg2.className === "block";
+		const mobileExist = userMobileMsg.className === "block";
 
-		// 닉네임 미입력
-		if (empInput(userName)) {
-			alert("닉네임은 필수로 입력해야 합니다.");
-			prevForm(userName, e);
+		if (nameEmpExist) prevForm(userName, e);
+		if (mobileExist) prevForm(userMobile, e);
 
-		// 닉네임 검증
-		} else if (!regExp.test(userName.value)) {
-			userNameMsg.className = "block";
-			prevForm(userName, e);
-
-		// 휴대전화 검증
-		} else if (!empInput(userMobile) && userMobile.value.trim().length < 11) {
-			userMobileMsg.className = "block";
-			prevForm(userMobile, e);
-		}
-		
 	});
 
 	// 비밀번호 변경 페이지 이동

@@ -1,6 +1,7 @@
 package com.mcp.semi.mypage.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -48,6 +50,18 @@ public class MyPageController {
 		UserDto userProfile = myPageService.getUserProfile(user.getUserNo());
 		model.addAttribute("user", userProfile);
 		return "mypage/myProfile";
+	}
+	
+	/**
+	 * 닉네임 중복 검사
+	 * 
+	 * @param userName
+	 * @return result
+	 */
+	@ResponseBody
+	@PostMapping("mypage/checkNickname")
+	public int checkNickname(@RequestBody String userName) {
+		return myPageService.checkNickname(userName);
 	}
 
 	/**
