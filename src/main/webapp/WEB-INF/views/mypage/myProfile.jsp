@@ -53,10 +53,11 @@
 					<div class="col-12 user-info">
 						<label for="user-name" class="form-label">닉네임</label>
 						<input type="text" class="form-control" id="user-name" name="userName" value="${user.userName}" maxlength="16">
-						<div class="none" id="user-name-msg">
+						<div class="none" id="user-name-msg-1">
 							닉네임은 2~8자의 영어/숫자/한글로 구성되어야 하며, <br>
 							한글 초성 및 모음은 허용되지 않습니다.
 						</div>
+						<div class="none" id="user-name-msg-2">이미 사용 중인 닉네임입니다.</div>
 					</div>
     
     				<!-- 성별 -->
