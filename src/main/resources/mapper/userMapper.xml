@@ -68,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   SELECT USER_NO, USER_EMAIL, USER_PW, USER_NAME, USER_GENDER, USER_MOBILE, PW_MODIFY_DT, SIGNUP_DT, USER_UPLOAD_PATH, USER_IMG
     FROM USER_T
   <where>
+  	WITHDRAWAL_DT IS NULL AND
      <if test="userEmail!=null">USER_EMAIL = #{userEmail}</if>
     <if test="userPw!=null">AND USER_PW= #{userPw}</if> 
   </where>

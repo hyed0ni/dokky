@@ -33,7 +33,7 @@ public class BoardController {
 					  , @RequestParam(value = "search", required = false) String search) {
 		
 		if(page == null) {
-		   page=1;
+		   page = 1;
 		}
 		
 		// 전체 게시물 리스트
@@ -47,12 +47,12 @@ public class BoardController {
 	    // 전체 게시물 수 조회
 	    int totalCount = boardService.getTotalCount(search); 
 	    model.addAttribute("totalCount", totalCount);
-	    
 	    // 전체 게시물 / 10	    
 		int maxPage = (int)Math.ceil((double)totalCount/10);
+		
 		int pageShow = 10; 
-		int startPage = Math.max(page - 1, 1);
-		int endPage = Math.min(startPage + pageShow - 1, maxPage);
+		int startPage = ((page - 1) / pageShow) * pageShow + 1;
+		int endPage = startPage + pageShow - 1; 
 
 		// 다음 페이지, 이전 페이지 계산
 		int nextPage = Math.min(page + 10, maxPage);
@@ -63,6 +63,9 @@ public class BoardController {
 		// 시작번호, 끝번호 계산 후 표출		
 		endPage = Math.min(endPage, maxPage);
 		startPage = Math.max(startPage, 1);
+		
+		model.addAttribute("currentPage", page);
+		model.addAttribute("maxPage", maxPage);
 		model.addAttribute("startPage",startPage);
 		model.addAttribute("endPage",endPage);
 		
@@ -83,7 +86,7 @@ public class BoardController {
 
 	@GetMapping("/modify")
 	public String boardModify(BoardDto boardDto, Model model) {
-		BoardDto board = boardService.getBoardUpdateList(boardDto);
+		BoardDto board = boardService.getBoardByNo(boardDto.getBoardNo());
 		model.addAttribute("board", board);
 		return "board/modify";
 	}
@@ -106,7 +109,6 @@ public class BoardController {
 		redirectAttributes.addFlashAttribute("insertResult",insertCount == 1 ? "등록되었습니다." : "등록되지 않았습니다.");
 		return "redirect:/dokky/main";
 	}
-	 
 	
 	@ResponseBody
 	@GetMapping(value = "/getBoard", produces = "application/json") 	// 전체 게시글 가져오기

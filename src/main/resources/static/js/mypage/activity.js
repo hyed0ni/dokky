@@ -3,14 +3,14 @@ import { rebindEventListeners } from "./myProfile.js";
 
 let originalProfileContent = null;
 
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", function() {
 	const profileContainer = document.getElementById("profile-container");
 	originalProfileContent = document.createElement("div");
 	Array.from(profileContainer.children).forEach(child => {
 		originalProfileContent.appendChild(child.cloneNode(true));
 	});
 	
-	document.getElementById("my-activity").addEventListener("click", async function(event) {
+	document.getElementById("my-activity").addEventListener("click", function(event) {
 		event.preventDefault();
 		removeActiveClass();
 		this.classList.add("active");
@@ -153,14 +153,7 @@ function displayMessage(message, container) {
 	const messageElement = document.createElement("div");
 	messageElement.className = "no-write";
 	messageElement.textContent = message;
-	
-	/*
-	const linkElement = document.createElement("a");
-	linkElement.href = linkHref;
-	linkElement.textContent = linkText;
-	linkElement.className = "add-link"
-	messageElement.appendChild(linkElement);
-	*/
+
 	container.appendChild(messageElement);	
 }
 
@@ -193,16 +186,8 @@ function showComments(page = 1) {
 	showContent(`/dokky/api/my-comment/${userNo}?page=${page}`, renderBoardRepeatedWithComments, (newPage) => showComments(newPage));
 }
 function showBoards(page = 1) {
-	return new Promise((resolve, reject) => {
 	const userNo = document.getElementById("user-no").value;
-	showContent(`/dokky/api/my-board/${userNo}?page=${page}`, renderUserBoards, (newPage) => showBoards(newPage))
-	.then(() => {
-		resolve();
-	})
-	.catch(error => {
-		reject(error);
-		});
-	});
+	showContent(`/dokky/api/my-board/${userNo}?page=${page}`, renderUserBoards, (newPage) => showBoards(newPage));
 }
 
 function createActivityCard({ boardNo, boardTitle, content, date, link, contentLength = 40, type }) {
@@ -273,7 +258,7 @@ function renderPagination(currentPage, totalPage, loadPage) {
 	prevGroupLink.href = "#";
 	prevGroupLink.textContent = "<<";
 	prevGroupLink.className = "page-link";
-	if(currentPage > startPage) {
+	if(currentPage > startPage || startPage > 1) {
 	console.log(startPage);
 		prevGroupLink.addEventListener("click", (e) => {
 			e.preventDefault();
@@ -332,7 +317,7 @@ function renderPagination(currentPage, totalPage, loadPage) {
 	}
 	paginationContainer.appendChild(nextLink);
 	
-	// 다음 10페이지 이동 버튼
+	// 10페이지 다음 버튼
 	const nextGroupLink = document.createElement("a");
 	nextGroupLink.href = "#";
 	nextGroupLink.textContent = ">>";
