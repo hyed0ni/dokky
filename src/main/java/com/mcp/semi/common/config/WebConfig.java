@@ -22,23 +22,23 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addRedirectViewController("/dokky/", "/dokky/main");
 	}
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(userInterceptor)
-//		.addPathPatterns("/dokky/**")
-//		.excludePathPatterns(
-//				"/dokky/signin",
-//				"/dokky/signup",
-//				"/dokky/logout",
-//				"/dokky/user/**",
-//				"/dokky/main",
-//				"/dokky/detail",
-//				"/dokky/getBoard.do",
-//				"/dokky/getBoardByNo.do",
-//				"/dokky/putBoardHit.do",
-//				"/detail/**");
-//	}
-//	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(userInterceptor)
+		.addPathPatterns("/dokky/**")
+		.excludePathPatterns(
+				"/dokky/signin",
+				"/dokky/signup",
+				"/dokky/signout",
+				"/dokky/user/**",
+				"/dokky/main",
+				"/dokky/detail",
+				"/dokky/getBoard",
+				"/dokky/getBoardByNo",
+				"/dokky/putBoardHit",
+				"/detail/**");
+	}
+	
 	
 
 }
