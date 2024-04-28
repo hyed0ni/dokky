@@ -1,180 +1,235 @@
-var emailCheck = false;
+const state = {
+  emailCheck: false
+};
 
-function fnCheckEmail() {
-    return new Promise((resolve) => {
-        let inpEmail = document.getElementById('inp-email').value;
-        let email = inpEmail.trim();
-        let msgEmail = document.getElementById('msg-email');
-        let regEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+// 전역 변수로 DOM 요소 선언
+const inpEmail = document.getElementById("inp-email");
+const inpPw = document.getElementById("inp-pw");
+const inpName = document.getElementById("inp-name");
+const inpMobile = document.getElementById("inp-mobile");
+const msgEmail = document.getElementById("msg-email");
+const msgPw = document.getElementById("msg-pw");
+const msgName = document.getElementById("msg-name");
+const msgMobile = document.getElementById("msg-mobile");
+const inpCode = document.getElementById("inp-code");
+const btnVerifyCode = document.getElementById("btn-verify-code");
 
-        if (email === '') {
-            msgEmail.textContent = "이메일을 입력해주세요";
-            return;
-        } else if (!regEmail.test(email)) {
-            msgEmail.textContent = '이메일 형식을 확인하세요.';
-            return;
-        } else {
-            msgEmail.textContent = '';
+
+async function validateForm() {
+	try {
+		const emailResult = await fnCheckEmail();
+		if (!emailResult.isValid) {
+			emailResult.element.focus();
+			return false;
+		}
+		
+		const passwordResult = fnCheckPassword();
+		if (!passwordResult.isValid) {
+			passwordResult.element.focus();
+			return false;
+		}
+		
+		const nameResult = fnCheckName();
+		if (!nameResult.isValid) {
+			nameResult.element.focus();
+			return false;
+		}
+		
+		const mobileResult = fnCheckMobile();
+		if (!mobileResult.isValid) {
+			mobileResult.element.focus();
+			return false;
+		} 
+		
+		return true; // 모든 검증 통과
+	} catch(error) {
+		return false;
+	}
+}
+
+// 이메일 검증
+async function fnCheckEmail() {
+    const userEmail = inpEmail.value.trim();
+    const regEmail = /^[a-zA-Z0-9._%+-]+@(?![a-zA-Z0-9.-]*xn--)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+    if (userEmail === "") {
+        msgEmail.textContent = "이메일을 입력해주세요";
+        return { isValid : false, element: inpEmail };
+    } else if (!regEmail.test(userEmail)) {
+        msgEmail.textContent = "이메일 형식을 확인하세요.";
+        return { isValid : false, element: inpEmail };
+    }
+    
+    try {
+		const response = await fetch("/dokky/user/checkEmail", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ "userEmail": userEmail })
+        });
+        const data = await response.json();
+        if (!data.enableEmail) {
+            msgEmail.textContent = "이미 사용 중인 이메일입니다.";
+            return { isValid: false, element: inpEmail };
         }
-
-        fetch('/dokky/user/checkEmail', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 'userEmail': email })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.enableEmail) {
-                fnSendCode(email).then(() => {
-                    emailCheck = true;
-                    resolve();
-                });
-            } else {
-                msgEmail.textContent = '이미 사용 중인 이메일입니다.';
-            }
-        })
-        .catch(() => {
-            msgEmail.textContent = '이메일 확인 중 에러가 발생했습니다.';
-        });
-    });   
+        return { isValid: true, userEmail: userEmail };  // 사용자 이메일을 반환
+    } catch (error) {
+        msgEmail.textContent = "이메일 확인 중 에러가 발생했습니다.";
+        return { isValid: false, element: inpEmail };
+    }
 }
 
-// 이메일 인증 코드 발송
-function fnSendCode(email) {
-    return new Promise((resolve) => {
-        let msgEmail = document.getElementById('msg-email');
-        fetch('/dokky/user/sendCode', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 'userEmail': email })
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(email + '로 인증코드가 전송되었습니다.');
-            document.getElementById('inp-code').disabled = false;
-            document.getElementById('btn-verify-code').disabled = false;
-            document.getElementById('btn-verify-code').onclick = () => fnVerifyCode(data.code, resolve);
-        })
-        .catch(() => {
-            msgEmail.textContent = '인증코드 발송 중 에러가 발생했습니다.';
-        });
-    });
-}
 
 // 이메일 인증 코드 발송
-function fnSendCode(email) {
-    return new Promise((resolve, reject) => {
-        fetch('/dokky/user/sendCode', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 'userEmail': email })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            alert(email + '로 인증코드가 전송되었습니다.');
-            document.getElementById('inp-code').disabled = false;
-            document.getElementById('btn-verify-code').disabled = false;
-            document.getElementById('btn-verify-code').onclick = () => fnVerifyCode(data.code, resolve, reject);
-        })
-        .catch(() => {
-            document.getElementById('msg-email').textContent = '인증코드 발송 중 에러가 발생했습니다.';
-            reject(new Error("Error while sending verification code"));
+async function fnSendCode(userEmail) {
+	try {
+		const response = await fetch("/dokky/user/sendCode", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ "userEmail": userEmail })
         });
-    });
+        const data = await response.json();
+        alert(`${userEmail}로 인증코드가 전송되었습니다`);
+        
+        inpCode.disabled = false;
+        btnVerifyCode.disabled = false;
+        btnVerifyCode.addEventListener("click", () => fnVerifyCode(data.code));
+	} catch {
+        msgEmail.textContent = "인증코드 발송 중 에러가 발생했습니다.";
+        throw new Error("인증코드 발송 중 에러가 발생했습니다.");
+	}
 }
 
 // 인증코드 검증
-function fnVerifyCode(expectedCode, resolve, reject) {
-    let enteredCode = document.getElementById('inp-code').value;
-    if (enteredCode === expectedCode) {
-        alert('인증되었습니다.');
-        emailCheck = true;
-        resolve(true);
+async function fnVerifyCode(expectedCode) {
+    if (inpCode.value === expectedCode) {
+        alert("인증되었습니다.");
+        state.emailCheck = true;
+        btnVerifyCode.disabled = true;
+        console.log(state.emailCheck);
     } else {
-        alert('인증코드가 일치하지 않습니다. 다시 확인해주세요.');
-        reject(new Error("Invalid verification code"));
+        alert("인증코드가 일치하지 않습니다. 다시 확인해주세요.");
+        inpCode.focus();
+        throw new Error("인증코드가 일치하지 않습니다. 다시 확인해주세요.");
     }
 }
 
+// 비밀번호 검증
 function fnCheckPassword() {
-    let inpPw = document.getElementById('inp-pw');
-    let password = inpPw.value.trim();
-    let passwordLength = password.length;
-    let validCount = /[A-Za-z]/.test(password) + /[0-9]/.test(password) + /[^A-Za-z0-9]/.test(password);
-    let msgPw = document.getElementById('msg-pw');
-    if (password === '') {
+    const userPw = inpPw.value.trim();
+    const passwordLength = userPw.length;
+    const validCount = /[A-Za-z]/.test(userPw)
+    				 + /[0-9]/.test(userPw)
+    				 + /[^A-Za-z0-9]/.test(userPw);
+    
+    if (userPw === "") {
         msgPw.textContent = "비밀번호를 입력해주세요";
-        return false;
+        return { isValid: false, element: inpPw };
+        
     } else if (passwordLength < 4) {
         msgPw.textContent = "비밀번호는 최소 4자 이상이어야 합니다.";
-        return false;
+        return { isValid: false, element: inpPw };
+        
     } else if (validCount < 2) {
-        msgPw.textContent = '비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.';
-        return false;
+        msgPw.textContent = "비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.";
+        return { isValid: false, element: inpPw };
+        
     } else {
-        msgPw.textContent = '사용 가능한 비밀번호입니다.';
-        return true;
+        msgPw.textContent = "사용 가능한 비밀번호입니다.";
+        return { isValid: true };
+        
     }
 }
 
+// 닉네임 검증 
 function fnCheckName() {
-    let inpName = document.getElementById('inp-name');
-    let name = inpName.value.trim();
-    let namePattern = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
-    let msgName = document.getElementById('msg-name');
+    const userName = inpName.value.trim();
+    const namePattern = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
 
-    if (name === '') {
+    if (userName === "") {
         msgName.textContent = "닉네임을 입력해주세요";
-        return false;
-    } else if (!namePattern.test(name)) {
-        msgName.textContent = '닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)';
-        return false;
+        return { isValid: false, element: inpName };
+    } else if (!namePattern.test(userName)) {
+        msgName.textContent = "닉네임 2~8자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)";
+        return { isValid: false, element: inpName };
     } else {
-        msgName.textContent = '사용 가능한 닉네임입니다.';
-        return true;
+        msgName.textContent = "사용 가능한 닉네임입니다.";
+        return { isValid: true };
     }
 }
 
+// 휴대폰 번호 검증
 function fnCheckMobile() {
-    let inpMobile = document.getElementById("inp-mobile");
-    let mobileValue = inpMobile.value.replace(/[^0-9]/g, '');
-    let mobilePattern = /^010\d{8}$/;
-    let msgMobile = document.getElementById('msg-mobile');
+    const mobileValue = inpMobile.value.replace(/[^0-9]/g, "");
+    const mobilePattern = /^010\d{8}$/;
 
-    if (!mobilePattern.test(mobileValue)) {
-        msgMobile.textContent = '휴대전화 번호를 확인하세요.';
-        return false;
+	if (mobileValue === "") {
+		msgMobile.textContent = "";
+		return { isValid: true, element: inpMobile };
+	} else if (!mobilePattern.test(mobileValue)) {
+        msgMobile.textContent = "휴대전화 번호를 확인하세요.";
+        return { isValid: false, element: inpMobile };
+        
     } else {
-        msgMobile.textContent = '사용 가능한 전화번호입니다.';
-        return true;
+        msgMobile.textContent = "사용 가능한 전화번호입니다.";
+        return { isValid: true, element: inpMobile };
     }
 }
 
 // 페이지 이동 시 입력값 초기화
-window.addEventListener('beforeunload', function() {
-    let inputElements = document.querySelectorAll('input[type=text], input[type=email], input[type=password], textarea');
-    inputElements.forEach(input => input.value = '');
+window.addEventListener("beforeunload", function() {
+   document.getElementById("frm-signup").reset();
 });
 
-document.getElementById('frm-signup').addEventListener('submit', function(event) {
+
+// 인증 코드 요청 이벤트
+document.getElementById("btn-code").addEventListener("click", async function() {
+    if (!state.emailCheck) {  // 이메일이 인증되지 않았다면 인증 코드 발송
+        const emailResult = await fnCheckEmail();
+        if (emailResult.isValid) {
+            try {
+                await fnSendCode(emailResult.userEmail);
+                state.emailCheck = true; // 인증 성공 상태 저장
+            } catch (error) {
+                console.error("Error sending code:", error);
+                alert("인증 코드 전송 중 문제가 발생했습니다.");
+            }
+        }
+    } else {
+        alert("이메일 인증이 이미 완료되었습니다.");
+    }
+});
+
+// 회원가입
+document.getElementById("frm-signup").addEventListener("submit", async function(event) {
     event.preventDefault();
-    if (!emailCheck) {
-        alert('이메일 인증이 필요합니다.');
+    if (!state.emailCheck) {
+        alert("이메일 인증이 필요합니다.");
+        inpEmail.focus();
         return;
     }
-    
-    if(fnCheckPassword() && fnCheckName() && fnCheckMobile()){
-        this.submit();
-    }
+    // 검증 완료시 회원가입
+    if (await validateForm()) {
+        this.submit();  // 폼 제출
+    } else {
+		alert("입력한 정보를 확인해 주세요.");
+	}
 });
 
-document.getElementById('btn-code').addEventListener('click', fnCheckEmail);
+// 비밀 번호 입력 필드 이벤트 
+document.getElementById("inp-pw").addEventListener("input", fnCheckPassword);
 
-document.getElementById('inp-pw').addEventListener('input', fnCheckPassword);
+// 닉네임 입력 필드 이벤트
+document.getElementById("inp-name").addEventListener("input", fnCheckName);
 
-document.getElementById('inp-name').addEventListener('input', fnCheckName);
-
-document.getElementById('inp-mobile').addEventListener('input', function() {
-    this.value = this.value.replace(/[^0-9]/g, '');
+// 휴대폰 번호 입력 필드 숫자만 입력되게 처리하는 이벤트
+document.getElementById("inp-mobile").addEventListener("input", function() {
+	let inputValue = this.value.replace(/[^0-9]/g, "");
+    
+    if(inputValue.length > 11) {
+		inputValue = inputValue.slice(0, -1);
+	}
+	
+	this.value = inputValue;
+	
+	fnCheckMobile();
 });
