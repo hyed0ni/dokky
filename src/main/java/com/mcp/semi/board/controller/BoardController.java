@@ -80,7 +80,9 @@ public class BoardController {
 // 	}
 
 	@GetMapping("/detail")
-	public String boardDetail() {
+	public String boardDetail(BoardDto boardDto, Model model) {
+		BoardDto board = boardService.getBoardByNo(boardDto.getBoardNo());
+		model.addAttribute("board", board);
 		return "board/detail";
 	}
 
@@ -99,15 +101,24 @@ public class BoardController {
 	}
 	
 	@GetMapping("/add")
-	public String boardAdd() {
+	public String boardAdd(BoardDto boardDto, Model model) {
+		BoardDto board = boardService.getBoardByNo(boardDto.getBoardNo());
+		model.addAttribute("board", board);
 		return "board/add";
 	}
 
 	@PostMapping("/add-form")
-	public String register(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		int insertCount = boardService.registerBoard(request);
-		redirectAttributes.addFlashAttribute("insertResult",insertCount == 1 ? "등록되었습니다." : "등록되지 않았습니다.");
-		return "redirect:/dokky/main";
+	public String register(HttpServletRequest request,
+						   RedirectAttributes redirectAttributes,
+						   BoardDto boardDto) {
+		int boardId = boardService.registerBoard(request);
+		if(boardId > 0 ) {
+			redirectAttributes.addFlashAttribute("insertResult", "등록되었습니다.");
+	        return "redirect:/dokky/detail?boardNo=" + boardId;	
+		}  else {
+	        redirectAttributes.addFlashAttribute("insertResult", "등록되지 않았습니다.");
+	        return "redirect:/dokky/add";
+	    }
 	}
 	
 	@ResponseBody

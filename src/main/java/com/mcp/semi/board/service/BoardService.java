@@ -35,8 +35,8 @@ public class BoardService {
 				               .user(user)
 				               .build();
 		
-       int insertCount = boardMapper.insertBoard(board);
-       return insertCount;
+       boardMapper.insertBoard(board);
+       return board.getBoardNo();
 		
 	}
 	
