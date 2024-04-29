@@ -17,7 +17,7 @@
         <!-- 내용 -->              
         <div class="mb-3">
             <label for="content" class="form-label mt-2">내용</label>
-            <textarea type="text" name="boardContent" id="boardContent" class="form-control" placeholder="내용은 500자 내외로 입력해주세요." maxlength="500"></textarea>
+            <textarea type="text" name="boardContent" id="boardContent" class="form-control" placeholder="내용은 500자 내외로 입력해주세요." maxlength="500" wrap="hard"></textarea>
         </div>
         <div class="d-flex justify-content-end" id="btn">
         	<input type="hidden" name="userNo" value="${sessionScope.user.userNo}">
@@ -47,7 +47,6 @@
 		evt.preventDefault();
 		return;
 	   }else{
-		   document.getElementById('boardContent').replace(/(?:\r\n|\r|\n)/g,'<br/>');
 		   alert("게시물이 등록되었습니다.");
 	   }
 	}
