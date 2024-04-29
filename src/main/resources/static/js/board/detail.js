@@ -48,6 +48,13 @@
 			data:'boardNo=' + boardNo,
 			dataType:'json',
 			success: function(data){
+				
+				if (!data || !data.user || !data.boardTitle) {
+                // 데이터가 유효하지 않을 경우 에러 페이지로 리다이렉트
+                window.location.href = "/dokky/error";
+                return; // 추가 실행을 방지
+        		}
+
 				fnAddBoardHit();
 				document.getElementById('contents-writer').innerHTML = data.user.userName;
 				document.getElementById('detail-title').innerHTML = data.boardTitle;
@@ -73,9 +80,8 @@
 				  	fnClickModify();
 				}
 			},
-			error:function(jqXHR){
-				alert("디테일 에러");
-				alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+			error:function(){
+				window.location.href = "/dokky/error";
 			}
 		})
 	}
@@ -187,7 +193,7 @@
 	 		        	str += '<div class="image-commenter" ><img src="' + data[i].user.userUploadPath + data[i].user.userImg + '" width="30" height="30" id="img-radius">';
 	 		        	 
 					str += '<a class="comment-writer" id="comment-writer">' + data[i].user.userName + '&nbsp;</a>';
-					str += '<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">' + data[i].cmtCreateDt + '</span>';
+					str += '<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">' + moment(data[i].cmtCreateDt).format('YYYY.MM.DD') + '</span>';
 					str += '<input type="hidden" value="' + i + '">';
 					if(sessionUser == data[i].user.userName)
 					{

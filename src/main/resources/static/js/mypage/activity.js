@@ -1,6 +1,5 @@
 import { rebindEventListeners } from "./myProfile.js";
 
-
 let originalProfileContent = null;
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -379,7 +378,6 @@ function renderBoardRepeatedWithComments(resData) {
 
 	return commentsContainer;
 }
-
 
 function showProfile() {
 	const profileContainer = document.getElementById("profile-container");
