@@ -43,7 +43,7 @@
 	<select id="getCommentList"
 			resultMap="CommentMap">
 	SELECT * FROM
-		(SELECT ROW_NUMBER() OVER(ORDER BY C.CMT_NO DESC) AS RN 
+		(SELECT ROW_NUMBER() OVER(ORDER BY C.CMT_NO ASC) AS RN 
 			 , C.CMT_NO
 			 , C.CMT_CONTENT
 			 , C.CMT_CREATE_DT
