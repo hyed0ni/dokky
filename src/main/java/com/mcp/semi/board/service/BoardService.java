@@ -5,11 +5,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.mapper.BoardMapper;
-import com.mcp.semi.common.page.PageResponse;
 import com.mcp.semi.common.util.SecurityUtils;
 import com.mcp.semi.user.dto.UserDto;
 
@@ -123,6 +121,6 @@ public class BoardService {
 	@Transactional(readOnly = true)
 	public int getTotalCount(String search) {
 		return boardMapper.getTotalCount(search);
+		
 	}
-
 }

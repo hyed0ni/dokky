@@ -12,7 +12,12 @@
 		<association property="user" javaType="UserDto">
 			<id property="userNo" column="USER_NO" />
 			<result property="userName" column="USER_NAME" />
+			<result property="userImg" column="USER_IMG" />
+			<result property="userUploadPath" column="USER_UPLOAD_PATH"/>
 		</association>
+<!-- 		<association property="cmt" javaType="commentDto"> -->
+<!-- 			<id property="commentNo" column="CMT_NO" /> -->
+<!-- 		</association> -->
 	</resultMap>
 
 	<insert id="insertBoard" parameterType="BoardDto">
@@ -53,22 +58,27 @@
 	    <include refid="search"></include>
 	</select>
 	
-	<select id="getBoardList" resultMap="BoardMap" parameterType="Map">
-		SELECT *
-		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY B.BOARD_NO DESC) AS RN
-					 , B.BOARD_NO
-					 , B.BOARD_TITLE
-					 , B.BOARD_CONTENT
-					 , B.BOARD_HIT
-					 , B.BOARD_CREATE_DT
-					 , B.BOARD_MODIFY_DT
-					 , B.USER_NO
-					 , U.USER_NAME
-				  FROM BOARD_T B INNER JOIN USER_T U
-				    ON B.USER_NO = U.USER_NO
-				    <include refid="search"></include> ) a
-				 WHERE RN BETWEEN #{begin} AND #{end}
-	</select>
+<select id="getBoardList" resultMap="BoardMap" parameterType="Map">
+    SELECT *
+      FROM (
+        SELECT ROW_NUMBER() OVER(ORDER BY B.BOARD_NO DESC) AS RN
+             , B.BOARD_NO
+             , B.BOARD_TITLE
+             , B.BOARD_CONTENT
+             , B.BOARD_HIT
+             , B.BOARD_CREATE_DT
+             , B.BOARD_MODIFY_DT
+             , B.USER_NO
+             , U.USER_NAME
+             , U.USER_IMG
+             , U.USER_UPLOAD_PATH
+             , (SELECT COUNT(*) FROM COMMENT_T WHERE BOARD_NO = B.BOARD_NO) AS CMT_NO
+          FROM BOARD_T B INNER JOIN USER_T U
+            ON B.USER_NO = U.USER_NO
+            <include refid="search"></include> 
+      ) a
+     WHERE RN BETWEEN #{begin} AND #{end}
+</select>
 
 	<select id="getBoardUpdateList" resultMap="BoardMap">
 		SELECT B.BOARD_TITLE
