@@ -15,10 +15,10 @@
     	<div class="px-2 hot-name" id="hot-name" style="font-size:1.7rem; text-align:left;">
     		<i class="fa-solid fa-fire"></i>&nbsp;
     		<span>오늘의</span>
-    		<span style="color:red; font-weight:bold;">추천</span>
+    		<span style="color:red; font-weight:bold;">추천 게시글</span>
     		&nbsp;<i class="fa-solid fa-fire"></i>
    		</div>
-   		<hr style="border: solid 1px; margin-top:1px; width:70%; margin-left:5px;">
+   		<hr style="border: solid 1px; margin-top:1px; width:95%; margin-left:5px;">
     	<div id="hot-boardList"></div>
     </div> 
     
@@ -53,10 +53,10 @@
 						<input type="hidden" name="userNo" id="userNo" value="${sessionScope.user.userNo}">
 						<c:choose>
 							<c:when test="${!empty sessionScope.user}">
-								<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}" alt="DOKKY 로고" height="50">
+								<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}"  height="50px" width="50px" id="img-radius-cmt">
 							</c:when>
 							<c:otherwise>
-								<img src="/images/dokky_profile.png" alt="DOKKY 로고" height="50">
+								<img src="/images/dokky_profile.png" height="50px" width="50px" id="img-radius-cmt">
 							</c:otherwise>
 						</c:choose>
 						<textarea rows="5" cols="70" id="comment-box" onkeydown="fncheckByte(this);" wrap="hard"></textarea>
