@@ -12,6 +12,8 @@
 		<association property="user" javaType="UserDto">
 			<id property="userNo" column="USER_NO" />
 			<result property="userName" column="USER_NAME" />
+			<result property="userImg" column="USER_IMG" />
+			<result property="userUploadPath" column="USER_UPLOAD_PATH" />
 		</association>
 		<association property="board" javaType="BoardDto">
 			<id property="boardNo" column="BOARD_NO" />
@@ -49,6 +51,8 @@
 			 , C.USER_NO
 			 , C.BOARD_NO
 			 , U.USER_NAME
+			 , U.USER_IMG
+			 , U.USER_UPLOAD_PATH
 		  FROM COMMENT_T C 
 	  	INNER JOIN USER_T U
 		  ON C.USER_NO = U.USER_NO

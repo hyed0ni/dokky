@@ -84,6 +84,14 @@
 }
 
 #msg-pw, #msg-email, #msg-name, #msg-mobile {
-  color: tomato;
+  color: #4BAF4B;
   font-size: 10px;
+}
+
+.signup .h3{
+  font-size: 23px !important;
+}
+
+.signup .error-message {
+    color: red;
 }

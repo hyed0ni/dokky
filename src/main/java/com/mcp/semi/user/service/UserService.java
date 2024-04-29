@@ -143,30 +143,20 @@ public class UserService {
 	public void signout(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			 // 로그아웃 기록
-			 HttpSession session = request.getSession(false);
-	      if (session != null && session.getAttribute("user") != null) {
-	         String sessionId = session.getId();
-	         userMapper.updateAccessHistory(sessionId);
-	
-	         // 세션 무효화
-	         session.invalidate();
-         
-	       	 }  
+			// 로그아웃 기록
+			HttpSession session = request.getSession(false);
+      if (session != null && session.getAttribute("user") != null) {
+        String sessionId = session.getId();
+        userMapper.updateAccessHistory(sessionId);
+
+        // 세션 무효화
+        session.invalidate();
+        System.out.println(sessionId);
+        
+      }  
       
-//      // 브라우저의 페이지 이력 삭제
-//      response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-//      response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-//      response.setDateHeader("Expires", 0); // Proxies
-      
-			String referer = request.getHeader("referer");
-			if (referer != null && referer.contains("mypage")) {
-				response.sendRedirect("/"); // 마이 페이지에서 로그아웃시 메인 페이지로 이동
-			} else {
-				response.sendRedirect(referer != null ? referer : "/");	
-			}
-//			// 사용자 속성 제거
-//			session.removeAttribute("user");
+			// 메인화면 이동
+			response.sendRedirect(request.getContextPath() + "/dokky/main");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
