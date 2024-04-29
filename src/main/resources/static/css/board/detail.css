@@ -6,6 +6,7 @@
 	  }
 	  
 	  .body{
+		width: 890px;
 	    display: flex;
 		margin: 20px auto;
 		text-align: center;
@@ -14,22 +15,24 @@
 	  .centerarea{
 		border:none;
 		text-align:left;
-		flex:6;
+		flex:5;
 	  }
 	  
-	  .leftarea, .rightarea{
+	  .leftarea{
 		text-align:left;
-		flex:2;
+		flex:1.5;
 		word-break:break-all;
 	  }
 	  
 	  #hot-name{
-	  width:150px;
+	  width:200x;
 	  height:20px;
+	  margin-left: 14px;
+	  margin-bottom:10px;
 	  }
 	  
 	  #hot-boardList{
-	  width:150px;
+	  width:200px;
 	  }
 	  
 	  .centerarea > .contents-banner{
@@ -66,6 +69,11 @@
    
    .image-writer{
    	margin-left: 5px;
+   }
+   
+   .image-writer > img{
+   	width:50px;
+   	height:50px;
    }
    
    .contents-button {
@@ -133,10 +141,6 @@
    .image-commenter-writer{
    display:flex;
    }
-   
-   .image-commenter-writer > img{
-   padding: 10px 0 0 0;    	
-   } 
    
    .image-commenter {
 	display: flex;
@@ -219,4 +223,18 @@
    margin-left:75%;
    position: relative;
    }
+
+   #img-radius{
+    border: 1px solid #e6e7eb;
+    border-radius: 100%;
+    object-fit: cover;
+    cursor: pointer;
+   }
    
+   #img-radius-cmt{
+   	margin-top:15px;
+    border: 1px solid #e6e7eb;
+    border-radius: 100%;
+    object-fit: cover;
+    cursor: pointer;
+   }

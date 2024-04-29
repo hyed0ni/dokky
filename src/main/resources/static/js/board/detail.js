@@ -55,9 +55,13 @@
 				document.getElementById('create-dt').innerHTML = moment(data.boardCreateDt).format('YYYY.MM.DD HH:mm');
 				document.getElementById('board-hit').innerHTML = data.boardHit;
 				
-				let img = '<img src="' + data.user.userUploadPath + data.user.userImg + '" height="30">';
+				let img = '';
+				if(data.user.userUploadPath == null && data.user.userImg == null)
+					img = '<img src="/images/dokky_profile.png" id="img-radius">';
+				else
+					img = '<img src="' + data.user.userUploadPath + data.user.userImg + '" id="img-radius">';
+					
 				$('.image-writer').append(img);
-				
 				if(sessionUser == data.user.userName)
 				{
 					let str = '<div class="contents-button">';
@@ -131,15 +135,15 @@
   		document.getElementById('btn-comment').addEventListener('click', function(){
   			if(sessionUser == '')
   			{
-  				alert('댓글 달려면 로그인 하쇼');
+  				alert('댓글을 작성하려면 로그인 해야합니다.');
 				window.location.href = "/dokky/signin";				
 			}
   			else
 			{
   				if(totalByte > 1000)
-  					alert('1000byte넘으면 등록안되지롱');
+  					alert('1000byte가 넘으면 등록이 안됩니다.');
   				else if($.trim($('#comment-box').val()) === ''){
-  					alert('내용이 없으면 등록안되지롱');
+  					alert('내용이 없으면 등록이 안됩니다.');
   				}
   				else
 				{
@@ -178,9 +182,9 @@
 				{
 	 		        let str = '<ol>';
 	 		        if(data[i].user.userUploadPath == null && data[i].user.userImg == null)
-	 		        	str += '<div class="image-commenter" ><img src="/images/dokky_profile.png" alt="DOKKY 로고" height="30">';
+	 		        	str += '<div class="image-commenter" ><img src="/images/dokky_profile.png" width="30" height="30" id="img-radius">';
  		        	else 
-	 		        	str += '<div class="image-commenter" ><img src="' + data[i].user.userUploadPath + data[i].user.userImg + '" alt="유저이미지" height="30">';
+	 		        	str += '<div class="image-commenter" ><img src="' + data[i].user.userUploadPath + data[i].user.userImg + '" width="30" height="30" id="img-radius">';
 	 		        	 
 					str += '<a class="comment-writer" id="comment-writer">' + data[i].user.userName + '&nbsp;</a>';
 					str += '<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">' + data[i].cmtCreateDt + '</span>';
@@ -257,7 +261,7 @@
 			
 			document.getElementById('btn-comment-update').addEventListener('click', function(){
 				if($.trim($('#commentupdate-box').val()) === '')
-					alert('수정할 내용 입력해야하지롱');
+					alert('수정할 내용을 입력해야 합니다.');
 				else
 				{
 					$.ajax({
