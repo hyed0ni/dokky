@@ -38,10 +38,14 @@
 	margin-bottom: 20px;
 }
 
+#add {
+	margin-left:26rem;
+}
+
 .search-container form {
 	display: flex;
 	align-items: center;
-	margin-left:31rem;
+	margin-left: 40rem;
 }
 
 .search-container input[type="text"] {

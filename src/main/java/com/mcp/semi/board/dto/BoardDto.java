@@ -1,5 +1,6 @@
 package com.mcp.semi.board.dto;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class BoardDto {
 	private Timestamp boardCreateDt;
 	private Timestamp boardModifyDt;
 	private UserDto user;
+	private int cmtNo;
 	private List<CommentDto> comments;
 
 
