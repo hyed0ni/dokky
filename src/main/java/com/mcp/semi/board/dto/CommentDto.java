@@ -1,6 +1,5 @@
 package com.mcp.semi.board.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import com.mcp.semi.user.dto.UserDto;
@@ -17,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class CommentDto {
 	private int commentNo;
 	private String commentContent;
-	private Date cmtCreateDt;
-	private Date cmtModifyDt;
+	private Timestamp cmtCreateDt;
+	private Timestamp cmtModifyDt;
 	private UserDto user;
 	private BoardDto board;
 }

@@ -32,6 +32,7 @@ public class WebConfig implements WebMvcConfigurer{
 				"/dokky/signout",
 				"/dokky/user/**",
 				"/dokky/main",
+				"/dokky/error",
 				"/dokky/detail",
 				"/dokky/getBoard",
 				"/dokky/getBoardByNo",
