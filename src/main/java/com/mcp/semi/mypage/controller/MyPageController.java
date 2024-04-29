@@ -59,7 +59,7 @@ public class MyPageController {
 	 * @return result
 	 */
 	@ResponseBody
-	@PostMapping("mypage/checkNickname")
+	@PostMapping("checkNickname")
 	public int checkNickname(@RequestBody String userName) {
 		return myPageService.checkNickname(userName);
 	}

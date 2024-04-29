@@ -158,7 +158,7 @@ async function fnCheckName() {
         return { isValid: false, element: inpName };
     } 
     try {
-        const response = await fetch("/dokky/mypage/checkNickname", {
+        const response = await fetch("/dokky/checkNickname", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: userName
