@@ -31,8 +31,8 @@
 		
 		<title>
 		  <c:choose>
-		    <c:when test="${empty param.title}">Welcome</c:when>
-		    <c:otherwise>${param.title}</c:otherwise>
+		    <c:when test="${not empty title}">${title}</c:when>
+		    <c:otherwise>DOKKY</c:otherwise>
 		  </c:choose>
 		</title>
 

@@ -7,6 +7,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
  </head>
 <body>
+<% request.setAttribute("title", "DOKKY | 게시물 상세"); %>
 <%@ include file="../layout/navbar.jsp" %>
 	
 <div class="main">
