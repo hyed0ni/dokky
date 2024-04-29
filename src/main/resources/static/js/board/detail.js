@@ -51,7 +51,7 @@
 				fnAddBoardHit();
 				document.getElementById('contents-writer').innerHTML = data.user.userName;
 				document.getElementById('detail-title').innerHTML = data.boardTitle;
-				document.getElementById('detail-contents').innerHTML = data.boardContent;
+				document.getElementById('detail-contents').innerHTML = data.boardContent.replace(/(?:\r\n|\r|\n)/g,'<br/>');
 				document.getElementById('create-dt').innerHTML = moment(data.boardCreateDt).format('YYYY.MM.DD HH:mm');
 				document.getElementById('board-hit').innerHTML = data.boardHit;
 				
