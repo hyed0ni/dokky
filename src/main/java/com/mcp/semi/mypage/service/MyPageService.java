@@ -33,6 +33,17 @@ public class MyPageService {
     }
 	
 	/**
+	 * 닉네임 중복 검사
+	 * 
+	 * @param userName
+	 * @return result
+	 */
+	@Transactional(readOnly = true)
+	public int checkNickname(String userName) {
+		return myPageMapper.checkNickname(userName);
+	}
+	
+	/**
 	 * 회원 정보 수정
 	 * 
 	 * @param userMap
@@ -153,4 +164,5 @@ public class MyPageService {
 		List<BoardDto> items = myPageMapper.getBoardsWithCommentsByUserNo(userNo, begin, end);
 		return new PageResponse<>(items, page ,total, startPage, endPage);
     }
+	
 }

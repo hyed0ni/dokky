@@ -1,7 +1,6 @@
 /**
  * 
  */
-
  
   var limitByte = 1000;
   var totalByte = 0;
@@ -18,7 +17,7 @@
               }
       }
       $("#messagebyte").text(totalByte);
-  }  
+  };  
   
   var sessionUser = document.getElementById('hidden-userInfo').value;
   
@@ -56,6 +55,13 @@
 				document.getElementById('create-dt').innerHTML = moment(data.boardCreateDt).format('YYYY.MM.DD HH:mm');
 				document.getElementById('board-hit').innerHTML = data.boardHit;
 				
+				let img = '';
+				if(data.user.userUploadPath == null && data.user.userImg == null)
+					img = '<img src="/images/dokky_profile.png" id="img-radius">';
+				else
+					img = '<img src="' + data.user.userUploadPath + data.user.userImg + '" id="img-radius">';
+					
+				$('.image-writer').append(img);
 				if(sessionUser == data.user.userName)
 				{
 					let str = '<div class="contents-button">';
@@ -76,17 +82,20 @@
 	
 	const fnClickDelete = ()=> {
 		document.getElementById('btn-delete').addEventListener('click', function(evt){
-			$.ajax({
-				type:'DELETE',
-				url: '/dokky/deleteBoard/' + boardNo,
-				dataType:'json',
-				success: function(data){
-					location.href = "/dokky/main";
-				},
-				error:function(jqXHR){
-					alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-				}
-			})
+			if(confirm("정말 게시글을 삭제할까요?"))
+			{
+				$.ajax({
+					type:'DELETE',
+					url: '/dokky/deleteBoard/' + boardNo,
+					dataType:'json',
+					success: function(data){
+						location.href = "/dokky/main";
+					},
+					error:function(jqXHR){
+						alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+					}
+				})
+			}
 		})
 	}
 	
@@ -125,13 +134,16 @@
   	const fnRegistComment = ()=>{
   		document.getElementById('btn-comment').addEventListener('click', function(){
   			if(sessionUser == '')
-  				alert('댓글 달려면 로그인 하쇼');
+  			{
+  				alert('댓글을 작성하려면 로그인 해야합니다.');
+				window.location.href = "/dokky/signin";				
+			}
   			else
 			{
   				if(totalByte > 1000)
-  					alert('1000byte넘으면 등록안되지롱');
+  					alert('1000byte가 넘으면 등록이 안됩니다.');
   				else if($.trim($('#comment-box').val()) === ''){
-  					alert('내용이 없으면 등록안되지롱');
+  					alert('내용이 없으면 등록이 안됩니다.');
   				}
   				else
 				{
@@ -169,7 +181,11 @@
 				for(var i = 0; i < data.length; i++)
 				{
 	 		        let str = '<ol>';
-	 		        str += '<div class="image-commenter" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30">'; 
+	 		        if(data[i].user.userUploadPath == null && data[i].user.userImg == null)
+	 		        	str += '<div class="image-commenter" ><img src="/images/dokky_profile.png" width="30" height="30" id="img-radius">';
+ 		        	else 
+	 		        	str += '<div class="image-commenter" ><img src="' + data[i].user.userUploadPath + data[i].user.userImg + '" width="30" height="30" id="img-radius">';
+	 		        	 
 					str += '<a class="comment-writer" id="comment-writer">' + data[i].user.userName + '&nbsp;</a>';
 					str += '<i class="fa-regular fa-clock"></i>&nbsp;<span id="create-dt">' + data[i].cmtCreateDt + '</span>';
 					str += '<input type="hidden" value="' + i + '">';
@@ -182,7 +198,8 @@
 								+ data[i].commentNo +'">삭제</button>';
 						str += '</div>';
 						str += '</div>';
-						str += '<p class="comment-text" id="comment-text' + i +'">' + data[i].commentContent + '</p>'; 
+						str += '<p class="comment-text" id="comment-text' + i +'">' 
+								+ data[i].commentContent.replace(/(?:\r\n|\r|\n)/g,'<br/>');
 						str += '<hr style="border:solid 1px; margin-top:10px;"></ol>';	
 		 		        $('#comment-list').append(str);
 		 		       	fnRemoveComment(i);
@@ -208,17 +225,20 @@
        	var removeButton = document.getElementById('btn-comment-remove' + evt + '');
 	      	removeButton.addEventListener('click', function() {
 	        var commentNo = $(this).data('commentno');
-			$.ajax({
-				type:'DELETE',
-				url:'/detail/deleteCmt/' + commentNo,
-				dataType:'json',
-				success: function(data){
-					location.reload();
-				},
-				error:function(jqXHR){
-					alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-				}
-			})	
+	        if(confirm("댓글을 삭제하시겠습니까?"))
+	        {
+				$.ajax({
+					type:'DELETE',
+					url:'/detail/deleteCmt/' + commentNo,
+					dataType:'json',
+					success: function(data){
+						location.reload();
+					},
+					error:function(jqXHR){
+						alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+					}
+				})	
+			}
       });  		
   	}
   	
@@ -240,9 +260,8 @@
 			})
 			
 			document.getElementById('btn-comment-update').addEventListener('click', function(){
-				console.log(evt);
-				if($.trim($('#comment-box').val()) === '')
-					alert('수정할 내용 입력해야하지롱');
+				if($.trim($('#commentupdate-box').val()) === '')
+					alert('수정할 내용을 입력해야 합니다.');
 				else
 				{
 					$.ajax({

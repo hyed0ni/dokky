@@ -11,10 +11,11 @@
 	<div class="signup">
 		<div align="center">
 		  <a href="/"><img class="mb-4" src=".././images/dokky.png"  alt="DOKKY-LOGO" height="30"></a>
-		  <h1 class="h3 mb-3 fw-normal">DOKKY에 오신것을 환영합니다.</h1><br>
-		  <h6>DOKKY는 MCP 개발자들을 위한 지식공유의 장입니다.</h6>
+		  <p class="h3 mb-3 fw-normal">DOKKY에 오신것을 환영합니다.</p>
 		  <br>
-		  <h6>------  회원가입에 필요한 기본정보를 입력해주세요.  -------</h6>		
+		  <p>DOKKY는 MCP 개발자들을 위한 지식공유의 장입니다.</p>
+		  <br>
+		  <p>------  회원가입에 필요한 기본정보를 입력해주세요.  -------</p>		
 		  </div>
 			  
 		<form method="POST"
@@ -44,13 +45,13 @@
 		
 		  <div class="col-12">
 		    <label for="inp-pw" class="form-label">비밀번호</label>
-		    <input type="password" class="form-control" id="inp-pw" name="userPw" placeholder="비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함">
+		    <input type="password" class="form-control" id="inp-pw" name="userPw" placeholder="비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함" maxlength="12">
 		    <div id="msg-pw"></div>
 		  </div>
 		
 		  <div class="col-12">
 		    <label for="inp-name" class="form-label">닉네임</label>
-		    <input type="text" class="form-control" name="userName" id="inp-name" placeholder="닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)">
+		    <input type="text" class="form-control" name="userName" id="inp-name" placeholder="닉네임 2~8자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)" maxlength="8">
 		    <div id="msg-name"></div>
 		  </div>
 		
@@ -74,14 +75,14 @@
 				
 		  <div class="col-12">
 		    <label for="inp-mobile" class="form-label">휴대전화</label>
-		    <input type="text" class="form-control" name="userMoblie" id="inp-mobile" placeholder="- 제외하고 입력해주세요.">
+		    <input type="text" class="form-control" name="userMoblie" id="inp-mobile" placeholder="- 제외하고 입력해주세요." maxlength="11">
 		    <div id="msg-mobile"></div>
 		  </div>
 		
 		  <div align="center">
 		    <button class="w-100 btn btn-primary btn-lg" id="btn-signup" type="submit">회원가입</button>
 		  </div>
-		
+		  <br>
 		  <div align="center" class="already">
 			<span>이미 회원이신가요?</span>
 			<a href="/dokky/signin">로그인</a>

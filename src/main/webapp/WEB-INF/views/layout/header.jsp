@@ -1,8 +1,6 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -31,8 +29,8 @@
 		
 		<title>
 		  <c:choose>
-		    <c:when test="${empty param.title}">Welcome</c:when>
-		    <c:otherwise>${param.title}</c:otherwise>
+		    <c:when test="${not empty title}">${title}</c:when>
+		    <c:otherwise>DOKKY</c:otherwise>
 		  </c:choose>
 		</title>
 
