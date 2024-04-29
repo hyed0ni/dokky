@@ -16,7 +16,7 @@
 						<a role="button" class="btn btn-primary me-2 " id="add" href="/dokky/add">작성하기</a>
 						<form action="/dokky/main" method="GET" name="searchform" onsubmit="return searchformaction(this,1)">
 							<input type="hidden" name="page" value="1" />
-							<input type="text" placeholder="검색어를 입력해주세요." name="search" <%-- value="${param.search}"> --%>>
+							<input type="text" placeholder="검색어를 입력해주세요." name="search" value="${param.search}">
 							<button type="submit" class="search-btn">
 								<i class="fa fa-search"></i>
 							</button>
@@ -29,6 +29,7 @@
 					<tr>
 						<th scope="col">작성자</th>
 						<th scope="col">제목</th>
+<!-- 						<th scope="col">댓글수</th> -->
 						<th scope="col">조회수</th>
 						<th scope="col">등록일</th>
 					</tr>
@@ -38,7 +39,17 @@
 						<c:when test="${boardList.size() > 0}">
 							<c:forEach var="board" items="${boardList}">
 								<tr>
-									<td>${board.user.userName}</td>
+									<td>	
+									  <c:if test="${board.user.userImg == null}">
+										  <img src="/images/dokky.png" alt="DOKKY 로고" height="30" class="nav-img">
+										   		${board.user.userName}
+									  </c:if>
+										  <c:if test="${board.user.userImg != null}">
+									      <img src="${board.user.userUploadPath}${board.user.userImg}" class="nav-img">
+									    			${board.user.userName}
+									      </c:if>
+									</td>
+<%-- 									<td>${board.cmtNo}</td> --%>
 									<td><a href="/dokky/detail?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
 									<td><i class="fa-regular fa-eye"></i>&nbsp;${board.boardHit}</td>
 									<td><fmt:formatDate value="${board.boardCreateDt}" pattern="yyyy-MM-dd HH:mm" /></td>
@@ -73,6 +84,8 @@
 	
 	// 전역 변수 
 	var boardListSize = ${boardList.size()};
+	
+	if()
 	
 	// 페이징 검색 게시물 없을 시 hide 처리
 	if(boardListSize != 0){
