@@ -254,4 +254,3 @@ document.getElementById("inp-mobile").addEventListener("input", function() {
     
     fnCheckMobile();
 });
-

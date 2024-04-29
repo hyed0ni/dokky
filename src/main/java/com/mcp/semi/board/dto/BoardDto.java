@@ -22,6 +22,7 @@ public class BoardDto {
 	private Timestamp boardCreateDt;
 	private Timestamp boardModifyDt;
 	private UserDto user;
+	private int cmtNo;
 	private List<CommentDto> comments;
 
 

@@ -1,3 +1,4 @@
+
 .signin .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
@@ -27,5 +28,14 @@
 }
 
 .signin{
-    margin-top: 90px;
+  margin-top: 90px;
+}
+
+.signin .top {
+	width: 350px;
+	font-size: 12px;
+}
+
+.signin .h3{
+  font-size: 23px !important;
 }
