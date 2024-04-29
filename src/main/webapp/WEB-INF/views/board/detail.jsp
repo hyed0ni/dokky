@@ -24,9 +24,9 @@
     </div> 
     
     <div class="centerarea">
-    	<div class="contents-banner" style="border:none; margin-bottom:5px;"><img src="/images/detailbanner.jpg" height="145" width="660"></div>
+    	<div class="contents-banner" style="border:none; margin-bottom:60px;"><img src="/images/detailbanner.jpg" width="660"></div>
     	
-		<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/main" style="font-size:1.2rem;">목록으로</a> 
+		<a class="px-2 text-gray-400 hover:text-blue-500 dark:hover:text-blue-200" href="/dokky/main" style="font-size:1.6rem;">목록으로</a> 
 		<hr style="border: solid 1px; margin-top:1px;">
 		
 		<div class="detail-contentinfo" id="detail-contentinfo">

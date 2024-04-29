@@ -65,20 +65,6 @@
 		</div>
 </nav>
 
-<script>
-    function logoutClicked() {
-        // 로그아웃 버튼 클릭 시 페이지를 새로고침하여 화면을 초기화
-        window.location.reload();
-    }
-
-    // 페이지 쇼 이벤트 핸들러
-    window.addEventListener('pageshow', function(event) {
-        // 로그인 상태가 풀린 경우에만 페이지를 새로고침
-        if (event.persisted) {
-            window.location.reload();
-        }
-    });
-</script>
 
  
 

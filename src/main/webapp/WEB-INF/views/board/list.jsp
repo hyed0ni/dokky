@@ -60,7 +60,7 @@
                     </c:when>
                     <c:otherwise>
                         <tr>
-                            <td colspan="5">검색된 게시물이 없습니다</td>
+                            <td colspan="6">검색된 게시물이 없습니다</td>
                         </tr>
                     </c:otherwise>
                 </c:choose>
@@ -68,17 +68,21 @@
         </table>
         
         <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item">
-                <a class="page-link" href="javascript:searchformaction(document.searchform, ${prevPage})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
-                <c:forEach begin="${startPage}" end="${endPage}" var="p">
-                <li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${p})">${p}</a></li>
-                </c:forEach>
-                <li class="page-item"><a class="page-link" href="javascript:searchformaction(document.searchform, ${nextPage})" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
-            </ul>
-        </nav>
-    </div>
-</div>
+				<ul class="pagination">
+					<li class="page-item">
+					<a class="page-link ${currentPage == 1 ? 'disabled' : ''}" href="javascript:searchformaction(document.searchform, ${prevPage})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+					<c:forEach begin="${startPage}" end="${endPage}" var="p">
+					<li class="page-item">
+						<a class="page-link ${currentPage == p ? 'active' : ''}" href="javascript:searchformaction(document.searchform, ${p})">${p}</a>
+					</li>
+					</c:forEach>
+					<li class="page-item">
+					<a class="page-link ${currentPage == maxPage ? 'disabled' : ''}" href="javascript:searchformaction(document.searchform, ${nextPage})" aria-label="Next"> 
+					<span aria-hidden="true">&raquo;</span></a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 
 <%@ include file="../layout/copyright.jsp" %>
 <%@ include file="../layout/footer.jsp" %>

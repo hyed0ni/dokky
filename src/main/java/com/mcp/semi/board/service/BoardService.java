@@ -81,7 +81,6 @@ public class BoardService {
 	@Transactional
 	public int modifyBoard(HttpServletRequest request) {
 	    
-	 
 	    String title = request.getParameter("title");
 	    String contents = request.getParameter("content");
 	    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
