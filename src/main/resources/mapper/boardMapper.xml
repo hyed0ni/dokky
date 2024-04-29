@@ -13,7 +13,7 @@
 			<id property="userNo" column="USER_NO" />
 			<result property="userName" column="USER_NAME" />
 			<result property="userImg" column="USER_IMG" />
-			<result property="userUploadPath" column="USER_UPLOAD_PATH"/>
+			<result property="userUploadPath" column="USER_UPLOAD_PATH" />
 		</association>
 <!-- 		<association property="cmt" javaType="commentDto"> -->
 <!-- 			<id property="commentNo" column="CMT_NO" /> -->
@@ -115,6 +115,8 @@
 			 , B.BOARD_MODIFY_DT
 			 , B.USER_NO
 			 , U.USER_NAME
+			 , U.USER_IMG
+			 , U.USER_UPLOAD_PATH
 		  FROM BOARD_T B 
     INNER JOIN USER_T U
 		    ON B.USER_NO = U.USER_NO

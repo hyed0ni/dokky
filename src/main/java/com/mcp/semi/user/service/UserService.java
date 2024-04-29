@@ -169,18 +169,12 @@ public class UserService {
 
         // 세션 무효화
         session.invalidate();
+        System.out.println(sessionId);
         
       }  
       
-//      // 브라우저의 페이지 이력 삭제
-//      response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-//      response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-//      response.setDateHeader("Expires", 0); // Proxies
-      
 			// 메인화면 이동
 			response.sendRedirect(request.getContextPath() + "/dokky/main");
-//			// 사용자 속성 제거
-//			session.removeAttribute("user");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
