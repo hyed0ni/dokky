@@ -31,7 +31,7 @@
 		
 		<div class="detail-contentinfo" id="detail-contentinfo">
 			<input type="hidden" id="hidden-userInfo" value="${sessionScope.user.userName}">
-			<div class="image-writer" ></div>
+			<div class="image-writer"></div>
 			<div class="contents-block">
 				<a class="contents-writer" id="contents-writer"></a>
 				<div class="contents-detailinfo">
@@ -53,7 +53,7 @@
 					<div class="image-commenter-writer" >
 						<input type="hidden" name="userNo" id="userNo" value="${sessionScope.user.userNo}">
 						<c:choose>
-							<c:when test="${!empty sessionScope.user}">
+							<c:when test="${!empty sessionScope.user and !empty sessionScope.user.userUploadPath and !empty sessionScope.user.userImg}">
 								<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}"  height="50px" width="50px" id="img-radius-cmt">
 							</c:when>
 							<c:otherwise>
@@ -74,8 +74,6 @@
     </div>
     
     <div class="rightarea"></div>
-  </form>
- </div>
   <script src="/js/board/detail.js"></script>
 </body>
 </html>

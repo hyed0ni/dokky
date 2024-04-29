@@ -83,15 +83,20 @@
   --bs-btn-font-size: 1rem;
 }
 
-#msg-pw, #msg-email, #msg-name, #msg-mobile {
+#msg-pw, #msg-email, #msg-name, #msg-mobile, #msg-code {
   color: #4BAF4B;
-  font-size: 10px;
+  font-size: 1rem;
 }
+
+#msg-email.error-message,
+#msg-pw.error-message,
+#msg-name.error-message,
+#msg-mobile.error-message {
+    color: red;
+    font-size: 1rem;
+}
+
 
 .signup .h3{
   font-size: 23px !important;
-}
-
-.signup .error-message {
-    color: red;
 }

@@ -16,6 +16,7 @@ const msgPw = document.getElementById("msg-pw");
 const msgName = document.getElementById("msg-name");
 const msgMobile = document.getElementById("msg-mobile");
 const inpCode = document.getElementById("inp-code");
+const msgCode = document.getElementById("msg-code");
 const btnVerifyCode = document.getElementById("btn-verify-code");
 
 // 모든 입력값 유효성 검사
@@ -59,9 +60,11 @@ async function fnCheckEmail() {
 
     if (userEmail === "") {
         msgEmail.textContent = "이메일을 입력해주세요";
+        msgEmail.classList.add("error-message");
         return { isValid : false, element: inpEmail };
     } else if (!regEmail.test(userEmail)) {
         msgEmail.textContent = "이메일 형식을 확인하세요.";
+        msgEmail.classList.add("error-message");
         return { isValid : false, element: inpEmail };
     }
     
@@ -74,11 +77,17 @@ async function fnCheckEmail() {
         const data = await response.json();
         if (!data.enableEmail) {
             msgEmail.textContent = "이미 사용 중인 이메일입니다.";
+            msgEmail.removeAttribute("msg-email");
+            msgEmail.classList.add("error-message");
             return { isValid: false, element: inpEmail };
-        }
-        return { isValid: true, userEmail: userEmail };  // 사용자 이메일을 반환
+        } else {
+			msgEmail.textContent = ""; // 에러 메시지 초기화
+        	msgEmail.classList.remove("error-message"); // 에러 클래스 제거
+        return { isValid: true, userEmail: userEmail };
+		}
     } catch (error) {
         msgEmail.textContent = "이메일 확인 중 에러가 발생했습니다.";
+        msgEmail.classList.remove("error-message");
         return { isValid: false, element: inpEmail };
     }
 }
@@ -107,6 +116,7 @@ async function fnSendCode(userEmail) {
 async function fnVerifyCode(expectedCode) {
     if (inpCode.value === expectedCode) {
         alert("인증되었습니다.");
+        msgCode.textContent = "인증이 완료되었습니다.";
         state.emailCheck = true;
         btnVerifyCode.disabled = true;
         console.log(state.emailCheck);
@@ -127,17 +137,21 @@ function fnCheckPassword() {
     
     if (userPw === "") {
         msgPw.textContent = "비밀번호를 입력해주세요";
+        msgPw.classList.add("error-message");
         return { isValid: false, element: inpPw };
         
     } else if (passwordLength < 4) {
         msgPw.textContent = "비밀번호는 최소 4자 이상이어야 합니다.";
+        msgPw.classList.add("error-message");
         return { isValid: false, element: inpPw };
         
     } else if (validCount < 2) {
         msgPw.textContent = "비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.";
+        msgPw.classList.add("error-message");
         return { isValid: false, element: inpPw };
         
     } else {
+		msgPw.classList.remove("error-message"); // 에러 클래스 제거
         msgPw.textContent = "사용 가능한 비밀번호입니다.";
         return { isValid: true, element: inpPw };
     }
@@ -150,10 +164,12 @@ async function fnCheckName() {
 
     if (userName === "") {
         msgName.textContent = "닉네임을 입력해주세요";
+        msgName.classList.add("error-message");
         nicknameCheck = false;
         return { isValid: false, element: inpName };
     } else if (!namePattern.test(userName)) {
         msgName.textContent = "닉네임 2~8자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)";
+        msgName.classList.add("error-message");
         nicknameCheck = false;
         return { isValid: false, element: inpName };
     } 
@@ -165,17 +181,21 @@ async function fnCheckName() {
         });
         const result = await response.json();
         if (result === 0) {
+			msgEmail.textContent = ""; // 에러 메시지 초기화
+			msgName.classList.remove("error-message"); // 에러 클래스 제거
             msgName.textContent = '사용 가능한 닉네임입니다.';
             nicknameCheck = true;
             return { isValid: true, element: inpName };
         } else {
             msgName.textContent = '이미 사용 중인 닉네임입니다.';
+            msgName.classList.add("error-message");
             nicknameCheck = false;
             return { isValid: false, element: inpName };
         }
     } catch (error) {
         console.error("Error checking nickname:", error);
         msgName.textContent = '닉네임 확인 중 문제가 발생했습니다.';
+        msgName.classList.add("error-message");
         nicknameCheck = false;
         return { isValid: false, element: inpName };
     }
@@ -188,12 +208,16 @@ function fnCheckMobile() {
 
     if (mobileValue === "") {
         msgMobile.textContent = "";
+        msgMobile.classList.remove("error-message");
         return { isValid: true, element: inpMobile };
     } else if (!mobilePattern.test(mobileValue)) {
         msgMobile.textContent = "휴대전화 번호를 확인하세요.";
+        msgMobile.classList.add("error-message");
         return { isValid: false, element: inpMobile };
         
     } else {
+        msgMobile.textContent = ""; // 에러 메시지 초기화
+		msgMobile.classList.remove("error-message"); // 에러 클래스 제거
         msgMobile.textContent = "사용 가능한 전화번호입니다.";
         return { isValid: true, element: inpMobile };
     }

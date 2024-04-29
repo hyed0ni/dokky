@@ -117,6 +117,8 @@
 			 , B.BOARD_MODIFY_DT
 			 , B.USER_NO
 			 , U.USER_NAME
+             , U.USER_IMG
+             , U.USER_UPLOAD_PATH
 		  FROM BOARD_T B 
     INNER JOIN USER_T U
 		    ON B.USER_NO = U.USER_NO
