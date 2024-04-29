@@ -1,5 +1,6 @@
 package com.mcp.semi.user.service;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Optional;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mcp.semi.common.exception.UserNotFoundException;
 import com.mcp.semi.common.util.MailUtils;
@@ -28,6 +30,7 @@ public class UserService {
 	private final MailUtils mailUtils;
 
 	// 회원가입하기
+	@Transactional
 	public void signup(HttpServletRequest request, HttpServletResponse response) {
 
 		String userEmail = request.getParameter("userEmail");
@@ -107,55 +110,34 @@ public class UserService {
 	}
 	
 	// 로그인
-	public void signin(HttpServletRequest request, HttpServletResponse response) {
-		
-		try {
-			String userEmail = request.getParameter("userEmail");
+	@Transactional
+	public boolean signin(String userEmail, String password,
+						  HttpServletRequest request) {
 			String userPw = SecurityUtils.getSha256(request.getParameter("userPw"));
 			String userIp = request.getRemoteAddr();
+			String sessionId = request.getSession().getId();
 			String userAgent = request.getHeader("User-Agent");
 			
-			Map<String, Object> params = Map.of("userEmail", userEmail
-																				, "userPw", userPw
-																				, "accessIp", userIp 
-																				, "userAgent", userAgent
-																				, "sessionId", request.getSession().getId());
+			Map<String, Object> params = Map.of("userEmail", userEmail,
+												"userPw", userPw,
+												"accessIp", userIp,
+												"userAgent", userAgent,
+												"sessionId", sessionId);
 
 			UserDto user = userMapper.getUserByMap(params);
 			
-			if(user != null) {   // 성공
+			if (user != null) {   // 성공
 				
-        userMapper.insertAccessHistory(params);
-
-        HttpSession session = request.getSession();
-        session.setAttribute("user", user);
-        session.setMaxInactiveInterval(1800);
-        
-        Optional<String> optUrl = Optional.ofNullable(request.getParameter("url"));
-        String redirectUrl = optUrl.orElse(request.getContextPath() + "/dokky/main");
-        
-        
-        // 이전 페이지를 세션에 저장     
-           session.setAttribute("prevPage", redirectUrl);
-        
-        response.sendRedirect(redirectUrl);        
-				
-			} else {   // 실패
-				
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("alert('일치하는 회원 정보가 없습니다.')");
-				out.println("location.href='" + request.getContextPath() + "/dokky/signin';");
-				out.println("</script>");
-				out.flush();
-				out.close();
+		        userMapper.insertAccessHistory(params);
+		
+		        HttpSession session = request.getSession();
+		        session.setAttribute("user", user);
+		        session.setMaxInactiveInterval(1800);     
+		        return true;
+			} else {
+				return false;
 			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-	}
 	
 	// 로그아웃
 	public void signout(HttpServletRequest request, HttpServletResponse response) {
@@ -180,22 +162,8 @@ public class UserService {
 			e.printStackTrace();
 		}
 	}
-
-	// 로그인 후 리다이렉트
-	public String getRedirectURLAfterSignin(HttpServletRequest request) {
-    
-    String redirectURL = "";
-    
-    redirectURL = (String)request.getHeader("REFERER");
-
-    // 기본적으로 돌아갈 URL
-    if (redirectURL == null || redirectURL.isEmpty()) {
-    	redirectURL = request.getContextPath() + "/dokky/main";
-    }
-    return redirectURL;
-    
-	}
-
+	
+	@Transactional
 	public UserDto findByUserNo(int userNo) {
 		return Optional.ofNullable(userMapper.findByUserNo(userNo))
 						 .orElseThrow(() -> new UserNotFoundException("사용자가 존재하지 않습니다."));

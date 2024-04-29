@@ -12,6 +12,14 @@ import com.mcp.semi.board.dto.BoardDto;
 public interface MyPageMapper {
 	
 	/**
+	 * 닉네임 중복 검사
+	 * 
+	 * @param userName
+	 * @return result
+	 */
+	int checkNickname(String userName);
+	
+	/**
 	 * 회원 정보 수정
 	 * 
 	 * @param userMap

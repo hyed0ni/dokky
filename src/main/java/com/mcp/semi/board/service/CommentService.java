@@ -1,12 +1,7 @@
 package com.mcp.semi.board.service;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -14,11 +9,9 @@ import org.springframework.ui.Model;
 import com.mcp.semi.board.dto.BoardDto;
 import com.mcp.semi.board.dto.CommentDto;
 import com.mcp.semi.board.dto.CommentInfoDto;
-import com.mcp.semi.board.mapper.BoardMapper;
 import com.mcp.semi.board.mapper.CommentMapper;
 import com.mcp.semi.user.dto.UserDto;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -39,7 +32,8 @@ public class CommentService {
 	public int insertComment(CommentInfoDto commentInfoDto)
 	{
 		String comment = commentInfoDto.getCommentContent();
-		int userNo = commentInfoDto.getUserNo();
+		comment = comment.replaceAll("<", "&lt;");
+		comment = comment.replaceAll(">", "&gt;");		int userNo = commentInfoDto.getUserNo();
 		int boardNo = commentInfoDto.getBoardNo();
 		UserDto user = new UserDto();
 		user.setUserNo(userNo);

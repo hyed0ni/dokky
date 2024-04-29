@@ -7,6 +7,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
  </head>
 <body>
+<% request.setAttribute("title", "DOKKY | 게시물 상세"); %>
 <%@ include file="../layout/navbar.jsp" %>
 	
 <div class="main">
@@ -15,10 +16,10 @@
     	<div class="px-2 hot-name" id="hot-name" style="font-size:1.7rem; text-align:left;">
     		<i class="fa-solid fa-fire"></i>&nbsp;
     		<span>오늘의</span>
-    		<span style="color:red; font-weight:bold;">추천</span>
+    		<span style="color:red; font-weight:bold;">추천 게시글</span>
     		&nbsp;<i class="fa-solid fa-fire"></i>
    		</div>
-   		<hr style="border: solid 1px; margin-top:1px; width:70%; margin-left:5px;">
+   		<hr style="border: solid 1px; margin-top:1px; width:95%; margin-left:5px;">
     	<div id="hot-boardList"></div>
     </div> 
     
@@ -30,7 +31,7 @@
 		
 		<div class="detail-contentinfo" id="detail-contentinfo">
 			<input type="hidden" id="hidden-userInfo" value="${sessionScope.user.userName}">
-			<div class="image-writer" ><img src="/images/dokky.png" alt="DOKKY 로고" height="30"></div>
+			<div class="image-writer" ></div>
 			<div class="contents-block">
 				<a class="contents-writer" id="contents-writer"></a>
 				<div class="contents-detailinfo">
@@ -51,8 +52,15 @@
 				<div class="comment-input" id="comment-input">	<!-- 댓글 입력창 -->
 					<div class="image-commenter-writer" >
 						<input type="hidden" name="userNo" id="userNo" value="${sessionScope.user.userNo}">
-						<img src="/images/dokky.png" alt="DOKKY 로고" height="50">
-						<textarea rows="5" cols="70" id="comment-box" onkeydown="fncheckByte(this);"></textarea>
+						<c:choose>
+							<c:when test="${!empty sessionScope.user}">
+								<img src="${sessionScope.user.userUploadPath}${sessionScope.user.userImg}"  height="50px" width="50px" id="img-radius-cmt">
+							</c:when>
+							<c:otherwise>
+								<img src="/images/dokky_profile.png" height="50px" width="50px" id="img-radius-cmt">
+							</c:otherwise>
+						</c:choose>
+						<textarea rows="5" cols="70" id="comment-box" onkeydown="fncheckByte(this);" wrap="hard"></textarea>
 					</div>
 					<div id="commentByte" class="commentByte">
 						<span id="messagebyte">0</span><span> / 1000byte</span>
@@ -68,6 +76,6 @@
     <div class="rightarea"></div>
   </form>
  </div>
-  <script type="module" src="/js/board/detail.js"></script>
+  <script src="/js/board/detail.js"></script>
 </body>
 </html>
