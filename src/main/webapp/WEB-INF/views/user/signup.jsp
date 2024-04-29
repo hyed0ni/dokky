@@ -80,7 +80,7 @@
 		  </div>
 		
 		  <div align="center">
-		    <button class="w-100 btn btn-primary btn-lg" id="btn-signup" type="button" disabled>회원가입</button>
+		    <button class="w-100 btn btn-primary btn-lg" id="btn-signup" type="submit">회원가입</button>
 		  </div>
 		  <br>
 		  <div align="center" class="already">
