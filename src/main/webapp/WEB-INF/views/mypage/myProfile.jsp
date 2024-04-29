@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% request.setAttribute("title", "DOKKY | 마이 페이지"); %>
 <%@ include file="../layout/header.jsp" %>
 <%@ include file="../layout/navbar.jsp" %>
 		<link rel="stylesheet" href="/css/mypage/myProfile.css" type="text/css">
@@ -30,7 +31,7 @@
  					<div>
  						<!-- 프로필 이미지: 기본 값 -->
  						<c:if test="${empty user.userImg}">
- 							<img src="/images/dokky_profile.png" id="profile-img"  data-src="/images/dokky_profile.png">
+ 							<img src="/images/dokky_profile.png" id="profile-img" data-src="/images/dokky_profile.png">
  						</c:if>
  						
  						<!-- 프로필 이미지 -->
@@ -52,10 +53,11 @@
 					<div class="col-12 user-info">
 						<label for="user-name" class="form-label">닉네임</label>
 						<input type="text" class="form-control" id="user-name" name="userName" value="${user.userName}" maxlength="16">
-						<div class="none" id="user-name-msg">
-							닉네임은 2~16자의 영어/숫자/한글로 구성되어야 하며, <br>
+						<div class="none" id="user-name-msg-1">
+							닉네임은 2~8자의 영어/숫자/한글로 구성되어야 하며, <br>
 							한글 초성 및 모음은 허용되지 않습니다.
 						</div>
+						<div class="none" id="user-name-msg-2">이미 사용 중인 닉네임입니다.</div>
 					</div>
     
     				<!-- 성별 -->

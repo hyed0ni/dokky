@@ -20,13 +20,12 @@ const fnGetContextPath = () => {
 const fnCheckEmail = () => {
   let inpEmail = $('#inp-email');
   let email = inpEmail.val();
-  let regEmail = /^[A-Za-z0-9-_]{2,}@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
-   //  let regEmail = /^[a-zA-Z0-9-_]{2,}+@[a-zA-Z0-9]+(\.[a-zA-Z]){3}$/;
+  let regEmail = /^[A-Za-z0-9-_]{2,}@[A-Za-z0-9]+(\.[A-Za-z]{2,3}){1,2}$/;
   
   if (!regEmail.test(email)) {
-      emailCheck = false;
-      alert('이메일 형식을 확인하세요.');
-      return;
+    emailCheck = false;
+    alert('이메일 형식을 확인하세요.');
+    return;
   }
     
   $.ajax({
@@ -54,7 +53,7 @@ const fnCheckEmail = () => {
                   btnVerifyCode.prop('disabled', false);
                   // 인증코드 로그찍기
                   console.log(resData.code);    
-                  btnVerifyCode.on('click', function (evt) {
+                  btnVerifyCode.on('click', function () {
                     if (resData.code === inpCode.val()) {
                       alert('인증되었습니다.');
                       emailCheck = true;
@@ -66,7 +65,7 @@ const fnCheckEmail = () => {
                 }
               });
 	        } else {
-            $('#msg-email').html('이미 사용 중인 이메일입니다.');
+						$('#msg-email').html('<span class="error-message">이미 사용 중인 이메일입니다.</span>');
             emailCheck = false;
             return;
 	        }
@@ -81,13 +80,13 @@ const fnCheckPassword = () => {
                  + /[0-9]/.test(inpPw.val()) 
                  + /[^A-Za-z0-9]/.test(inpPw.val());
   let passwordLength = inpPw.val().length;
-  pwCheck = passwordLength >= 6
-               && validCount >= 2; 
+  pwCheck = 4 <= passwordLength && passwordLength <= 12 && validCount >= 2;
   let msgPw = $('#msg-pw');
   if(pwCheck){
     msgPw.html('사용 가능한 비밀번호입니다.');
   } else {
-    msgPw.html('비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.');
+    msgPw.html('<span class="error-message">비밀번호 4~12자, 영문/숫자/특수문자 중 2개 이상 포함해주세요.</span>');
+    return;
   }
 }
   
@@ -95,32 +94,29 @@ const fnCheckPassword = () => {
 const fnCheckName = () => {
   let inpName = $('#inp-name');
   let name = inpName.val();
-  let nameCheck = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
+  let nameCheck = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/;
   let msgName = $('#msg-name'); 
   if (!nameCheck.test(name)) { 
-    msgName.html('닉네임 2~16자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)');
+    msgName.html('<span class="error-message">닉네임 2~8자, 영어/숫자/한글로 구성 (공백, 초성, 모음 불가)</span>');
+    return;
   } else {
     msgName.html('사용 가능한 닉네임입니다.');
   }
 }
 
 // 휴대전화 확인
-const fnCheckMobile = () => {
-  let inpMobile = $('#inp-mobile');
-  let mobile = inpMobile.val().replace(/[^0-9]/g, ''); 
-  let mobileCheck = /^010\d{8}$/; 
-  let msgMobile = $('#msg-mobile');
-  if (!mobileCheck.test(mobile)) {
-    msgMobile.html('휴대전화 번호를 확인하세요.');
-  } else {
-    msgMobile.html('사용 가능한 전화번호입니다.');
+document.getElementById("inp-mobile").addEventListener("input", e => {
+  const inpValue = e.target.value;
+  const regExp = /^[0-9]*$/; // 수정된 정규식, 하이픈을 허용하지 않음
+  if (!regExp.test(inpValue)) {
+      e.target.value = inpValue.replace(/[^\d]/g, ''); // 숫자가 아닌 문자 제거
   }
-}
+});
 
 // 입력값이 없을 때 검증 메시지 숨기기
 $('#inp-email').on('blur', function() {
   if ($(this).val() === '') {
-      $('#msg-email').html('');
+      $('#msg-email').html('');	
   }
 });
 
@@ -136,26 +132,24 @@ $('#inp-name').on('blur', function() {
   }
 });
 
-$('#inp-mobile').on('blur', function() {
-  if ($(this).val() === '') {
-      $('#msg-mobile').html('');
-  }
-});
-
 // 필수입력 절차
 const fnSignup = () => {
   $('#frm-signup').on('submit', function (evt) {
     if ($.trim($('#inp-email').val()) === '') {
-      evt.preventDefault();
       alert('이메일을 입력해주세요.');
+      evt.preventDefault();
+      return;
+    } else if ($.trim($('#inp-code').val()) === '') {
+      alert('인증코드를 인증해주세요.');
+      evt.preventDefault();
       return;
     } else if ($.trim($('#inp-pw').val()) === '') {
-      evt.preventDefault();
       alert('비밀번호를 입력해주세요.');
+      evt.preventDefault();
       return;
     } else if ($.trim($('#inp-name').val()) === '') {
-      evt.preventDefault();
       alert('닉네임을 입력해주세요.');
+      evt.preventDefault();
       return;
     }
   });
@@ -176,7 +170,6 @@ $(document).ready(function() {
 
 // 호출
 $('#btn-code').on('click', fnCheckEmail);
-$('#inp-pw').on('keyup', fnCheckPassword);
-$('#inp-name').on('blur', fnCheckName);
-$('#inp-mobile').on('blur', fnCheckMobile);
-//fnSignup();
+$('#inp-pw').on('keydown', fnCheckPassword);
+$('#inp-name').on('keydown', fnCheckName);
+
