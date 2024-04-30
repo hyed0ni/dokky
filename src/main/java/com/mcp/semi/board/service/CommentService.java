@@ -59,6 +59,18 @@ public class CommentService {
 	@Transactional
 	public int modifyComment(CommentInfoDto commentInfoDto) 
 	{
-		return commentMapper.modifyComment(commentInfoDto);
+		String comment = commentInfoDto.getCommentContent();
+		comment = comment.replaceAll("<", "&lt;");
+		comment = comment.replaceAll(">", "&gt;");
+		int userNo = commentInfoDto.getUserNo();
+		int boardNo = commentInfoDto.getBoardNo();
+		
+		CommentInfoDto commentInfo = CommentInfoDto.builder()
+									.commentContent(comment)
+									.userNo(userNo)
+									.boardNo(boardNo)
+									.build();
+		
+		return commentMapper.modifyComment(commentInfo);
 	}
 }
