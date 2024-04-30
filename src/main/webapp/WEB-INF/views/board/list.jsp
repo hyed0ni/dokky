@@ -42,7 +42,7 @@
                             <tr>
                                 <td class="align-middle">
                                     <c:if test="${board.user.userImg == null}">
-                                        <img src="/images/dokky.png" alt="DOKKY 로고" height="30" class="nav-img">
+                                        <img src="/images/dokky_profile.png" alt="DOKKY 로고" height="30" class="nav-img">
                                         ${board.user.userName}
                                     </c:if>
                                     <c:if test="${board.user.userImg != null}">

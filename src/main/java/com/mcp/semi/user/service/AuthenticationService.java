@@ -24,4 +24,5 @@ public class AuthenticationService {
 	public UserDto getCurrentUser(HttpSession session) {
 		return (UserDto) session.getAttribute(USER);
 	}
+	
 }

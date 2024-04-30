@@ -10,6 +10,7 @@
 
 <div class="main">
     <form id="frm-board-add" action="/dokky/add-form" method="POST" class="my-3">
+    	<input type="hidden" id="boardNo" value="${board.boardNo}">
         <!-- 제목 -->
         <h4 class="border-bottom py-2">게시물 작성하기</h4>
         <label for="title" class="form-label">제목</label>
@@ -35,6 +36,7 @@
 	$('#cancelBtn').on('click', () => {
 		window.location.href="/dokky/main";
 	})
+	
 	
 	/* 게시물 등록 예외처리 */
 	const fnRegisterBoard = (evt) => {

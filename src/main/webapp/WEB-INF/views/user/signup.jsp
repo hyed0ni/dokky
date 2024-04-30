@@ -20,7 +20,8 @@
 			  
 		<form method="POST"
 			    action="/dokky/signup"
-			        id="frm-signup">
+			        id="frm-signup"
+			    autocomplete="off">
 			  
 		<div class="col-md-7 col-lg-8">
 		<div class="row g-3">

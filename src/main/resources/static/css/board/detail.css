@@ -150,7 +150,7 @@
    }
    
    .comment-buttons{
-   	margin-left:410px;
+   	margin-left:auto;
    	position: relative;
    }
    
@@ -215,6 +215,10 @@
    .comment-text{
    	max-width:640px;
 	word-break:break-all;
+   }
+   
+   .comment-writer {
+   width: 90px;
    }
    
    #btn-comment{

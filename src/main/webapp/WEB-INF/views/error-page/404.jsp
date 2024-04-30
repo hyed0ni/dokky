@@ -12,7 +12,7 @@
 <div class="main error-div">
 	<div class="centered-container">
 	<img class="error-image" src="/images/jenkins.png" alt="죄송합니다. 이 페이지는 존재하지 않습니다.">
-		죄송합니다. 이 페이지는 이제 제껍니다.
+	권한이 없거나 존재하지 않는 페이지입니다.
 		<a href="/">홈으로 다시 가기</a>
 	</div>
 </div>

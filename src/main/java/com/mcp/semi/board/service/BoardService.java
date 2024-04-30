@@ -35,8 +35,8 @@ public class BoardService {
 				               .user(user)
 				               .build();
 		
-       int insertCount = boardMapper.insertBoard(board);
-       return insertCount;
+       boardMapper.insertBoard(board);
+       return board.getBoardNo();
 		
 	}
 	
@@ -120,6 +120,10 @@ public class BoardService {
 	@Transactional(readOnly = true)
 	public int getTotalCount(String search) {
 		return boardMapper.getTotalCount(search);
-		
+	}
+	
+	@Transactional(readOnly = true)
+	public boolean isUserBoardOwner(int userNo, int boardNo) {
+		return boardMapper.isUserBoardOwner(userNo, boardNo);
 	}
 }
