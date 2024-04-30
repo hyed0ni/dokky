@@ -202,7 +202,7 @@ public class MyPageController {
 	@GetMapping(value = "/api/my-comment/{userNo}", produces = "application/json")
 	public ResponseEntity<?> myComment(@PathVariable("userNo") int userNo,
 			 						  @RequestParam(value ="page", defaultValue = "1")int page) {
-		 PageResponse<BoardDto> boardList = myPageService.getUserBoardsWithComments(userNo, page, 10);
+		PageResponse<BoardDto> boardList = myPageService.getUserBoardsWithComments(userNo, page, 10);
 		if (boardList.getItems().isEmpty()) {
 			return ResponseEntity.ok(Map.of("message", "아직 작성한 댓글이 없습니다."));
 		} else {
