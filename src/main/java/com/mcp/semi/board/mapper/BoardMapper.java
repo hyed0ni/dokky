@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mcp.semi.board.dto.BoardDto;
 
@@ -29,6 +30,8 @@ public interface BoardMapper {
 	int getBoardUpdate(BoardDto boardDto);
 	
 	int getTotalCount(String search);
+	
+	boolean isUserBoardOwner(@Param("userNo") int userNo, @Param("boardNo") int boardNo);
 
 }
 	

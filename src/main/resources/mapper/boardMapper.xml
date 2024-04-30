@@ -155,4 +155,10 @@
 			ON B.USER_NO = U.USER_NO
 		<!-- WHERE B.BOARD_NO BETWEEN #{begin} AND #{end} -->
 	</select>
+	
+	<select id="isUserBoardOwner" resultType="boolean">
+	SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
+ 	  FROM BOARD_T 
+     WHERE USER_NO = #{userNo} AND BOARD_NO = #{boardNo}
+	</select>
 </mapper>

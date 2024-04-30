@@ -19,7 +19,7 @@ public class CustomErrorController implements ErrorController {
 	        if (status != null) {
 	            int statusCode = Integer.parseInt(status.toString());
 	            
-	            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+	            if(statusCode == HttpStatus.NOT_FOUND.value() || statusCode == HttpStatus.FORBIDDEN.value()) {
 	                return "error-page/404";
 	            }
 	            // 다른 HTTP 에러 코드에 대한 페이지도 처리 가능
