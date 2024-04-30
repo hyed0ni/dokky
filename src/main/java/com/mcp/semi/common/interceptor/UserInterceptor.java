@@ -3,6 +3,7 @@ package com.mcp.semi.common.interceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.mcp.semi.board.service.BoardService;
 import com.mcp.semi.user.dto.UserDto;
 import com.mcp.semi.user.service.AuthenticationService;
 
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserInterceptor implements HandlerInterceptor {
 	
 	private final AuthenticationService authenticationService;
+	private final BoardService boardService;
 	
 
 	@Override
@@ -33,14 +35,21 @@ public class UserInterceptor implements HandlerInterceptor {
 			return false;
 		}
 		
-		if(path.equals("/dokky/modify")) {
-			if(session == null || session.getAttribute("user") == null) {
+		if(path.startsWith("/dokky/modify")) { // 경로 확인 조건을 수정합니다.
+			UserDto currentUser = authenticationService.getCurrentUser(session);
+			if(currentUser == null) {
 				log.warn("세션이 없는 상태에서 {} 경로에 접근 시도함.", path);
 				response.sendRedirect("/dokky/signin");
 				return false;
 			}
-		}
 		
+		String boardNo = request.getParameter("boardNo");
+		if(boardNo != null && !boardService.isUserBoardOwner(currentUser.getUserNo(), Integer.parseInt(boardNo))) {
+			log.warn("사용자 {}가 자신의 게시물이 아닌 {} 경로에 접근 시도함.", currentUser.getUserNo(), path);
+			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return false;
+		}
+	}
 		if(path.equals("/dokky/mypage")) {
 			UserDto currentUser = authenticationService.getCurrentUser(request.getSession());
 			if(currentUser == null) {
